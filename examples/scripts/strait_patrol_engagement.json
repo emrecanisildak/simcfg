@@ -1,0 +1,23 @@
+{
+  "description": "SAM'in Viper 11'e angajmanı: tespit -> IFF sorgusu -> atış -> Viper RWR füze uyarısı -> flare + kırılma; ardından kilitlenmede chaff, şarjör tükenmesi.",
+  "scenario": "demo.scenario.strait_patrol",
+  "step": 1.0,
+  "until": 40,
+  "events": [
+    { "t": 2,  "set": { "entity": "viper_1", "path": "state.position", "value": { "lat": 39.95, "lon": 27.75 } } },
+    { "t": 3,  "entity": "sam_1", "event": "core.event.sensor.detection",
+               "payload": { "system": "search_radar", "target": "viper_1", "range": 17000, "bearing": 310, "identity": "unknown" } },
+    { "t": 5,  "entity": "sam_1", "event": "core.event.sensor.detection",
+               "payload": { "system": "search_radar", "target": "viper_1", "range": 16500, "bearing": 310, "identity": "hostile" } },
+    { "t": 9,  "complete": { "entity": "viper_1", "channel": "movement" } },
+    { "t": 10, "entity": "viper_1", "event": "core.event.rwr.lock",
+               "payload": { "system": "rwr", "emitter": "DEMO-SAM-SR", "source": "sam_1", "bearing": 130 } },
+    { "t": 12, "entity": "viper_1", "event": "core.event.rwr.lock",
+               "payload": { "system": "rwr", "emitter": "DEMO-SAM-SR", "source": "sam_1", "bearing": 131 } },
+    { "t": 16, "entity": "viper_1", "event": "core.event.rwr.lock",
+               "payload": { "system": "rwr", "emitter": "DEMO-SAM-SR", "source": "sam_1", "bearing": 132 } },
+    { "t": 20, "set": { "entity": "viper_1", "path": "systems.flare.state.remaining", "value": 0 } },
+    { "t": 21, "entity": "viper_1", "event": "core.event.rwr.missile_launch",
+               "payload": { "system": "rwr", "source": "sam_1", "bearing": 133 } }
+  ]
+}

@@ -1,0 +1,68 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.gun_mount",
+    "extends": "core.systemtype.weapon_launcher",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Gun mount / turret"
+    },
+    "spec": {
+      "implementation": "engine.weapon.gun_mount",
+      "parameters": {
+        "traverseRate": {
+          "type": "number",
+          "unit": "deg/s",
+          "default": 40,
+          "min": 0,
+          "ui": {
+            "group": "Turret"
+          }
+        },
+        "elevationMin": {
+          "type": "number",
+          "unit": "deg",
+          "default": -10,
+          "min": -90,
+          "max": 90,
+          "ui": {
+            "group": "Turret"
+          }
+        },
+        "elevationMax": {
+          "type": "number",
+          "unit": "deg",
+          "default": 20,
+          "min": -90,
+          "max": 90,
+          "ui": {
+            "group": "Turret"
+          }
+        },
+        "stabilized": {
+          "type": "boolean",
+          "default": true,
+          "ui": {
+            "group": "Turret"
+          }
+        },
+        "fireControl": {
+          "type": "enum",
+          "values": [
+            "manual",
+            "basic",
+            "computerized"
+          ],
+          "default": "computerized",
+          "ui": {
+            "group": "Fire control"
+          }
+        }
+      },
+      "ui": {
+        "icon": "gun"
+      }
+    }
+  }
+]

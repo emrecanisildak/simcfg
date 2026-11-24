@@ -1,0 +1,95 @@
+{
+  "$schema": "../../../schemas/v1/scenario.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "Scenario",
+  "id": "demo.scenario.strait_patrol_night",
+  "extends": "demo.scenario.strait_patrol",
+  "version": "0.1.0",
+  "meta": {
+    "name": "Strait Patrol (night variant)",
+    "description": {
+      "tr": "Senaryo kalıtımı: zaman/hava, kural ve varlık değişiklikleri."
+    }
+  },
+  "spec": {
+    "time": {
+      "start": "2026-06-01T22:00:00Z"
+    },
+    "environment": {
+      "weather": {
+        "visibility": "5 km"
+      }
+    },
+    "behaviorOverrides": {
+      "core.behavior.air.self_defense": {
+        "parameters": {
+          "breakG": 6,
+          "chaffBurst": 3
+        },
+        "rules": {
+          "flare_and_break_on_launch": {
+            "priority": 110
+          }
+        }
+      },
+      "core.behavior.ground.sam_site": {
+        "rules": {
+          "identify_contact": {
+            "enabled": false
+          }
+        }
+      },
+      "core.behavior.air.engage_hostiles": {
+        "parameters": {
+          "roe": "hold"
+        }
+      }
+    },
+    "entities": {
+      "viper_2": {
+        "platform": "demo.platform.fighter_mk2_ew"
+      },
+      "airliner_1": {
+        "$delete": true
+      },
+      "bandit_2": {
+        "platform": "demo.platform.fighter_mk2_export",
+        "side": "red",
+        "callsign": "BANDIT 2",
+        "initial": {
+          "position": {
+            "lat": 39.75,
+            "lon": 28.4
+          },
+          "altitude": "18000 ft",
+          "heading": 300,
+          "speed": "450 kts"
+        },
+        "plan": [
+          {
+            "action": "core.action.wait",
+            "params": {
+              "duration": "5 min"
+            }
+          },
+          {
+            "action": "core.action.follow_route",
+            "params": {
+              "route": "red_ingress"
+            }
+          }
+        ]
+      }
+    },
+    "rules": {
+      "phase_2_red_push": {
+        "trigger": {
+          "at": "25 min"
+        }
+      },
+      "civil_in_mez_alert": {
+        "$delete": true
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/action-type.schema.json",
+  "title": "ActionType - platforma/sisteme verilebilen görev/aksiyon",
+  "description": "Uygulama türleri: native (motor eklentisi), command (sistem komutuna eşleme), composite (diğer aksiyonlardan veriyle tanımlı).",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "ActionType" },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "parameters": { "$ref": "common.schema.json#/$defs/descriptorMap" },
+        "channels": {
+          "type": "array", "items": { "type": "string" }, "uniqueItems": true,
+          "description": "Aksiyonun kilitlediği kaynak kanalları (movement, emissions...). Öncelik hakemi bunları kullanır."
+        },
+        "durative": { "type": "boolean", "description": "true: zaman alan aksiyon; false: anlık." },
+        "implementation": {
+          "oneOf": [
+            {
+              "type": "object", "required": ["type", "handler"],
+              "properties": { "type": { "const": "native" }, "handler": { "type": "string" } },
+              "additionalProperties": false
+            },
+            {
+              "type": "object", "required": ["type", "system", "command"],
+              "properties": {
+                "type": { "const": "command" },
+                "system": { "$ref": "common.schema.json#/$defs/localKey", "description": "systemRole tipindeki parametrenin adı" },
+                "command": { "type": "string" },
+                "args": { "type": "object" }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object", "required": ["type", "body"],
+              "properties": { "type": { "const": "composite" }, "body": { "$ref": "common.schema.json#/$defs/actionInvocation" } },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "ui": { "$ref": "common.schema.json#/$defs/uiHints" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

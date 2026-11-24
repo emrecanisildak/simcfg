@@ -1,0 +1,555 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/scenario.schema.json",
+  "title": "Scenario - senaryo tanımı",
+  "allOf": [
+    {
+      "$ref": "document.schema.json"
+    }
+  ],
+  "$defs": {
+    "q": {
+      "$ref": "common.schema.json#/$defs/quantity"
+    },
+    "geo": {
+      "$ref": "common.schema.json#/$defs/geoPoint"
+    },
+    "geometry": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "shape",
+            "center",
+            "radius"
+          ],
+          "properties": {
+            "shape": {
+              "const": "circle"
+            },
+            "center": {
+              "$ref": "#/$defs/geo"
+            },
+            "radius": {
+              "$ref": "#/$defs/q"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "shape",
+            "points"
+          ],
+          "properties": {
+            "shape": {
+              "const": "polygon"
+            },
+            "points": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "$ref": "#/$defs/geo"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "shape",
+            "points",
+            "width"
+          ],
+          "properties": {
+            "shape": {
+              "const": "corridor"
+            },
+            "points": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "$ref": "#/$defs/geo"
+              }
+            },
+            "width": {
+              "$ref": "#/$defs/q"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "shape",
+            "center",
+            "radius",
+            "startBearing",
+            "endBearing"
+          ],
+          "properties": {
+            "shape": {
+              "const": "sector"
+            },
+            "center": {
+              "$ref": "#/$defs/geo"
+            },
+            "radius": {
+              "$ref": "#/$defs/q"
+            },
+            "minRadius": {
+              "$ref": "#/$defs/q"
+            },
+            "startBearing": {
+              "$ref": "#/$defs/q"
+            },
+            "endBearing": {
+              "$ref": "#/$defs/q"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "shape",
+            "center",
+            "semiMajor",
+            "semiMinor"
+          ],
+          "properties": {
+            "shape": {
+              "const": "ellipse"
+            },
+            "center": {
+              "$ref": "#/$defs/geo"
+            },
+            "semiMajor": {
+              "$ref": "#/$defs/q"
+            },
+            "semiMinor": {
+              "$ref": "#/$defs/q"
+            },
+            "orientation": {
+              "$ref": "#/$defs/q"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "area": {
+      "type": "object",
+      "required": [
+        "type",
+        "geometry"
+      ],
+      "properties": {
+        "type": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "label": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "geometry": {
+          "$ref": "#/$defs/geometry"
+        },
+        "altitude": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "$ref": "#/$defs/q"
+            },
+            "max": {
+              "$ref": "#/$defs/q"
+            },
+            "reference": {
+              "enum": [
+                "MSL",
+                "AGL"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "sides": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/localKey"
+          },
+          "description": "Alanın ilişkili olduğu taraflar (boş = herkes)."
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "properties": {
+          "$ref": "common.schema.json#/$defs/valueMap"
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      },
+      "additionalProperties": false
+    },
+    "waypoint": {
+      "type": "object",
+      "required": [
+        "position"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/localKey"
+        },
+        "position": {
+          "$ref": "#/$defs/geo"
+        },
+        "altitude": {
+          "$ref": "#/$defs/q"
+        },
+        "speed": {
+          "$ref": "#/$defs/q"
+        },
+        "hold": {
+          "$ref": "#/$defs/q"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/actionInvocation"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "route": {
+      "type": "object",
+      "required": [
+        "waypoints"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "loop": {
+          "type": "boolean"
+        },
+        "waypoints": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/waypoint"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "entity": {
+      "type": "object",
+      "required": [
+        "platform",
+        "side"
+      ],
+      "properties": {
+        "platform": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "side": {
+          "$ref": "common.schema.json#/$defs/localKey"
+        },
+        "label": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "callsign": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "initial": {
+          "type": "object",
+          "properties": {
+            "position": {
+              "$ref": "#/$defs/geo"
+            },
+            "route": {
+              "$ref": "common.schema.json#/$defs/localKey"
+            },
+            "altitude": {
+              "$ref": "#/$defs/q"
+            },
+            "heading": {
+              "$ref": "#/$defs/q"
+            },
+            "speed": {
+              "$ref": "#/$defs/q"
+            },
+            "state": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        "overrides": {
+          "type": "object",
+          "description": "PlatformTemplate.spec üzerine uygulanan yama (parameters, systems, behaviors...)."
+        },
+        "plan": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/actionInvocation"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      },
+      "additionalProperties": false
+    },
+    "side": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "color": {
+          "type": "string"
+        },
+        "relations": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "friendly",
+              "neutral",
+              "hostile"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "unitInstance": {
+      "type": "object",
+      "required": [
+        "template",
+        "side",
+        "position"
+      ],
+      "properties": {
+        "template": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "side": {
+          "$ref": "common.schema.json#/$defs/localKey"
+        },
+        "label": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "callsign": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "position": {
+          "$ref": "#/$defs/geo"
+        },
+        "heading": {
+          "$ref": "#/$defs/q"
+        },
+        "initial": {
+          "type": "object",
+          "properties": {
+            "altitude": {
+              "$ref": "#/$defs/q"
+            },
+            "speed": {
+              "$ref": "#/$defs/q"
+            },
+            "state": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        "formation": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "spacing": {
+              "$ref": "#/$defs/q"
+            }
+          },
+          "additionalProperties": false
+        },
+        "allMembers": {
+          "type": "object",
+          "description": "Tüm üyelerin platform spec'ine uygulanan yama (ör. ROE)."
+        },
+        "overrides": {
+          "type": "object",
+          "description": "Üretilen varlık anahtarı -> yama (ör. 'tigers_lead')."
+        },
+        "plan": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/actionInvocation"
+          }
+        },
+        "planFor": {
+          "enum": [
+            "all",
+            "leader"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "kind": {
+      "const": "Scenario"
+    },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "duration": {
+              "$ref": "#/$defs/q"
+            },
+            "timeStep": {
+              "$ref": "#/$defs/q"
+            },
+            "seed": {
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "environment": {
+          "type": "object"
+        },
+        "sides": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "common.schema.json#/$defs/localKey"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/side"
+          }
+        },
+        "areas": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "common.schema.json#/$defs/localKey"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/area"
+          }
+        },
+        "routes": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "common.schema.json#/$defs/localKey"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/route"
+          }
+        },
+        "entities": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "common.schema.json#/$defs/localKey"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/entity"
+          }
+        },
+        "groups": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "common.schema.json#/$defs/localKey"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "members"
+            ],
+            "properties": {
+              "label": {
+                "$ref": "common.schema.json#/$defs/text"
+              },
+              "members": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "common.schema.json#/$defs/localKey"
+                }
+              },
+              "formation": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "behaviorOverrides": {
+          "type": "object",
+          "description": "Behavior id -> bu senaryodaki TÜM kullanımlarına uygulanan değişiklik. Öncelik: şablon eki < senaryo geneli < varlık seviyesi.",
+          "propertyNames": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "parameters": {
+                "$ref": "common.schema.json#/$defs/valueMap"
+              },
+              "rules": {
+                "type": "object"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "variables": {
+          "$ref": "common.schema.json#/$defs/descriptorMap"
+        },
+        "rules": {
+          "$ref": "common.schema.json#/$defs/ruleMap"
+        },
+        "units": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "common.schema.json#/$defs/localKey"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/unitInstance"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      },
+      "additionalProperties": false
+    }
+  }
+}

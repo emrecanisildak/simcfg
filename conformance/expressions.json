@@ -1,0 +1,704 @@
+{
+  "description": "simcfg ifade dili uyumluluk vektörleri. Her motor implementasyonu bu vakaların tamamını geçmelidir. context.vars tam değişken yolu -> değer; context.conds koşul id -> handler sonucu; çağrılmaması gereken koşullar 'test.must_not_be_called' (çağrılırsa test başarısız).",
+  "apiVersion": "simcfg/conformance/v1",
+  "cases": [
+    {
+      "name": "literal number",
+      "expr": 5,
+      "context": {},
+      "expected": 5
+    },
+    {
+      "name": "literal bool",
+      "expr": true,
+      "context": {},
+      "expected": true
+    },
+    {
+      "name": "var lookup",
+      "expr": {
+        "var": "self.speed"
+      },
+      "context": {
+        "vars": {
+          "self.speed": 250
+        }
+      },
+      "expected": 250
+    },
+    {
+      "name": "missing var is null",
+      "expr": {
+        "var": "self.nope"
+      },
+      "context": {},
+      "expected": null
+    },
+    {
+      "name": "param lookup",
+      "expr": {
+        "param": "chaffBurst"
+      },
+      "context": {
+        "params": {
+          "chaffBurst": 4
+        }
+      },
+      "expected": 4
+    },
+    {
+      "name": "missing param is null",
+      "expr": {
+        "param": "x"
+      },
+      "context": {},
+      "expected": null
+    },
+    {
+      "name": "eq numbers int/float",
+      "expr": {
+        "op": "eq",
+        "args": [
+          1,
+          1.0
+        ]
+      },
+      "context": {},
+      "expected": true
+    },
+    {
+      "name": "eq strings",
+      "expr": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "event.identity"
+          },
+          "hostile"
+        ]
+      },
+      "context": {
+        "vars": {
+          "event.identity": "hostile"
+        }
+      },
+      "expected": true
+    },
+    {
+      "name": "eq null null",
+      "expr": {
+        "op": "eq",
+        "args": [
+          {
+            "var": "a"
+          },
+          null
+        ]
+      },
+      "context": {},
+      "expected": true
+    },
+    {
+      "name": "ne",
+      "expr": {
+        "op": "ne",
+        "args": [
+          "hold",
+          "free"
+        ]
+      },
+      "context": {},
+      "expected": true
+    },
+    {
+      "name": "gt",
+      "expr": {
+        "op": "gt",
+        "args": [
+          {
+            "var": "self.altitude"
+          },
+          1000
+        ]
+      },
+      "context": {
+        "vars": {
+          "self.altitude": 7620
+        }
+      },
+      "expected": true
+    },
+    {
+      "name": "lt with null is false",
+      "expr": {
+        "op": "lt",
+        "args": [
+          {
+            "var": "missing"
+          },
+          5
+        ]
+      },
+      "context": {},
+      "expected": false
+    },
+    {
+      "name": "ge with string is false",
+      "expr": {
+        "op": "ge",
+        "args": [
+          "10",
+          5
+        ]
+      },
+      "context": {},
+      "expected": false
+    },
+    {
+      "name": "between inclusive",
+      "expr": {
+        "op": "between",
+        "args": [
+          5,
+          5,
+          10
+        ]
+      },
+      "context": {},
+      "expected": true
+    },
+    {
+      "name": "between outside",
+      "expr": {
+        "op": "between",
+        "args": [
+          11,
+          5,
+          10
+        ]
+      },
+      "context": {},
+      "expected": false
+    },
+    {
+      "name": "add",
+      "expr": {
+        "op": "add",
+        "args": [
+          1,
+          2,
+          3
+        ]
+      },
+      "context": {},
+      "expected": 6
+    },
+    {
+      "name": "sub",
+      "expr": {
+        "op": "sub",
+        "args": [
+          10,
+          4
+        ]
+      },
+      "context": {},
+      "expected": 6
+    },
+    {
+      "name": "mul with param",
+      "expr": {
+        "op": "mul",
+        "args": [
+          {
+            "param": "fraction"
+          },
+          {
+            "var": "self.params.fuelCapacity"
+          }
+        ]
+      },
+      "context": {
+        "params": {
+          "fraction": 0.25
+        },
+        "vars": {
+          "self.params.fuelCapacity": 4000
+        }
+      },
+      "expected": 1000.0
+    },
+    {
+      "name": "div",
+      "expr": {
+        "op": "div",
+        "args": [
+          9,
+          2
+        ]
+      },
+      "context": {},
+      "expected": 4.5
+    },
+    {
+      "name": "div by zero is null",
+      "expr": {
+        "op": "div",
+        "args": [
+          1,
+          0
+        ]
+      },
+      "context": {},
+      "expected": null
+    },
+    {
+      "name": "mod",
+      "expr": {
+        "op": "mod",
+        "args": [
+          7,
+          3
+        ]
+      },
+      "context": {},
+      "expected": 1
+    },
+    {
+      "name": "arith with null is null",
+      "expr": {
+        "op": "add",
+        "args": [
+          1,
+          {
+            "var": "missing"
+          }
+        ]
+      },
+      "context": {},
+      "expected": null
+    },
+    {
+      "name": "neg",
+      "expr": {
+        "op": "neg",
+        "args": [
+          3
+        ]
+      },
+      "context": {},
+      "expected": -3
+    },
+    {
+      "name": "abs",
+      "expr": {
+        "op": "abs",
+        "args": [
+          -3.5
+        ]
+      },
+      "context": {},
+      "expected": 3.5
+    },
+    {
+      "name": "min/max",
+      "expr": {
+        "op": "max",
+        "args": [
+          {
+            "op": "min",
+            "args": [
+              3,
+              9
+            ]
+          },
+          1
+        ]
+      },
+      "context": {},
+      "expected": 3
+    },
+    {
+      "name": "in list",
+      "expr": {
+        "op": "in",
+        "args": [
+          {
+            "var": "event.identity"
+          },
+          [
+            "friend",
+            "neutral"
+          ]
+        ]
+      },
+      "context": {
+        "vars": {
+          "event.identity": "neutral"
+        }
+      },
+      "expected": true
+    },
+    {
+      "name": "in non-list is false",
+      "expr": {
+        "op": "in",
+        "args": [
+          "a",
+          "abc"
+        ]
+      },
+      "context": {},
+      "expected": false
+    },
+    {
+      "name": "exists null",
+      "expr": {
+        "op": "exists",
+        "args": [
+          {
+            "param": "homeBase"
+          }
+        ]
+      },
+      "context": {
+        "params": {
+          "homeBase": null
+        }
+      },
+      "expected": false
+    },
+    {
+      "name": "exists value",
+      "expr": {
+        "op": "exists",
+        "args": [
+          {
+            "param": "homeBase"
+          }
+        ]
+      },
+      "context": {
+        "params": {
+          "homeBase": {
+            "lat": 1,
+            "lon": 2
+          }
+        }
+      },
+      "expected": true
+    },
+    {
+      "name": "if lazy true branch",
+      "expr": {
+        "op": "if",
+        "args": [
+          true,
+          "a",
+          {
+            "op": "div",
+            "args": [
+              1,
+              0
+            ]
+          }
+        ]
+      },
+      "context": {},
+      "expected": "a"
+    },
+    {
+      "name": "if false branch",
+      "expr": {
+        "op": "if",
+        "args": [
+          {
+            "var": "missing"
+          },
+          "a",
+          "b"
+        ]
+      },
+      "context": {},
+      "expected": "b"
+    },
+    {
+      "name": "all empty is true",
+      "expr": {
+        "all": []
+      },
+      "context": {},
+      "expected": true
+    },
+    {
+      "name": "any empty is false",
+      "expr": {
+        "any": []
+      },
+      "context": {},
+      "expected": false
+    },
+    {
+      "name": "all short circuit",
+      "expr": {
+        "all": [
+          false,
+          {
+            "cond": "test.must_not_be_called"
+          }
+        ]
+      },
+      "context": {},
+      "expected": false
+    },
+    {
+      "name": "any short circuit",
+      "expr": {
+        "any": [
+          true,
+          {
+            "cond": "test.must_not_be_called"
+          }
+        ]
+      },
+      "context": {},
+      "expected": true
+    },
+    {
+      "name": "not",
+      "expr": {
+        "not": {
+          "var": "missing"
+        }
+      },
+      "context": {},
+      "expected": true
+    },
+    {
+      "name": "truthiness number",
+      "expr": {
+        "all": [
+          1,
+          "x",
+          [
+            0
+          ]
+        ]
+      },
+      "context": {},
+      "expected": true
+    },
+    {
+      "name": "truthiness zero/empty",
+      "expr": {
+        "any": [
+          0,
+          "",
+          []
+        ]
+      },
+      "context": {},
+      "expected": false
+    },
+    {
+      "name": "cond returns handler result",
+      "expr": {
+        "cond": "test.true"
+      },
+      "context": {
+        "conds": {
+          "test.true": true
+        }
+      },
+      "expected": true
+    },
+    {
+      "name": "cond result coerced to boolean",
+      "expr": {
+        "cond": "test.number"
+      },
+      "context": {
+        "conds": {
+          "test.number": 3
+        }
+      },
+      "expected": true
+    },
+    {
+      "name": "cond params evaluated in context",
+      "expr": {
+        "cond": "test.echo",
+        "params": {
+          "n": {
+            "param": "k"
+          }
+        }
+      },
+      "context": {
+        "params": {
+          "k": 7
+        },
+        "conds": {
+          "test.echo": true
+        },
+        "expectCondCalls": [
+          [
+            "test.echo",
+            {
+              "n": 7
+            }
+          ]
+        ]
+      },
+      "expected": true
+    },
+    {
+      "name": "nested realistic",
+      "expr": {
+        "all": [
+          {
+            "op": "ne",
+            "args": [
+              {
+                "param": "roe"
+              },
+              "hold"
+            ]
+          },
+          {
+            "any": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "event.identity"
+                  },
+                  "hostile"
+                ]
+              },
+              {
+                "all": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "param": "roe"
+                      },
+                      "free"
+                    ]
+                  },
+                  {
+                    "not": {
+                      "op": "in",
+                      "args": [
+                        {
+                          "var": "event.identity"
+                        },
+                        [
+                          "friend",
+                          "neutral"
+                        ]
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "context": {
+        "params": {
+          "roe": "free"
+        },
+        "vars": {
+          "event.identity": "unknown"
+        }
+      },
+      "expected": true
+    },
+    {
+      "name": "nested realistic tight unknown",
+      "expr": {
+        "all": [
+          {
+            "op": "ne",
+            "args": [
+              {
+                "param": "roe"
+              },
+              "hold"
+            ]
+          },
+          {
+            "any": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "event.identity"
+                  },
+                  "hostile"
+                ]
+              },
+              {
+                "all": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "param": "roe"
+                      },
+                      "free"
+                    ]
+                  },
+                  {
+                    "not": {
+                      "op": "in",
+                      "args": [
+                        {
+                          "var": "event.identity"
+                        },
+                        [
+                          "friend",
+                          "neutral"
+                        ]
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "context": {
+        "params": {
+          "roe": "tight"
+        },
+        "vars": {
+          "event.identity": "unknown"
+        }
+      },
+      "expected": false
+    },
+    {
+      "name": "literal object with nested expr",
+      "expr": {
+        "lat": {
+          "var": "p.lat"
+        },
+        "lon": 2
+      },
+      "context": {
+        "vars": {
+          "p.lat": 1
+        }
+      },
+      "expected": {
+        "lat": 1,
+        "lon": 2
+      }
+    }
+  ]
+}

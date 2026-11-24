@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../schemas/v1/behavior.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "Behavior",
+  "id": "demo.behavior.aggressive_self_defense",
+  "extends": "core.behavior.air.self_defense",
+  "version": "0.1.0",
+  "meta": { "name": { "tr": "Agresif öz savunma", "en": "Aggressive self defense" }, "description": { "tr": "Kural tabanlı davranış türetme örneği." } },
+  "spec": {
+    "parameters": {
+      "chaffBurst": { "default": 6 },
+      "jinkG":      { "type": "number", "unit": "g", "default": 5, "min": 1, "max": 9 }
+    },
+    "rules": {
+      "chaff_on_lock": { "priority": 85, "cooldown": "2 s" },
+      "magazine_empty": { "$delete": true },
+      "jink_on_track": {
+        "label": { "tr": "Takipte jink + arka chaff", "en": "Jink when tracked" },
+        "priority": 60,
+        "trigger": { "event": "core.event.rwr.new_threat", "filter": { "op": "eq", "args": [ { "var": "event.threatLevel" }, "track" ] } },
+        "condition": { "cond": "core.cond.random", "params": { "probability": 0.7 } },
+        "actions": [
+          { "action": "demo.action.defensive_reaction", "params": { "chaffSystem": "chaff", "threatBearing": { "var": "event.bearing" }, "g": { "param": "jinkG" } } }
+        ],
+        "cooldown": "10 s"
+      }
+    }
+  }
+}

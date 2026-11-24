@@ -1,0 +1,62 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_sam_site",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic SAM site",
+      "tags": [
+        "generic",
+        "air-defense"
+      ]
+    },
+    "spec": {
+      "platformType": "core.platformtype.wheeled_vehicle",
+      "parameters": {
+        "mass": "30 t",
+        "length": 12,
+        "maxSpeed": "60 km/h",
+        "setupTime": "5 min",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              180
+            ]
+          ],
+          "values": [
+            20,
+            20
+          ]
+        }
+      },
+      "systems": {
+        "search_radar": {
+          "template": "core.system.radar.generic_search"
+        },
+        "iff": {
+          "template": "core.system.iff.generic_combined"
+        },
+        "launcher": {
+          "template": "core.system.weapon.generic_sam_launcher"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        }
+      },
+      "behaviors": {
+        "air_defense": {
+          "behavior": "core.behavior.ground.sam_site",
+          "bindings": {
+            "radar": "search_radar"
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SHGPUCD---*****",
+        "model": "generic/sam_site"
+      }
+    }
+  }
+]

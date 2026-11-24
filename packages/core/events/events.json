@@ -1,0 +1,419 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.scenario.started",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Scenario started"
+    },
+    "spec": {
+      "source": "scenario",
+      "payload": {}
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.platform.waypoint_reached",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Waypoint reached"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {
+        "route": {
+          "type": "routeRef"
+        },
+        "waypoint": {
+          "type": "integer"
+        },
+        "waypointId": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.platform.route_completed",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Route completed"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {
+        "route": {
+          "type": "routeRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.platform.area_entered",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Area entered"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {
+        "area": {
+          "type": "areaRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.platform.area_exited",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Area exited"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {
+        "area": {
+          "type": "areaRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.platform.destroyed",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Platform destroyed"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {
+        "by": {
+          "type": "entityRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.system.failed",
+    "version": "1.0.0",
+    "meta": {
+      "name": "System failed"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.sensor.detection",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Sensor detection"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "target": {
+          "type": "entityRef"
+        },
+        "range": {
+          "type": "number",
+          "unit": "m"
+        },
+        "bearing": {
+          "type": "number",
+          "unit": "deg"
+        },
+        "elevation": {
+          "type": "number",
+          "unit": "deg"
+        },
+        "identity": {
+          "type": "enum",
+          "values": [
+            "unknown",
+            "friend",
+            "neutral",
+            "hostile"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.sensor.track_lost",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Track lost"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "target": {
+          "type": "entityRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.rwr.new_threat",
+    "version": "1.0.0",
+    "meta": {
+      "name": "RWR: new threat"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "emitter": {
+          "type": "string"
+        },
+        "source": {
+          "type": "entityRef"
+        },
+        "bearing": {
+          "type": "number",
+          "unit": "deg"
+        },
+        "threatLevel": {
+          "type": "enum",
+          "enumRef": "core.enum.threat_level"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.rwr.lock",
+    "version": "1.0.0",
+    "meta": {
+      "name": "RWR: radar lock"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "emitter": {
+          "type": "string"
+        },
+        "source": {
+          "type": "entityRef"
+        },
+        "bearing": {
+          "type": "number",
+          "unit": "deg"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.rwr.missile_launch",
+    "version": "1.0.0",
+    "meta": {
+      "name": "RWR: missile launch"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "source": {
+          "type": "entityRef"
+        },
+        "bearing": {
+          "type": "number",
+          "unit": "deg"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.rwr.threat_lost",
+    "version": "1.0.0",
+    "meta": {
+      "name": "RWR: threat lost"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "emitter": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.cm.dispensed",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Countermeasure dispensed"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "count": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.cm.empty",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Countermeasure magazine empty"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.iff.reply",
+    "version": "1.0.0",
+    "meta": {
+      "name": "IFF reply received"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "target": {
+          "type": "entityRef"
+        },
+        "mode": {
+          "type": "enum",
+          "enumRef": "core.enum.iff_mode"
+        },
+        "code": {
+          "type": "string"
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.weapon.launched",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Weapon launched"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "munition": {
+          "type": "string"
+        },
+        "target": {
+          "type": "entityRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.weapon.impact",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Weapon impact / miss"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "munition": {
+          "type": "string"
+        },
+        "target": {
+          "type": "entityRef"
+        },
+        "hit": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.weapon.out_of_ammo",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Out of ammunition"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        }
+      }
+    }
+  }
+]

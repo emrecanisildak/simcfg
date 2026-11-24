@@ -1,0 +1,102 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_srm",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic short-range IR AAM"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.guided_missile",
+      "parameters": {
+        "mass": "85 kg",
+        "guidance": "ir",
+        "minRange": "300 m",
+        "maxRange": "18 km",
+        "speed": "900 m/s",
+        "maxFlightTime": "40 s",
+        "maxG": 40,
+        "seekerFov": 90,
+        "pk": 0.75,
+        "launchWarning": false,
+        "cmSusceptibility": {
+          "flare": 0.35
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_mrm",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic medium-range ARH AAM"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.guided_missile",
+      "parameters": {
+        "mass": "150 kg",
+        "guidance": "arh",
+        "minRange": "1 km",
+        "maxRange": "80 km",
+        "speed": "1100 m/s",
+        "maxFlightTime": "90 s",
+        "maxG": 30,
+        "seekerRange": "15 km",
+        "pk": 0.65,
+        "cmSusceptibility": {
+          "chaff": 0.2
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_sam_mr",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic medium-range SAM"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.guided_missile",
+      "parameters": {
+        "mass": "700 kg",
+        "guidance": "sarh",
+        "minRange": "3 km",
+        "maxRange": "45 km",
+        "speed": "1000 m/s",
+        "maxFlightTime": "70 s",
+        "maxG": 25,
+        "lethalRadius": "20 m",
+        "pk": 0.7,
+        "cmSusceptibility": {
+          "chaff": 0.25
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_gun_20mm",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic 20 mm gun round"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "0.1 kg",
+        "maxRange": "2 km",
+        "speed": "1000 m/s",
+        "maxFlightTime": "3 s",
+        "lethalRadius": "1 m",
+        "pk": 0.05,
+        "launchWarning": false
+      }
+    }
+  }
+]

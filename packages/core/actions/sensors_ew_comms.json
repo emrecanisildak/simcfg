@@ -1,0 +1,303 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.point_sensor",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Sensörü yönlendir / takip",
+        "en": "Point sensor"
+      }
+    },
+    "spec": {
+      "category": "sensor",
+      "channels": [],
+      "durative": false,
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.eo_ir"
+          }
+        },
+        "target": {
+          "type": "entityRef",
+          "nullable": true,
+          "default": null
+        },
+        "position": {
+          "type": "geoPoint",
+          "nullable": true,
+          "default": null
+        },
+        "track": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "system",
+        "command": "pointAt",
+        "args": {
+          "target": {
+            "param": "target"
+          },
+          "position": {
+            "param": "position"
+          },
+          "track": {
+            "param": "track"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.designate_target",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Lazerle işaretle",
+        "en": "Designate target"
+      }
+    },
+    "spec": {
+      "category": "targeting",
+      "channels": [
+        "designator"
+      ],
+      "durative": true,
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.laser_designator"
+          }
+        },
+        "target": {
+          "type": "entityRef",
+          "required": true
+        },
+        "code": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "duration": {
+          "type": "number",
+          "unit": "s",
+          "nullable": true,
+          "default": null,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "system",
+        "command": "designate",
+        "args": {
+          "target": {
+            "param": "target"
+          },
+          "code": {
+            "param": "code"
+          },
+          "duration": {
+            "param": "duration"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.stop_designating",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "İşaretlemeyi bırak",
+        "en": "Stop designating"
+      }
+    },
+    "spec": {
+      "category": "targeting",
+      "channels": [
+        "designator"
+      ],
+      "durative": false,
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.laser_designator"
+          }
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "system",
+        "command": "stopDesignating",
+        "args": {}
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.start_jamming",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Karıştırmaya başla",
+        "en": "Start jamming"
+      }
+    },
+    "spec": {
+      "category": "ew",
+      "channels": [
+        "jamming"
+      ],
+      "durative": false,
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.jammer"
+          }
+        },
+        "target": {
+          "type": "entityRef",
+          "nullable": true,
+          "default": null
+        },
+        "bearing": {
+          "type": "number",
+          "unit": "deg",
+          "nullable": true,
+          "default": null
+        },
+        "technique": {
+          "type": "enum",
+          "enumRef": "core.enum.jamming_technique",
+          "nullable": true,
+          "default": null
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "system",
+        "command": "startJamming",
+        "args": {
+          "target": {
+            "param": "target"
+          },
+          "bearing": {
+            "param": "bearing"
+          },
+          "technique": {
+            "param": "technique"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.stop_jamming",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Karıştırmayı durdur",
+        "en": "Stop jamming"
+      }
+    },
+    "spec": {
+      "category": "ew",
+      "channels": [
+        "jamming"
+      ],
+      "durative": false,
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.jammer"
+          }
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "system",
+        "command": "stopJamming",
+        "args": {}
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.send_message",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Mesaj gönder",
+        "en": "Send message"
+      }
+    },
+    "spec": {
+      "category": "comms",
+      "channels": [],
+      "durative": false,
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.radio"
+          }
+        },
+        "to": {
+          "type": "entityRef",
+          "nullable": true,
+          "default": null
+        },
+        "message": {
+          "type": "string",
+          "required": true
+        },
+        "priority": {
+          "type": "enum",
+          "enumRef": "core.enum.message_priority",
+          "default": "routine"
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "system",
+        "command": "sendMessage",
+        "args": {
+          "to": {
+            "param": "to"
+          },
+          "message": {
+            "param": "message"
+          },
+          "priority": {
+            "param": "priority"
+          }
+        }
+      }
+    }
+  }
+]

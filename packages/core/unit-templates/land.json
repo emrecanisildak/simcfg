@@ -1,0 +1,281 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "UnitTemplate",
+    "id": "core.unit.infantry_fire_team",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Piyade ateş timi",
+        "en": "Infantry fire team"
+      }
+    },
+    "spec": {
+      "echelon": "fire_team",
+      "domain": "land",
+      "symbol": "SFGPUCI---*A***",
+      "formation": {
+        "type": "wedge",
+        "spacing": "10 m"
+      },
+      "members": {
+        "leader": {
+          "platform": "core.platform.life.generic_squad_leader",
+          "count": 1,
+          "role": "team leader",
+          "leader": true
+        },
+        "rifleman": {
+          "platform": "core.platform.life.generic_rifleman",
+          "count": 1,
+          "role": "rifleman"
+        },
+        "gunner": {
+          "platform": "core.platform.life.generic_machine_gunner",
+          "count": 1,
+          "role": "automatic rifleman"
+        },
+        "at": {
+          "platform": "core.platform.life.generic_at_gunner",
+          "count": 1,
+          "role": "anti-armor"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "UnitTemplate",
+    "id": "core.unit.infantry_squad",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Piyade mangası",
+        "en": "Infantry squad"
+      }
+    },
+    "spec": {
+      "echelon": "squad",
+      "domain": "land",
+      "symbol": "SFGPUCI---*B***",
+      "formation": {
+        "type": "line",
+        "spacing": "25 m"
+      },
+      "members": {
+        "leader": {
+          "platform": "core.platform.life.generic_squad_leader",
+          "count": 1,
+          "role": "squad leader",
+          "leader": true
+        }
+      },
+      "subunits": {
+        "alpha": {
+          "unit": "core.unit.infantry_fire_team",
+          "count": 1
+        },
+        "bravo": {
+          "unit": "core.unit.infantry_fire_team",
+          "count": 1
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "UnitTemplate",
+    "id": "core.unit.mech_infantry_platoon",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Mekanize piyade takımı",
+        "en": "Mechanized infantry platoon"
+      }
+    },
+    "spec": {
+      "echelon": "platoon",
+      "domain": "land",
+      "symbol": "SFGPUCIZ--*D***",
+      "formation": {
+        "type": "column",
+        "spacing": "60 m"
+      },
+      "members": {
+        "ifv": {
+          "platform": "core.platform.land.generic_ifv",
+          "count": 3,
+          "role": "carrier"
+        }
+      },
+      "subunits": {
+        "squad": {
+          "unit": "core.unit.infantry_squad",
+          "count": 3
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "UnitTemplate",
+    "id": "core.unit.tank_platoon",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Tank takımı",
+        "en": "Tank platoon"
+      }
+    },
+    "spec": {
+      "echelon": "platoon",
+      "domain": "land",
+      "symbol": "SFGPUCA---*D***",
+      "formation": {
+        "type": "wedge",
+        "spacing": "100 m"
+      },
+      "members": {
+        "lead": {
+          "platform": "core.platform.land.generic_mbt",
+          "count": 1,
+          "role": "platoon leader",
+          "leader": true
+        },
+        "wing": {
+          "platform": "core.platform.land.generic_mbt",
+          "count": 3,
+          "role": "wingman"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "UnitTemplate",
+    "id": "core.unit.air_defense_battery",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Hava savunma bataryası",
+        "en": "Air defense battery"
+      }
+    },
+    "spec": {
+      "echelon": "battery",
+      "domain": "land",
+      "symbol": "SHGPUCD---*E***",
+      "formation": {
+        "type": "spread",
+        "spacing": "600 m"
+      },
+      "members": {
+        "fcp": {
+          "platform": "core.platform.land.generic_lr_sam_site",
+          "count": 1,
+          "role": "fire unit",
+          "leader": true
+        },
+        "shorad": {
+          "platform": "core.platform.land.generic_shorad_vehicle",
+          "count": 2,
+          "role": "point defense"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "UnitTemplate",
+    "id": "core.unit.manpads_team",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "MANPADS timi",
+        "en": "MANPADS team"
+      }
+    },
+    "spec": {
+      "echelon": "fire_team",
+      "domain": "land",
+      "symbol": "SFGPUCDM--*A***",
+      "formation": {
+        "type": "line",
+        "spacing": "5 m"
+      },
+      "members": {
+        "leader": {
+          "platform": "core.platform.life.generic_squad_leader",
+          "count": 1,
+          "role": "team leader",
+          "leader": true
+        },
+        "gunner": {
+          "platform": "core.platform.life.generic_manpads_gunner",
+          "count": 1,
+          "role": "gunner"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "UnitTemplate",
+    "id": "core.unit.artillery_battery",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Topçu bataryası",
+        "en": "Artillery battery"
+      }
+    },
+    "spec": {
+      "echelon": "battery",
+      "domain": "land",
+      "symbol": "SFGPUCF---*E***",
+      "formation": {
+        "type": "line",
+        "spacing": "150 m"
+      },
+      "members": {
+        "gun": {
+          "platform": "core.platform.land.generic_sp_howitzer",
+          "count": 4,
+          "role": "gun"
+        },
+        "ammo": {
+          "platform": "core.platform.land.generic_logistics_truck",
+          "count": 2,
+          "role": "ammunition"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "UnitTemplate",
+    "id": "core.unit.civilian_crowd",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Sivil kalabalık",
+        "en": "Civilian crowd"
+      }
+    },
+    "spec": {
+      "echelon": "group",
+      "domain": "land",
+      "formation": {
+        "type": "spread",
+        "spacing": "4 m"
+      },
+      "members": {
+        "person": {
+          "platform": "core.platform.life.generic_civilian",
+          "count": 12,
+          "role": "civilian"
+        }
+      }
+    }
+  }
+]

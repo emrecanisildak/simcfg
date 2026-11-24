@@ -1,0 +1,501 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.tank_main_gun_120",
+    "version": "1.0.0",
+    "meta": {
+      "name": "120 mm tank main gun"
+    },
+    "spec": {
+      "systemType": "core.systemtype.gun_mount",
+      "parameters": {
+        "loadout": {
+          "apfsds": {
+            "munition": "core.munition.generic_120mm_apfsds",
+            "count": 22
+          },
+          "heat": {
+            "munition": "core.munition.generic_120mm_heat",
+            "count": 18
+          }
+        },
+        "minLaunchInterval": "6 s",
+        "traverseRate": 40
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.coax_mg_762",
+    "version": "1.0.0",
+    "meta": {
+      "name": "7.62 mm coaxial MG"
+    },
+    "spec": {
+      "systemType": "core.systemtype.gun_mount",
+      "parameters": {
+        "loadout": {
+          "belt": {
+            "munition": "core.munition.generic_762_mg",
+            "count": 3000
+          }
+        },
+        "minLaunchInterval": "0.1 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.rws_mg_762",
+    "version": "1.0.0",
+    "meta": {
+      "name": "7.62 mm remote weapon station"
+    },
+    "spec": {
+      "systemType": "core.systemtype.gun_mount",
+      "parameters": {
+        "loadout": {
+          "belt": {
+            "munition": "core.munition.generic_762_mg",
+            "count": 1000
+          }
+        },
+        "minLaunchInterval": "0.1 s",
+        "elevationMax": 60
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.ifv_autocannon_30",
+    "version": "1.0.0",
+    "meta": {
+      "name": "30 mm IFV autocannon"
+    },
+    "spec": {
+      "systemType": "core.systemtype.gun_mount",
+      "parameters": {
+        "loadout": {
+          "ap": {
+            "munition": "core.munition.generic_30mm_ap",
+            "count": 400
+          }
+        },
+        "minLaunchInterval": "0.2 s",
+        "elevationMax": 60
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.ifv_atgm_launcher",
+    "version": "1.0.0",
+    "meta": {
+      "name": "IFV ATGM launcher"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "atgm": {
+            "munition": "core.munition.generic_atgm",
+            "count": 4
+          }
+        },
+        "minLaunchInterval": "10 s",
+        "reloadTime": "60 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.heli_gun_30",
+    "version": "1.0.0",
+    "meta": {
+      "name": "30 mm helicopter chin gun"
+    },
+    "spec": {
+      "systemType": "core.systemtype.gun_mount",
+      "parameters": {
+        "loadout": {
+          "ap": {
+            "munition": "core.munition.generic_30mm_ap",
+            "count": 300
+          }
+        },
+        "minLaunchInterval": "0.1 s",
+        "elevationMin": -60,
+        "elevationMax": 10
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.heli_hardpoints",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Attack helicopter hardpoints"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "atgm": {
+            "munition": "core.munition.generic_heli_atgm",
+            "count": 8
+          },
+          "rockets": {
+            "munition": "core.munition.generic_70mm_rocket",
+            "count": 38
+          }
+        },
+        "maxSimultaneousEngagements": 2
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.uav_hardpoints",
+    "version": "1.0.0",
+    "meta": {
+      "name": "MALE UAV hardpoints"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "agm": {
+            "munition": "core.munition.generic_agm_laser",
+            "count": 4
+          },
+          "lgb": {
+            "munition": "core.munition.generic_lgb",
+            "count": 2
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.attack_aircraft_stores",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Attack aircraft stores"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "lgb": {
+            "munition": "core.munition.generic_lgb",
+            "count": 4
+          },
+          "gps": {
+            "munition": "core.munition.generic_gps_bomb",
+            "count": 2
+          },
+          "srm": {
+            "munition": "core.munition.generic_srm",
+            "count": 2
+          },
+          "gun": {
+            "munition": "core.munition.generic_gun_20mm",
+            "count": 500
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.lr_sam_launcher",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Long-range SAM launcher"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "ready": {
+            "munition": "core.munition.generic_lr_sam",
+            "count": 4
+          }
+        },
+        "maxSimultaneousEngagements": 4,
+        "reloadTime": "20 min",
+        "minLaunchInterval": "3 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.shorad_launcher",
+    "version": "1.0.0",
+    "meta": {
+      "name": "SHORAD missile launcher"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "ready": {
+            "munition": "core.munition.generic_shorad_missile",
+            "count": 8
+          }
+        },
+        "maxSimultaneousEngagements": 2,
+        "minLaunchInterval": "2 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.aaa_35_twin",
+    "version": "1.0.0",
+    "meta": {
+      "name": "35 mm twin AAA"
+    },
+    "spec": {
+      "systemType": "core.systemtype.gun_mount",
+      "parameters": {
+        "loadout": {
+          "ahead": {
+            "munition": "core.munition.generic_35mm_ahead",
+            "count": 500
+          }
+        },
+        "minLaunchInterval": "0.05 s",
+        "elevationMax": 85,
+        "traverseRate": 100
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.manpads_launcher",
+    "version": "1.0.0",
+    "meta": {
+      "name": "MANPADS launcher"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "tube": {
+            "munition": "core.munition.generic_manpads",
+            "count": 2
+          }
+        },
+        "reloadTime": "30 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.rifle_556",
+    "version": "1.0.0",
+    "meta": {
+      "name": "5.56 mm assault rifle"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "mag": {
+            "munition": "core.munition.generic_556_rifle",
+            "count": 210
+          }
+        },
+        "minLaunchInterval": "0.1 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.lmg_762",
+    "version": "1.0.0",
+    "meta": {
+      "name": "7.62 mm light machine gun"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "belt": {
+            "munition": "core.munition.generic_762_mg",
+            "count": 600
+          }
+        },
+        "minLaunchInterval": "0.1 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.rpg_launcher",
+    "version": "1.0.0",
+    "meta": {
+      "name": "RPG launcher"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "rockets": {
+            "munition": "core.munition.generic_rpg",
+            "count": 4
+          }
+        },
+        "reloadTime": "6 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.mortar_81",
+    "version": "1.0.0",
+    "meta": {
+      "name": "81 mm mortar"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "he": {
+            "munition": "core.munition.generic_81mm_mortar",
+            "count": 40
+          }
+        },
+        "minLaunchInterval": "4 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.howitzer_155",
+    "version": "1.0.0",
+    "meta": {
+      "name": "155 mm howitzer"
+    },
+    "spec": {
+      "systemType": "core.systemtype.gun_mount",
+      "parameters": {
+        "loadout": {
+          "he": {
+            "munition": "core.munition.generic_155mm_he",
+            "count": 40
+          }
+        },
+        "minLaunchInterval": "10 s",
+        "elevationMax": 70,
+        "traverseRate": 10
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.naval_gun_76",
+    "version": "1.0.0",
+    "meta": {
+      "name": "76 mm naval gun"
+    },
+    "spec": {
+      "systemType": "core.systemtype.gun_mount",
+      "parameters": {
+        "loadout": {
+          "he": {
+            "munition": "core.munition.generic_76mm_naval",
+            "count": 80
+          }
+        },
+        "minLaunchInterval": "0.5 s",
+        "elevationMax": 85
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.naval_sam_vls",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Naval SAM VLS"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "vls": {
+            "munition": "core.munition.generic_sam_mr",
+            "count": 16
+          }
+        },
+        "maxSimultaneousEngagements": 4,
+        "minLaunchInterval": "2 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.boat_gun_30",
+    "version": "1.0.0",
+    "meta": {
+      "name": "30 mm boat gun"
+    },
+    "spec": {
+      "systemType": "core.systemtype.gun_mount",
+      "parameters": {
+        "loadout": {
+          "ap": {
+            "munition": "core.munition.generic_30mm_ap",
+            "count": 300
+          }
+        },
+        "minLaunchInterval": "0.2 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.door_gun_762",
+    "version": "1.0.0",
+    "meta": {
+      "name": "7.62 mm door gun"
+    },
+    "spec": {
+      "systemType": "core.systemtype.gun_mount",
+      "parameters": {
+        "loadout": {
+          "belt": {
+            "munition": "core.munition.generic_762_mg",
+            "count": 2000
+          }
+        },
+        "minLaunchInterval": "0.1 s"
+      }
+    }
+  }
+]

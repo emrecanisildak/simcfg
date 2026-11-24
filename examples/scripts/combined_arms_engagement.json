@@ -1,0 +1,140 @@
+{
+  "description": "Müşterek harekât: MANPADS helikopteri hedefler (RWR görmez, MAWS görür) -> flare+kırılma; helikopter pop-up ATGM ile piyadeyi vurur -> piyade siper alır, siviller kaçar; tank angajmanı; LWR -> sis; İHA bağlantı kaybı; LZ'de asker indirme; dolanan mühimmat; ATC; topçu.",
+  "scenario": "demo.scenario.combined_arms",
+  "step": 10,
+  "until": 610,
+  "events": [
+    {
+      "t": 1,
+      "set": {
+        "entity": "blue_attack_lead",
+        "path": "state.position",
+        "value": {
+          "lat": 39.68,
+          "lon": 27.315
+        }
+      }
+    },
+    {
+      "t": 1,
+      "set": {
+        "entity": "blue_attack_wing",
+        "path": "state.position",
+        "value": {
+          "lat": 39.678,
+          "lon": 27.318
+        }
+      }
+    },
+    {
+      "t": 2,
+      "entity": "red_manpads_gunner",
+      "event": "core.event.sensor.detection",
+      "payload": {
+        "system": "eyes",
+        "target": "blue_attack_lead",
+        "identity": "hostile",
+        "range": 1700
+      }
+    },
+    {
+      "t": 3,
+      "complete": {
+        "entity": "blue_attack_lead",
+        "channel": "movement"
+      }
+    },
+    {
+      "t": 4,
+      "entity": "blue_attack_lead",
+      "event": "core.event.sensor.detection",
+      "payload": {
+        "system": "eo",
+        "target": "red_squad_leader",
+        "identity": "hostile",
+        "range": 3700
+      }
+    },
+    {
+      "t": 8,
+      "set": {
+        "entity": "blue_tanks_lead",
+        "path": "state.position",
+        "value": {
+          "lat": 39.685,
+          "lon": 27.32
+        }
+      }
+    },
+    {
+      "t": 9,
+      "entity": "blue_tanks_lead",
+      "event": "core.event.sensor.detection",
+      "payload": {
+        "system": "sight",
+        "target": "red_squad_alpha_gunner",
+        "identity": "hostile",
+        "range": 2800
+      }
+    },
+    {
+      "t": 10,
+      "entity": "blue_tanks_wing_1",
+      "event": "core.event.lwr.laser_warning",
+      "payload": {
+        "system": "lwr",
+        "laserType": "rangefinder",
+        "bearing": 40,
+        "source": "red_squad_alpha_at"
+      }
+    },
+    {
+      "t": 12,
+      "entity": "blue_uav",
+      "event": "core.event.datalink.lost",
+      "payload": {
+        "system": "c2"
+      }
+    },
+    {
+      "t": 14,
+      "entity": "blue_uav",
+      "event": "core.event.datalink.restored",
+      "payload": {
+        "system": "c2"
+      }
+    },
+    {
+      "t": 15,
+      "entity": "blue_lift",
+      "event": "core.event.platform.waypoint_reached",
+      "payload": {
+        "route": "helo_ingress",
+        "waypoint": 2,
+        "waypointId": "lz"
+      }
+    },
+    {
+      "t": 18,
+      "set": {
+        "entity": "blue_tanks_wing_2",
+        "path": "state.position",
+        "value": {
+          "lat": 39.66,
+          "lon": 27.3
+        }
+      }
+    },
+    {
+      "t": 19,
+      "entity": "red_lm",
+      "event": "core.event.sensor.detection",
+      "payload": {
+        "system": "seeker",
+        "target": "blue_tanks_wing_2",
+        "identity": "hostile",
+        "range": 1200
+      }
+    }
+  ]
+}

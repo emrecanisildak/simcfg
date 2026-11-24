@@ -1,0 +1,307 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.uav.generic_male_uav",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic MALE UAV (ISR / strike)"
+    },
+    "spec": {
+      "platformType": "core.platformtype.uav",
+      "parameters": {
+        "mass": "4.5 t",
+        "length": 11,
+        "maxSpeed": "400 km/h",
+        "minSpeed": "120 km/h",
+        "cruiseSpeed": "300 km/h",
+        "ceiling": "15000 m",
+        "fuelCapacity": "1.3 t",
+        "fuelFlowCruise": "0.02 kg/s",
+        "maxG": 2.5,
+        "controlRange": "250 km",
+        "endurance": "24 h",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              90,
+              180
+            ]
+          ],
+          "values": [
+            1,
+            3,
+            1
+          ]
+        },
+        "irSignature": "500 W/sr"
+      },
+      "systems": {
+        "iff": {
+          "template": "core.system.iff.generic_combined"
+        },
+        "eo": {
+          "template": "core.system.eo.generic_uav_ball"
+        },
+        "designator": {
+          "template": "core.system.laser.generic_pod_designator"
+        },
+        "c2": {
+          "template": "core.system.comms.generic_uav_c2_link"
+        },
+        "satcom": {
+          "template": "core.system.comms.generic_satcom_link"
+        },
+        "nav": {
+          "template": "core.system.nav.generic_gnss_ins"
+        },
+        "weapons": {
+          "template": "core.system.weapon.uav_hardpoints"
+        }
+      },
+      "behaviors": {
+        "isr": {
+          "behavior": "core.behavior.uav.isr_orbit",
+          "bindings": {
+            "sensor": "eo",
+            "radio": "satcom"
+          }
+        },
+        "lost_link": {
+          "behavior": "core.behavior.uav.lost_link",
+          "bindings": {
+            "link": "c2"
+          }
+        },
+        "engage": {
+          "behavior": "core.behavior.air.engage_hostiles",
+          "parameters": {
+            "roe": "hold"
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPMFQ---*****",
+        "model": "generic/male_uav"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.uav.generic_tactical_uav",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic tactical UAV"
+    },
+    "spec": {
+      "platformType": "core.platformtype.uav",
+      "parameters": {
+        "mass": "200 kg",
+        "length": 4,
+        "maxSpeed": "200 km/h",
+        "minSpeed": "80 km/h",
+        "cruiseSpeed": "130 km/h",
+        "ceiling": "5000 m",
+        "fuelCapacity": "40 kg",
+        "fuelFlowCruise": "0.002 kg/s",
+        "maxG": 3,
+        "controlRange": "120 km",
+        "endurance": "8 h",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              180
+            ]
+          ],
+          "values": [
+            0.3,
+            0.3
+          ]
+        },
+        "irSignature": "50 W/sr"
+      },
+      "systems": {
+        "eo": {
+          "template": "core.system.eo.generic_uav_ball",
+          "parameters": {
+            "maxRange": "15 km"
+          }
+        },
+        "c2": {
+          "template": "core.system.comms.generic_uav_c2_link"
+        },
+        "nav": {
+          "template": "core.system.nav.generic_gnss_ins"
+        }
+      },
+      "behaviors": {
+        "isr": {
+          "behavior": "core.behavior.uav.isr_orbit",
+          "bindings": {
+            "sensor": "eo",
+            "radio": "c2"
+          }
+        },
+        "lost_link": {
+          "behavior": "core.behavior.uav.lost_link"
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPMFQ---*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.uav.generic_quadcopter",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic quadcopter (ISR)"
+    },
+    "spec": {
+      "platformType": "core.platformtype.multirotor",
+      "parameters": {
+        "mass": "5 kg",
+        "length": 0.6,
+        "maxSpeed": "20 m/s",
+        "cruiseSpeed": "12 m/s",
+        "maxAltitude": "500 m",
+        "endurance": "40 min",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              180
+            ]
+          ],
+          "values": [
+            0.01,
+            0.01
+          ]
+        },
+        "irSignature": "5 W/sr"
+      },
+      "systems": {
+        "camera": {
+          "template": "core.system.eo.generic_small_drone_camera"
+        },
+        "link": {
+          "template": "core.system.comms.generic_drone_link"
+        }
+      },
+      "behaviors": {
+        "isr": {
+          "behavior": "core.behavior.uav.isr_orbit",
+          "parameters": {
+            "orbitRadius": "300 m",
+            "orbitAltitude": "120 m"
+          }
+        },
+        "lost_link": {
+          "behavior": "core.behavior.uav.lost_link"
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPMFQ---*****",
+        "model": "generic/quadcopter"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.uav.generic_commercial_drone",
+    "extends": "core.platform.uav.generic_quadcopter",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic commercial drone (civil)"
+    },
+    "spec": {
+      "behaviors": {
+        "isr": {
+          "enabled": false
+        }
+      },
+      "appearance": {
+        "sidc": "SNAPCF----*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.uav.generic_loitering_munition",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic loitering munition"
+    },
+    "spec": {
+      "platformType": "core.platformtype.loitering_munition",
+      "parameters": {
+        "mass": "15 kg",
+        "length": 1.5,
+        "maxSpeed": "185 km/h",
+        "minSpeed": "70 km/h",
+        "cruiseSpeed": "110 km/h",
+        "ceiling": "4500 m",
+        "fuelCapacity": "3 kg",
+        "fuelFlowCruise": "0.001 kg/s",
+        "maxG": 4,
+        "controlRange": "40 km",
+        "endurance": "1 h",
+        "warheadMass": "3 kg",
+        "lethalRadius": "8 m",
+        "penetration": "200 mm",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              180
+            ]
+          ],
+          "values": [
+            0.05,
+            0.05
+          ]
+        },
+        "irSignature": "20 W/sr"
+      },
+      "systems": {
+        "seeker": {
+          "template": "core.system.eo.generic_small_drone_camera",
+          "parameters": {
+            "maxRange": "5 km",
+            "bands": [
+              "visual",
+              "lwir"
+            ]
+          }
+        },
+        "link": {
+          "template": "core.system.comms.generic_uav_c2_link",
+          "parameters": {
+            "maxRange": "40 km"
+          }
+        }
+      },
+      "behaviors": {
+        "strike": {
+          "behavior": "core.behavior.uav.loiter_and_strike"
+        },
+        "lost_link": {
+          "behavior": "core.behavior.uav.lost_link",
+          "parameters": {
+            "action": "continue_mission"
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPWM----*****"
+      }
+    }
+  }
+]

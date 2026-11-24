@@ -1,0 +1,298 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.jammer",
+    "extends": "core.systemtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Jammer (self-protection / stand-off / ground)"
+    },
+    "spec": {
+      "category": "ew",
+      "implementation": "engine.ew.jammer",
+      "parameters": {
+        "bands": {
+          "type": "list",
+          "items": {
+            "type": "enum",
+            "enumRef": "core.enum.frequency_band"
+          },
+          "required": true,
+          "minItems": 1
+        },
+        "erp": {
+          "type": "number",
+          "unit": "W",
+          "required": true,
+          "min": 0,
+          "label": "Effective radiated power"
+        },
+        "techniques": {
+          "type": "list",
+          "items": {
+            "type": "enum",
+            "enumRef": "core.enum.jamming_technique"
+          },
+          "default": [
+            "noise"
+          ]
+        },
+        "maxTargets": {
+          "type": "integer",
+          "default": 1,
+          "min": 1
+        },
+        "coverageAzimuth": {
+          "type": "number",
+          "unit": "deg",
+          "default": 360,
+          "min": 0,
+          "max": 360
+        },
+        "selfProtection": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "state": {
+        "active": {
+          "type": "boolean",
+          "default": false
+        },
+        "technique": {
+          "type": "enum",
+          "enumRef": "core.enum.jamming_technique",
+          "default": "noise"
+        }
+      },
+      "commands": {
+        "startJamming": {
+          "label": "Start jamming",
+          "parameters": {
+            "target": {
+              "type": "entityRef",
+              "nullable": true,
+              "default": null
+            },
+            "bearing": {
+              "type": "number",
+              "unit": "deg",
+              "nullable": true,
+              "default": null
+            },
+            "technique": {
+              "type": "enum",
+              "enumRef": "core.enum.jamming_technique",
+              "nullable": true,
+              "default": null
+            }
+          }
+        },
+        "stopJamming": {
+          "label": "Stop jamming",
+          "parameters": {}
+        }
+      },
+      "emits": [
+        "core.event.ew.jamming_detected"
+      ],
+      "ui": {
+        "icon": "jammer",
+        "color": "#5e35b1"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.radio",
+    "extends": "core.systemtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Radio"
+    },
+    "spec": {
+      "category": "comms",
+      "implementation": "engine.comms.radio",
+      "parameters": {
+        "bands": {
+          "type": "list",
+          "items": {
+            "type": "enum",
+            "enumRef": "core.enum.comms_band"
+          },
+          "default": [
+            "vhf"
+          ]
+        },
+        "maxRange": {
+          "type": "number",
+          "unit": "m",
+          "default": 30000,
+          "min": 0
+        },
+        "dataRate": {
+          "type": "number",
+          "unit": "bit/s",
+          "default": 16000,
+          "min": 0
+        },
+        "encrypted": {
+          "type": "boolean",
+          "default": true
+        },
+        "defaultNet": {
+          "type": "string",
+          "default": "default"
+        }
+      },
+      "state": {
+        "net": {
+          "type": "string",
+          "defaultFrom": "parameters.defaultNet"
+        },
+        "transmitting": {
+          "type": "boolean",
+          "default": false,
+          "readonly": true
+        }
+      },
+      "commands": {
+        "sendMessage": {
+          "label": "Send message",
+          "parameters": {
+            "to": {
+              "type": "entityRef",
+              "nullable": true,
+              "default": null,
+              "description": "Boş = aynı ağdaki herkes"
+            },
+            "message": {
+              "type": "string",
+              "required": true
+            },
+            "priority": {
+              "type": "enum",
+              "enumRef": "core.enum.message_priority",
+              "default": "routine"
+            }
+          }
+        },
+        "setNet": {
+          "label": "Set net",
+          "parameters": {
+            "net": {
+              "type": "string",
+              "required": true
+            }
+          }
+        }
+      },
+      "emits": [
+        "core.event.comms.message_received"
+      ],
+      "ui": {
+        "icon": "radio"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.datalink",
+    "extends": "core.systemtype.radio",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Datalink (Link 16, UAV C2, SATCOM, mesh)"
+    },
+    "spec": {
+      "implementation": "engine.comms.datalink",
+      "parameters": {
+        "linkType": {
+          "type": "enum",
+          "values": [
+            "link16",
+            "uav_c2",
+            "satcom",
+            "mesh"
+          ],
+          "default": "link16"
+        },
+        "latency": {
+          "type": "number",
+          "unit": "s",
+          "default": 0.1,
+          "min": 0
+        },
+        "shareTracks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Sensör izlerini ağla paylaş"
+        }
+      },
+      "state": {
+        "linkStatus": {
+          "type": "enum",
+          "enumRef": "core.enum.link_status",
+          "default": "ok",
+          "readonly": true
+        }
+      },
+      "emits": [
+        "core.event.datalink.lost",
+        "core.event.datalink.restored"
+      ],
+      "ui": {
+        "icon": "datalink"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.navigation",
+    "extends": "core.systemtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Navigation (GNSS/INS)"
+    },
+    "spec": {
+      "category": "navigation",
+      "implementation": "engine.nav.gnss_ins",
+      "parameters": {
+        "gnssAccuracy": {
+          "type": "number",
+          "unit": "m",
+          "default": 5,
+          "min": 0
+        },
+        "insDriftPerHour": {
+          "type": "number",
+          "unit": "m",
+          "default": 1800,
+          "min": 0,
+          "description": "GNSS yokken saatlik sapma"
+        },
+        "antiJam": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "state": {
+        "gnssAvailable": {
+          "type": "boolean",
+          "default": true,
+          "readonly": true
+        }
+      },
+      "emits": [
+        "core.event.nav.gnss_lost",
+        "core.event.nav.gnss_restored"
+      ],
+      "ui": {
+        "icon": "gps"
+      }
+    }
+  }
+]

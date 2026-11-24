@@ -1,0 +1,218 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Maneuver",
+    "id": "core.maneuver.pop_up",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Pop-up (helicopter)",
+      "description": "Arazi maskesinden yükselip atış ve tekrar maskelenme."
+    },
+    "spec": {
+      "domain": "air",
+      "parameters": {
+        "climb": {
+          "type": "number",
+          "unit": "m",
+          "default": 40,
+          "min": 5
+        },
+        "holdTime": {
+          "type": "number",
+          "unit": "s",
+          "default": 8,
+          "min": 0
+        }
+      },
+      "segments": [
+        {
+          "type": "climb",
+          "altitudeChange": {
+            "param": "climb"
+          },
+          "rate": "6 m/s"
+        },
+        {
+          "type": "hold",
+          "duration": {
+            "param": "holdTime"
+          }
+        },
+        {
+          "type": "descend",
+          "altitudeChange": {
+            "param": "climb"
+          },
+          "rate": "8 m/s"
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Maneuver",
+    "id": "core.maneuver.crank",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Crank",
+      "description": "BVR: radar gimbal sınırına dönerek kapanma hızını azaltma."
+    },
+    "spec": {
+      "domain": "air",
+      "parameters": {
+        "angle": {
+          "type": "number",
+          "unit": "deg",
+          "default": 50,
+          "min": 10,
+          "max": 90
+        },
+        "g": {
+          "type": "number",
+          "unit": "g",
+          "default": 3,
+          "min": 1
+        },
+        "duration": {
+          "type": "number",
+          "unit": "s",
+          "default": 20,
+          "min": 0
+        }
+      },
+      "segments": [
+        {
+          "type": "heading",
+          "heading": {
+            "param": "angle"
+          },
+          "relative": true,
+          "g": {
+            "param": "g"
+          },
+          "direction": "shortest"
+        },
+        {
+          "type": "hold",
+          "duration": {
+            "param": "duration"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Maneuver",
+    "id": "core.maneuver.zigzag",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Zigzag (ground)"
+    },
+    "spec": {
+      "domain": "land",
+      "parameters": {
+        "angle": {
+          "type": "number",
+          "unit": "deg",
+          "default": 30,
+          "min": 5,
+          "max": 90
+        },
+        "legTime": {
+          "type": "number",
+          "unit": "s",
+          "default": 4,
+          "min": 1
+        }
+      },
+      "segments": [
+        {
+          "type": "turn",
+          "headingChange": {
+            "param": "angle"
+          },
+          "direction": "left"
+        },
+        {
+          "type": "hold",
+          "duration": {
+            "param": "legTime"
+          }
+        },
+        {
+          "type": "turn",
+          "headingChange": {
+            "op": "mul",
+            "args": [
+              2,
+              {
+                "param": "angle"
+              }
+            ]
+          },
+          "direction": "right"
+        },
+        {
+          "type": "hold",
+          "duration": {
+            "param": "legTime"
+          }
+        },
+        {
+          "type": "turn",
+          "headingChange": {
+            "param": "angle"
+          },
+          "direction": "left"
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Maneuver",
+    "id": "core.maneuver.turn_away_dash",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Turn away and dash (ground)"
+    },
+    "spec": {
+      "domain": "land",
+      "parameters": {
+        "speed": {
+          "type": "number",
+          "unit": "m/s",
+          "default": 15,
+          "min": 0
+        },
+        "duration": {
+          "type": "number",
+          "unit": "s",
+          "default": 8,
+          "min": 0
+        }
+      },
+      "segments": [
+        {
+          "type": "heading",
+          "heading": 180,
+          "relative": true,
+          "direction": "away"
+        },
+        {
+          "type": "accelerate",
+          "speed": {
+            "param": "speed"
+          }
+        },
+        {
+          "type": "hold",
+          "duration": {
+            "param": "duration"
+          }
+        }
+      ]
+    }
+  }
+]

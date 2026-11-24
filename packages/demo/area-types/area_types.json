@@ -1,0 +1,13 @@
+[
+  {
+    "apiVersion": "simcfg/v1", "kind": "AreaType", "id": "demo.areatype.training_area", "extends": "core.areatype.generic", "version": "0.1.0",
+    "meta": { "name": { "tr": "Eğitim sahası" } },
+    "spec": {
+      "properties": {
+        "exerciseName": { "type": "string", "required": true },
+        "liveFire":     { "type": "boolean", "default": false }
+      },
+      "style": { "stroke": "#00897b", "fill": "#00897b", "lineStyle": "dashed" }
+    }
+  }
+]

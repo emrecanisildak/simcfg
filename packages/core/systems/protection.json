@@ -1,0 +1,197 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.protection.armor_heavy",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Heavy armor (MBT)"
+    },
+    "spec": {
+      "systemType": "core.systemtype.armor",
+      "parameters": {
+        "armorClass": "heavy",
+        "frontal": "800 mm",
+        "side": "200 mm",
+        "rear": "80 mm",
+        "top": "40 mm",
+        "era": true
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.protection.armor_medium",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Medium armor (IFV)"
+    },
+    "spec": {
+      "systemType": "core.systemtype.armor",
+      "parameters": {
+        "armorClass": "medium",
+        "frontal": "100 mm",
+        "side": "40 mm",
+        "rear": "30 mm",
+        "top": "20 mm"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.protection.armor_light",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Light armor (APC)"
+    },
+    "spec": {
+      "systemType": "core.systemtype.armor",
+      "parameters": {
+        "armorClass": "light",
+        "frontal": "15 mm",
+        "side": "10 mm",
+        "rear": "8 mm",
+        "top": "6 mm"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.protection.body_armor",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Body armor"
+    },
+    "spec": {
+      "systemType": "core.systemtype.armor",
+      "parameters": {
+        "armorClass": "light",
+        "frontal": "10 mm",
+        "side": "5 mm",
+        "rear": "10 mm"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.protection.generic_aps",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic hard-kill APS"
+    },
+    "spec": {
+      "systemType": "core.systemtype.aps",
+      "parameters": {
+        "interceptors": 4
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.cm.generic_smoke_launcher",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic smoke grenade launcher"
+    },
+    "spec": {
+      "systemType": "core.systemtype.smoke_launcher",
+      "parameters": {
+        "capacity": 12,
+        "programs": {
+          "salvo": {
+            "burstCount": 4,
+            "burstInterval": "100 ms"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.cargo.troop_compartment_8",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Troop compartment (8)"
+    },
+    "spec": {
+      "systemType": "core.systemtype.cargo_bay",
+      "parameters": {
+        "seats": 8,
+        "maxPayload": "1 t",
+        "rampLoad": true
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.cargo.troop_compartment_10",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Troop compartment (10)"
+    },
+    "spec": {
+      "systemType": "core.systemtype.cargo_bay",
+      "parameters": {
+        "seats": 10,
+        "maxPayload": "1.2 t",
+        "rampLoad": true
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.cargo.heli_cabin_11",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Helicopter cabin (11)"
+    },
+    "spec": {
+      "systemType": "core.systemtype.cargo_bay",
+      "parameters": {
+        "seats": 11,
+        "maxPayload": "1.5 t"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.cargo.transport_hold",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Transport aircraft hold"
+    },
+    "spec": {
+      "systemType": "core.systemtype.cargo_bay",
+      "parameters": {
+        "seats": 60,
+        "maxPayload": "20 t",
+        "rampLoad": true
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.cargo.truck_bed",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Truck cargo bed"
+    },
+    "spec": {
+      "systemType": "core.systemtype.cargo_bay",
+      "parameters": {
+        "seats": 12,
+        "maxPayload": "5 t"
+      }
+    }
+  }
+]

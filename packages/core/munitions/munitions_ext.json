@@ -1,0 +1,526 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_atgm",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic ATGM (SACLOS)"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.guided_missile",
+      "parameters": {
+        "mass": "25 kg",
+        "guidance": "sacl",
+        "warhead": "tandem_heat",
+        "penetration": "900 mm",
+        "minRange": "75 m",
+        "maxRange": "4 km",
+        "speed": "200 m/s",
+        "maxFlightTime": "25 s",
+        "maxG": 10,
+        "pk": 0.8,
+        "launchWarning": false,
+        "targetDomains": [
+          "land",
+          "surface"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_heli_atgm",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic helicopter ATGM (laser)"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.guided_missile",
+      "parameters": {
+        "mass": "45 kg",
+        "guidance": "laser",
+        "warhead": "tandem_heat",
+        "penetration": "1000 mm",
+        "minRange": "500 m",
+        "maxRange": "8 km",
+        "speed": "400 m/s",
+        "maxFlightTime": "30 s",
+        "maxG": 15,
+        "pk": 0.85,
+        "launchWarning": false,
+        "targetDomains": [
+          "land",
+          "surface"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_manpads",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic MANPADS (IR)"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.guided_missile",
+      "parameters": {
+        "mass": "11 kg",
+        "guidance": "ir",
+        "warhead": "frag",
+        "minRange": "500 m",
+        "maxRange": "5 km",
+        "speed": "600 m/s",
+        "maxFlightTime": "15 s",
+        "maxG": 20,
+        "lethalRadius": "3 m",
+        "pk": 0.6,
+        "launchWarning": false,
+        "targetDomains": [
+          "air"
+        ],
+        "cmSusceptibility": {
+          "flare": 0.4
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_shorad_missile",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic SHORAD missile (IR/command)"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.guided_missile",
+      "parameters": {
+        "mass": "75 kg",
+        "guidance": "command",
+        "warhead": "frag",
+        "minRange": "1 km",
+        "maxRange": "10 km",
+        "speed": "900 m/s",
+        "maxFlightTime": "20 s",
+        "maxG": 30,
+        "lethalRadius": "5 m",
+        "pk": 0.7,
+        "targetDomains": [
+          "air"
+        ],
+        "cmSusceptibility": {
+          "flare": 0.2,
+          "chaff": 0.1
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_lr_sam",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic long-range SAM (ARH)"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.guided_missile",
+      "parameters": {
+        "mass": "1800 kg",
+        "guidance": "arh",
+        "warhead": "blast_frag",
+        "minRange": "5 km",
+        "maxRange": "150 km",
+        "speed": "1500 m/s",
+        "maxFlightTime": "180 s",
+        "maxG": 25,
+        "lethalRadius": "30 m",
+        "pk": 0.75,
+        "targetDomains": [
+          "air"
+        ],
+        "cmSusceptibility": {
+          "chaff": 0.15
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_agm_laser",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic air-to-ground missile (laser)"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.guided_missile",
+      "parameters": {
+        "mass": "50 kg",
+        "guidance": "laser",
+        "warhead": "heat",
+        "penetration": "800 mm",
+        "minRange": "500 m",
+        "maxRange": "10 km",
+        "speed": "450 m/s",
+        "maxFlightTime": "35 s",
+        "maxG": 15,
+        "pk": 0.85,
+        "launchWarning": false,
+        "targetDomains": [
+          "land",
+          "surface"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_120mm_apfsds",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic 120 mm APFSDS"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "7 kg",
+        "warhead": "kinetic",
+        "penetration": "650 mm",
+        "maxRange": "4 km",
+        "speed": "1700 m/s",
+        "maxFlightTime": "4 s",
+        "pk": 0.7,
+        "launchWarning": false,
+        "targetDomains": [
+          "land"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_120mm_heat",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic 120 mm HEAT-MP"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "13 kg",
+        "warhead": "heat",
+        "penetration": "450 mm",
+        "maxRange": "3 km",
+        "speed": "1100 m/s",
+        "maxFlightTime": "4 s",
+        "lethalRadius": "5 m",
+        "pk": 0.6,
+        "launchWarning": false,
+        "targetDomains": [
+          "land"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_30mm_ap",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic 30 mm AP/HE"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "0.4 kg",
+        "warhead": "kinetic",
+        "penetration": "60 mm",
+        "maxRange": "3 km",
+        "speed": "1100 m/s",
+        "maxFlightTime": "5 s",
+        "lethalRadius": "1 m",
+        "pk": 0.1,
+        "launchWarning": false,
+        "targetDomains": [
+          "land",
+          "air"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_35mm_ahead",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic 35 mm airburst"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "0.75 kg",
+        "warhead": "frag",
+        "maxRange": "4 km",
+        "speed": "1050 m/s",
+        "maxFlightTime": "5 s",
+        "lethalRadius": "5 m",
+        "pk": 0.05,
+        "launchWarning": false,
+        "targetDomains": [
+          "air"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_762_mg",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic 7.62 mm ball"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "0.025 kg",
+        "warhead": "kinetic",
+        "penetration": "8 mm",
+        "maxRange": "1100 m",
+        "speed": "840 m/s",
+        "maxFlightTime": "3 s",
+        "lethalRadius": "0.3 m",
+        "pk": 0.03,
+        "launchWarning": false,
+        "targetDomains": [
+          "land"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_556_rifle",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic 5.56 mm ball"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "0.012 kg",
+        "warhead": "kinetic",
+        "penetration": "5 mm",
+        "maxRange": "600 m",
+        "speed": "900 m/s",
+        "maxFlightTime": "2 s",
+        "lethalRadius": "0.3 m",
+        "pk": 0.05,
+        "launchWarning": false,
+        "targetDomains": [
+          "land"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_rpg",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic RPG (HEAT rocket)"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "2.5 kg",
+        "warhead": "heat",
+        "penetration": "500 mm",
+        "minRange": "20 m",
+        "maxRange": "500 m",
+        "speed": "300 m/s",
+        "maxFlightTime": "4 s",
+        "lethalRadius": "3 m",
+        "pk": 0.4,
+        "launchWarning": false,
+        "targetDomains": [
+          "land"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_70mm_rocket",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic 70 mm rocket"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "11 kg",
+        "warhead": "he",
+        "maxRange": "6 km",
+        "speed": "700 m/s",
+        "maxFlightTime": "12 s",
+        "lethalRadius": "10 m",
+        "pk": 0.2,
+        "launchWarning": false,
+        "targetDomains": [
+          "land",
+          "surface"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_155mm_he",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic 155 mm HE"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "43 kg",
+        "warhead": "he",
+        "minRange": "3 km",
+        "maxRange": "30 km",
+        "speed": "800 m/s",
+        "maxFlightTime": "90 s",
+        "lethalRadius": "50 m",
+        "pk": 0.3,
+        "launchWarning": false,
+        "indirect": true,
+        "cep": "100 m",
+        "targetDomains": [
+          "land"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_81mm_mortar",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic 81 mm mortar HE"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "4 kg",
+        "warhead": "he",
+        "minRange": "100 m",
+        "maxRange": "5.5 km",
+        "speed": "250 m/s",
+        "maxFlightTime": "40 s",
+        "lethalRadius": "25 m",
+        "pk": 0.25,
+        "launchWarning": false,
+        "indirect": true,
+        "cep": "60 m",
+        "targetDomains": [
+          "land"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_76mm_naval",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic 76 mm naval HE"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.ballistic",
+      "parameters": {
+        "mass": "6 kg",
+        "warhead": "he",
+        "maxRange": "16 km",
+        "speed": "900 m/s",
+        "maxFlightTime": "30 s",
+        "lethalRadius": "10 m",
+        "pk": 0.15,
+        "launchWarning": false,
+        "targetDomains": [
+          "surface",
+          "air",
+          "land"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_lgb",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic laser-guided bomb"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.guided_bomb",
+      "parameters": {
+        "mass": "250 kg",
+        "guidance": "laser",
+        "warhead": "he",
+        "maxRange": "15 km",
+        "speed": "250 m/s",
+        "maxFlightTime": "90 s",
+        "lethalRadius": "30 m",
+        "pk": 0.8,
+        "launchWarning": false,
+        "targetDomains": [
+          "land",
+          "surface"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Munition",
+    "id": "core.munition.generic_gps_bomb",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic GPS-guided bomb"
+    },
+    "spec": {
+      "munitionType": "core.munitiontype.guided_bomb",
+      "parameters": {
+        "mass": "250 kg",
+        "guidance": "gps_ins",
+        "warhead": "he",
+        "maxRange": "25 km",
+        "speed": "250 m/s",
+        "maxFlightTime": "120 s",
+        "lethalRadius": "30 m",
+        "pk": 0.75,
+        "launchWarning": false,
+        "targetDomains": [
+          "land",
+          "surface"
+        ]
+      }
+    }
+  }
+]

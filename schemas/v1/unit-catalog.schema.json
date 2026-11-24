@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/unit-catalog.schema.json",
+  "title": "UnitCatalog - birim boyutları ve dönüşümleri",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "UnitCatalog" },
+    "spec": {
+      "type": "object",
+      "required": ["dimensions"],
+      "properties": {
+        "dimensions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["base", "units"],
+            "properties": {
+              "base": { "type": "string" },
+              "units": {
+                "type": "object",
+                "description": "birim -> çarpan (taban = değer*factor + offset)",
+                "additionalProperties": {
+                  "oneOf": [
+                    { "type": "number" },
+                    {
+                      "type": "object",
+                      "required": ["factor"],
+                      "properties": { "factor": { "type": "number" }, "offset": { "type": "number" } },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

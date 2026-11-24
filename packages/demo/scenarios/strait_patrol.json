@@ -1,0 +1,592 @@
+{
+  "$schema": "../../../schemas/v1/scenario.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "Scenario",
+  "id": "demo.scenario.strait_patrol",
+  "version": "0.1.0",
+  "meta": {
+    "name": "Strait Patrol",
+    "description": {
+      "tr": "Mavi CAP uçuşu, kırmızı SAM ve avcı tehdidi, sivil hava koridoru."
+    }
+  },
+  "spec": {
+    "time": {
+      "start": "2026-06-01T06:00:00Z",
+      "duration": "2 h",
+      "timeStep": "50 ms",
+      "seed": 42
+    },
+    "environment": {
+      "weather": {
+        "visibility": "20 km",
+        "cloudBase": "3000 ft",
+        "windSpeed": "15 kts",
+        "windDirection": 270
+      },
+      "terrain": "dted/level1"
+    },
+    "sides": {
+      "blue": {
+        "label": "Blue",
+        "color": "#1e88e5",
+        "relations": {
+          "red": "hostile",
+          "white": "neutral"
+        }
+      },
+      "red": {
+        "label": "Red",
+        "color": "#e53935",
+        "relations": {
+          "blue": "hostile",
+          "white": "neutral"
+        }
+      },
+      "white": {
+        "label": "Civil",
+        "color": "#9e9e9e",
+        "relations": {
+          "blue": "neutral",
+          "red": "neutral"
+        }
+      }
+    },
+    "areas": {
+      "cap_north": {
+        "type": "core.areatype.cap_station",
+        "label": "CAP North",
+        "geometry": {
+          "shape": "polygon",
+          "points": [
+            {
+              "lat": 40.6,
+              "lon": 26.4
+            },
+            {
+              "lat": 40.6,
+              "lon": 27.1
+            },
+            {
+              "lat": 40.3,
+              "lon": 27.1
+            },
+            {
+              "lat": 40.3,
+              "lon": 26.4
+            }
+          ]
+        },
+        "altitude": {
+          "min": "20000 ft",
+          "max": "30000 ft",
+          "reference": "MSL"
+        },
+        "sides": [
+          "blue"
+        ],
+        "properties": {
+          "stationAltitude": "25000 ft"
+        }
+      },
+      "red_mez": {
+        "type": "core.areatype.threat_zone",
+        "label": "Red SAM MEZ",
+        "geometry": {
+          "shape": "circle",
+          "center": {
+            "lat": 39.85,
+            "lon": 27.9
+          },
+          "radius": "40 km"
+        },
+        "altitude": {
+          "min": 0,
+          "max": "60000 ft"
+        },
+        "sides": [
+          "red"
+        ],
+        "properties": {
+          "threatSystem": "DEMO-SAM-SR",
+          "lethality": 0.7
+        }
+      },
+      "red_search_sector": {
+        "type": "core.areatype.generic",
+        "geometry": {
+          "shape": "sector",
+          "center": {
+            "lat": 39.85,
+            "lon": 27.9
+          },
+          "radius": "180 km",
+          "startBearing": 240,
+          "endBearing": 330
+        }
+      },
+      "city_nfz": {
+        "type": "core.areatype.no_fly",
+        "geometry": {
+          "shape": "polygon",
+          "points": [
+            {
+              "lat": 40.15,
+              "lon": 26.35
+            },
+            {
+              "lat": 40.2,
+              "lon": 26.5
+            },
+            {
+              "lat": 40.1,
+              "lon": 26.55
+            }
+          ]
+        },
+        "properties": {
+          "exemptSides": [
+            "white"
+          ]
+        }
+      },
+      "airway_a1": {
+        "type": "core.areatype.air_corridor",
+        "geometry": {
+          "shape": "corridor",
+          "width": "10 nmi",
+          "points": [
+            {
+              "lat": 41.0,
+              "lon": 25.8
+            },
+            {
+              "lat": 39.5,
+              "lon": 28.8
+            }
+          ]
+        }
+      }
+    },
+    "routes": {
+      "cap_orbit": {
+        "label": "CAP racetrack",
+        "loop": true,
+        "waypoints": [
+          {
+            "id": "cp1",
+            "position": {
+              "lat": 40.55,
+              "lon": 26.5
+            },
+            "altitude": "25000 ft",
+            "speed": "420 kts"
+          },
+          {
+            "id": "cp2",
+            "position": {
+              "lat": 40.55,
+              "lon": 27.0
+            },
+            "altitude": "25000 ft",
+            "speed": "420 kts",
+            "actions": [
+              {
+                "action": "core.action.log",
+                "params": {
+                  "message": "CAP east turn"
+                }
+              }
+            ]
+          },
+          {
+            "id": "cp3",
+            "position": {
+              "lat": 40.35,
+              "lon": 27.0
+            },
+            "altitude": "25000 ft"
+          },
+          {
+            "id": "cp4",
+            "position": {
+              "lat": 40.35,
+              "lon": 26.5
+            },
+            "altitude": "25000 ft"
+          }
+        ]
+      },
+      "red_ingress": {
+        "waypoints": [
+          {
+            "position": {
+              "lat": 39.7,
+              "lon": 28.3
+            },
+            "altitude": "15000 ft",
+            "speed": "450 kts"
+          },
+          {
+            "position": {
+              "lat": 40.1,
+              "lon": 27.4
+            },
+            "altitude": "12000 ft",
+            "speed": "500 kts"
+          },
+          {
+            "position": {
+              "lat": 40.4,
+              "lon": 26.9
+            },
+            "altitude": "12000 ft",
+            "hold": "2 min"
+          }
+        ]
+      },
+      "airway_track": {
+        "waypoints": [
+          {
+            "position": {
+              "lat": 41.0,
+              "lon": 25.8
+            },
+            "altitude": "35000 ft",
+            "speed": "460 kts"
+          },
+          {
+            "position": {
+              "lat": 39.5,
+              "lon": 28.8
+            },
+            "altitude": "35000 ft"
+          }
+        ]
+      }
+    },
+    "entities": {
+      "viper_1": {
+        "platform": "demo.platform.fighter_mk2",
+        "side": "blue",
+        "callsign": "VIPER 11",
+        "initial": {
+          "position": {
+            "lat": 40.45,
+            "lon": 26.45
+          },
+          "altitude": "25000 ft",
+          "heading": 90,
+          "speed": "420 kts"
+        },
+        "overrides": {
+          "systems": {
+            "iff": {
+              "initialState": {
+                "mode3Code": "4521",
+                "mode5Enabled": true
+              }
+            }
+          },
+          "behaviors": {
+            "patrol": {
+              "behavior": "core.behavior.air.route_patrol",
+              "parameters": {
+                "patrolRoute": "cap_orbit"
+              }
+            },
+            "fuel": {
+              "parameters": {
+                "homeBase": {
+                  "lat": 40.95,
+                  "lon": 26.1
+                }
+              }
+            }
+          }
+        }
+      },
+      "viper_2": {
+        "platform": "demo.platform.fighter_mk2",
+        "side": "blue",
+        "callsign": "VIPER 12",
+        "initial": {
+          "position": {
+            "lat": 40.43,
+            "lon": 26.43
+          },
+          "altitude": "24000 ft",
+          "heading": 90,
+          "speed": "420 kts"
+        },
+        "overrides": {
+          "systems": {
+            "iff": {
+              "initialState": {
+                "mode3Code": "4522",
+                "mode5Enabled": true
+              }
+            },
+            "chaff": {
+              "initialState": {
+                "remaining": 12
+              }
+            }
+          },
+          "behaviors": {
+            "patrol": {
+              "behavior": "core.behavior.air.route_patrol",
+              "parameters": {
+                "patrolRoute": "cap_orbit"
+              }
+            },
+            "fuel": {
+              "parameters": {
+                "homeBase": {
+                  "lat": 40.95,
+                  "lon": 26.1
+                }
+              }
+            },
+            "self_defense": {
+              "rules": {
+                "notch_without_flares": {
+                  "enabled": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "bandit_1": {
+        "platform": "core.platform.air.generic_fighter",
+        "side": "red",
+        "callsign": "BANDIT 1",
+        "initial": {
+          "route": "red_ingress",
+          "altitude": "15000 ft",
+          "speed": "450 kts"
+        },
+        "overrides": {
+          "systems": {
+            "iff": {
+              "initialState": {
+                "mode3Code": "7000"
+              }
+            }
+          },
+          "behaviors": {
+            "engage": {
+              "parameters": {
+                "roe": "free"
+              }
+            }
+          }
+        },
+        "plan": [
+          {
+            "action": "core.action.follow_route",
+            "params": {
+              "route": "red_ingress"
+            }
+          }
+        ]
+      },
+      "sam_1": {
+        "platform": "demo.platform.sam_battery",
+        "side": "red",
+        "callsign": "SA-RED-1",
+        "initial": {
+          "position": {
+            "lat": 39.85,
+            "lon": 27.9
+          },
+          "heading": 300
+        },
+        "overrides": {
+          "behaviors": {
+            "air_defense": {
+              "parameters": {
+                "engagementArea": "red_mez"
+              }
+            }
+          }
+        }
+      },
+      "airliner_1": {
+        "platform": "core.platform.air.generic_transport",
+        "side": "white",
+        "callsign": "CIV 2301",
+        "initial": {
+          "route": "airway_track",
+          "altitude": "35000 ft",
+          "speed": "460 kts"
+        },
+        "overrides": {
+          "systems": {
+            "iff": {
+              "initialState": {
+                "mode3Code": "2301"
+              }
+            }
+          }
+        },
+        "plan": [
+          {
+            "action": "core.action.follow_route",
+            "params": {
+              "route": "airway_track"
+            }
+          }
+        ]
+      }
+    },
+    "groups": {
+      "viper_flight": {
+        "label": "VIPER flight",
+        "members": [
+          "viper_1",
+          "viper_2"
+        ],
+        "formation": "wall"
+      }
+    },
+    "behaviorOverrides": {
+      "core.behavior.air.self_defense": {
+        "parameters": {
+          "breakG": 7
+        }
+      },
+      "core.behavior.air.engage_hostiles": {
+        "parameters": {
+          "roe": "tight"
+        }
+      }
+    },
+    "variables": {
+      "phase": {
+        "type": "integer",
+        "default": 1
+      }
+    },
+    "rules": {
+      "phase_2_red_push": {
+        "trigger": {
+          "at": "15 min"
+        },
+        "actions": [
+          {
+            "action": "core.action.set_variable",
+            "params": {
+              "name": "phase",
+              "value": 2
+            }
+          },
+          {
+            "action": "core.action.log",
+            "params": {
+              "message": "Phase 2: red push",
+              "level": "alert"
+            }
+          },
+          {
+            "action": "core.action.set_kinematics",
+            "on": "bandit_1",
+            "params": {
+              "speed": "520 kts"
+            }
+          },
+          {
+            "action": "core.action.set_radar_mode",
+            "on": "bandit_1",
+            "params": {
+              "system": "radar",
+              "mode": "search"
+            }
+          },
+          {
+            "action": "core.action.set_master_arm",
+            "on": "bandit_1",
+            "params": {
+              "launcher": "weapons",
+              "armed": true
+            }
+          }
+        ]
+      },
+      "civil_in_mez_alert": {
+        "trigger": {
+          "event": "core.event.platform.area_entered",
+          "filter": {
+            "all": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "event.area"
+                  },
+                  "red_mez"
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "event.entity"
+                  },
+                  "airliner_1"
+                ]
+              }
+            ]
+          }
+        },
+        "actions": [
+          {
+            "action": "core.action.log",
+            "params": {
+              "message": "Civil traffic inside red MEZ",
+              "level": "warning"
+            }
+          }
+        ]
+      },
+      "red_emcon_until_phase2": {
+        "trigger": {
+          "every": "30 s"
+        },
+        "condition": {
+          "all": [
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "var": "bb.phase"
+                },
+                1
+              ]
+            },
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "var": "entities.bandit_1.systems.radar.state.mode"
+                },
+                "search"
+              ]
+            }
+          ]
+        },
+        "actions": [
+          {
+            "action": "core.action.set_radar_mode",
+            "on": "bandit_1",
+            "params": {
+              "system": "radar",
+              "mode": "standby"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

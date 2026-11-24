@@ -1,0 +1,65 @@
+[
+  {
+    "apiVersion": "simcfg/v1", "kind": "Maneuver", "id": "core.maneuver.break_turn", "version": "1.0.0",
+    "meta": { "name": "Break turn", "description": "Yüksek G'li ani dönüş." },
+    "spec": {
+      "domain": "air",
+      "parameters": {
+        "g":             { "type": "number", "unit": "g", "default": 6, "min": 1, "max": 12 },
+        "headingChange": { "type": "number", "unit": "deg", "default": 90, "min": 0, "max": 360 },
+        "direction":     { "type": "enum", "enumRef": "core.enum.turn_direction", "default": "away" },
+        "holdTime":      { "type": "number", "unit": "s", "default": 3, "min": 0 }
+      },
+      "segments": [
+        { "type": "turn", "g": { "param": "g" }, "headingChange": { "param": "headingChange" }, "direction": { "param": "direction" } },
+        { "type": "hold", "duration": { "param": "holdTime" } }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "Maneuver", "id": "core.maneuver.notch", "version": "1.0.0",
+    "meta": { "name": "Notch / beam", "description": "Tehdidi 90° bordaya alarak doppler çentiğine girme." },
+    "spec": {
+      "domain": "air",
+      "parameters": {
+        "g":            { "type": "number", "unit": "g", "default": 5, "min": 1, "max": 12 },
+        "descend":      { "type": "number", "unit": "m", "default": 1500, "min": 0 },
+        "duration":     { "type": "number", "unit": "s", "default": 10, "min": 0 }
+      },
+      "segments": [
+        { "type": "heading", "heading": 90, "relative": true, "g": { "param": "g" }, "direction": "shortest" },
+        { "type": "descend", "altitudeChange": { "param": "descend" }, "rate": "60 m/s" },
+        { "type": "hold", "duration": { "param": "duration" } }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "Maneuver", "id": "core.maneuver.split_s", "version": "1.0.0",
+    "meta": { "name": "Split-S" },
+    "spec": {
+      "domain": "air",
+      "parameters": { "g": { "type": "number", "unit": "g", "default": 5, "min": 1, "max": 12 } },
+      "segments": [
+        { "type": "roll", "angle": 180 },
+        { "type": "pull", "g": { "param": "g" }, "until": { "op": "ge", "args": [ { "var": "self.pitch" }, 0 ] } },
+        { "type": "roll", "angle": 0 }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "Maneuver", "id": "core.maneuver.jink", "version": "1.0.0",
+    "meta": { "name": "Jink", "description": "Kısa aralıklı sağ-sol dönüşler." },
+    "spec": {
+      "domain": "air",
+      "parameters": {
+        "g":     { "type": "number", "unit": "g", "default": 4, "min": 1, "max": 12 },
+        "angle": { "type": "number", "unit": "deg", "default": 30, "min": 5, "max": 90 }
+      },
+      "segments": [
+        { "type": "turn", "g": { "param": "g" }, "headingChange": { "param": "angle" }, "direction": "left" },
+        { "type": "turn", "g": { "param": "g" }, "headingChange": { "op": "mul", "args": [2, { "param": "angle" }] }, "direction": "right" },
+        { "type": "turn", "g": { "param": "g" }, "headingChange": { "param": "angle" }, "direction": "left" }
+      ]
+    }
+  }
+]

@@ -1,0 +1,55 @@
+[
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.follow_route", "version": "1.0.0",
+    "meta": { "name": { "tr": "Rota takibi", "en": "Follow route" } },
+    "spec": {
+      "category": "movement", "channels": ["movement"], "durative": true,
+      "parameters": {
+        "route":         { "type": "routeRef", "required": true },
+        "startWaypoint": { "type": "integer", "default": 0, "min": 0 },
+        "loop":          { "type": "boolean", "description": "Boş = rotanın kendi loop ayarı", "nullable": true, "default": null },
+        "speedOverride": { "type": "number", "unit": "m/s", "nullable": true, "default": null }
+      },
+      "implementation": { "type": "native", "handler": "core.movement.follow_route" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.fly_to", "version": "1.0.0",
+    "meta": { "name": { "tr": "Noktaya git", "en": "Move to" } },
+    "spec": {
+      "category": "movement", "channels": ["movement"], "durative": true,
+      "parameters": {
+        "position": { "type": "geoPoint", "required": true },
+        "altitude": { "type": "number", "unit": "m", "nullable": true, "default": null },
+        "speed":    { "type": "number", "unit": "m/s", "nullable": true, "default": null }
+      },
+      "implementation": { "type": "native", "handler": "core.movement.move_to" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.set_kinematics", "version": "1.0.0",
+    "meta": { "name": { "tr": "Yön/hız/irtifa ayarla", "en": "Set heading/speed/altitude" } },
+    "spec": {
+      "category": "movement", "channels": ["movement"], "durative": false,
+      "parameters": {
+        "heading":  { "type": "number", "unit": "deg", "nullable": true, "default": null, "min": 0, "max": 360 },
+        "speed":    { "type": "number", "unit": "m/s", "nullable": true, "default": null, "min": 0 },
+        "altitude": { "type": "number", "unit": "m", "nullable": true, "default": null }
+      },
+      "implementation": { "type": "native", "handler": "core.movement.set_kinematics" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.maneuver", "version": "1.0.0",
+    "meta": { "name": { "tr": "Manevra", "en": "Maneuver" } },
+    "spec": {
+      "category": "movement", "channels": ["movement"], "durative": true,
+      "parameters": {
+        "maneuver":         { "type": "ref", "refKind": "Maneuver", "required": true },
+        "args":             { "type": "args", "argsOf": "maneuver", "argsFrom": "parameters", "default": {} },
+        "referenceBearing": { "type": "number", "unit": "deg", "nullable": true, "default": null, "description": "away/toward yönleri için referans kerteriz (ör. tehdit kerterizi)." }
+      },
+      "implementation": { "type": "native", "handler": "core.movement.maneuver" }
+    }
+  }
+]

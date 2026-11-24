@@ -1,0 +1,12 @@
+{
+  "$schema": "../../schemas/v1/package.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "Package",
+  "id": "demo",
+  "version": "0.1.0",
+  "meta": { "name": "Demo extension package", "description": { "tr": "core üzerine türetilmiş modeller, davranışlar ve örnek senaryolar." } },
+  "spec": {
+    "dependencies": { "core": "^1.0.0" },
+    "include": ["**/*.json"]
+  }
+}

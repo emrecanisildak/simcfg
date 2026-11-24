@@ -1,0 +1,321 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.base",
+    "version": "1.0.0",
+    "abstract": true,
+    "meta": {
+      "name": "Base platform"
+    },
+    "spec": {
+      "parameters": {
+        "mass": {
+          "type": "number",
+          "unit": "kg",
+          "default": 1000,
+          "min": 0,
+          "ui": {
+            "group": "Physical"
+          }
+        },
+        "length": {
+          "type": "number",
+          "unit": "m",
+          "default": 10,
+          "min": 0,
+          "ui": {
+            "group": "Physical"
+          }
+        },
+        "maxSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "rcs": {
+          "type": "table",
+          "unit": "m2",
+          "description": "Bakış açısına göre radar kesit alanı.",
+          "axes": [
+            {
+              "name": "aspect",
+              "unit": "deg"
+            }
+          ],
+          "default": {
+            "breakpoints": [
+              [
+                0,
+                180
+              ]
+            ],
+            "values": [
+              5,
+              5
+            ]
+          },
+          "ui": {
+            "group": "Signatures",
+            "widget": "lookup-table"
+          }
+        },
+        "irSignature": {
+          "type": "number",
+          "unit": "W/sr",
+          "default": 1000,
+          "min": 0,
+          "ui": {
+            "group": "Signatures"
+          }
+        }
+      },
+      "state": {
+        "position": {
+          "type": "geoPoint",
+          "readonly": true
+        },
+        "altitude": {
+          "type": "number",
+          "unit": "m",
+          "default": 0
+        },
+        "heading": {
+          "type": "number",
+          "unit": "deg",
+          "default": 0,
+          "min": 0,
+          "max": 360
+        },
+        "speed": {
+          "type": "number",
+          "unit": "m/s",
+          "default": 0,
+          "min": 0
+        },
+        "alive": {
+          "type": "boolean",
+          "default": true,
+          "readonly": true
+        },
+        "damage": {
+          "type": "number",
+          "default": 0,
+          "min": 0,
+          "max": 1,
+          "readonly": true
+        }
+      },
+      "emits": [
+        "core.event.platform.area_entered",
+        "core.event.platform.area_exited",
+        "core.event.platform.destroyed",
+        "core.event.platform.under_fire",
+        "core.event.platform.damaged",
+        "core.event.weapon.detonation_nearby"
+      ],
+      "allowedSystemTypes": [
+        "core.systemtype.base"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.fixed_wing",
+    "extends": "core.platformtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Fixed-wing aircraft (3-DOF point mass)"
+    },
+    "spec": {
+      "domain": "air",
+      "implementation": "engine.dynamics.fixed_wing_3dof",
+      "parameters": {
+        "minSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "cruiseSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "maxG": {
+          "type": "number",
+          "unit": "g",
+          "default": 3,
+          "min": 1,
+          "max": 12,
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "ceiling": {
+          "type": "number",
+          "unit": "m",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "climbRate": {
+          "type": "number",
+          "unit": "m/s",
+          "default": 50,
+          "min": 0,
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "fuelCapacity": {
+          "type": "number",
+          "unit": "kg",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Fuel"
+          }
+        },
+        "fuelFlowCruise": {
+          "type": "number",
+          "unit": "kg/s",
+          "default": 0.5,
+          "min": 0,
+          "ui": {
+            "group": "Fuel"
+          }
+        }
+      },
+      "state": {
+        "fuel": {
+          "type": "number",
+          "unit": "kg",
+          "min": 0,
+          "defaultFrom": "parameters.fuelCapacity"
+        },
+        "pitch": {
+          "type": "number",
+          "unit": "deg",
+          "default": 0,
+          "readonly": true
+        },
+        "roll": {
+          "type": "number",
+          "unit": "deg",
+          "default": 0,
+          "readonly": true
+        },
+        "gLoad": {
+          "type": "number",
+          "unit": "g",
+          "default": 1,
+          "readonly": true
+        }
+      },
+      "emits": [
+        "core.event.platform.waypoint_reached",
+        "core.event.platform.route_completed"
+      ],
+      "ui": {
+        "icon": "aircraft"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.ground_vehicle",
+    "extends": "core.platformtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Ground vehicle / site",
+      "description": "Kara araçlarının ortak tabanı (soyut). Paletli/tekerlekli türetin."
+    },
+    "spec": {
+      "domain": "land",
+      "implementation": "engine.dynamics.ground",
+      "parameters": {
+        "offRoadSpeedFactor": {
+          "type": "number",
+          "default": 0.5,
+          "min": 0,
+          "max": 1
+        },
+        "setupTime": {
+          "type": "number",
+          "unit": "s",
+          "default": 0,
+          "min": 0,
+          "description": "Konuşlanma süresi (ör. SAM)."
+        },
+        "fuelCapacity": {
+          "type": "number",
+          "unit": "kg",
+          "default": 500,
+          "min": 0,
+          "ui": {
+            "group": "Fuel"
+          }
+        },
+        "fuelFlow": {
+          "type": "number",
+          "unit": "kg/s",
+          "default": 0.01,
+          "min": 0,
+          "ui": {
+            "group": "Fuel"
+          }
+        },
+        "maxSlope": {
+          "type": "number",
+          "unit": "deg",
+          "default": 30,
+          "min": 0,
+          "max": 90,
+          "ui": {
+            "group": "Mobility"
+          }
+        },
+        "crew": {
+          "type": "integer",
+          "default": 1,
+          "min": 0,
+          "ui": {
+            "group": "Crew"
+          }
+        }
+      },
+      "emits": [
+        "core.event.platform.waypoint_reached",
+        "core.event.platform.route_completed"
+      ],
+      "ui": {
+        "icon": "vehicle"
+      },
+      "state": {
+        "fuel": {
+          "type": "number",
+          "unit": "kg",
+          "min": 0,
+          "defaultFrom": "parameters.fuelCapacity"
+        }
+      }
+    },
+    "abstract": true
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "apiVersion": "simcfg/v1", "kind": "SystemTemplate", "id": "core.system.rwr.generic", "version": "1.0.0",
+    "meta": { "name": "Generic RWR", "tags": ["generic"] },
+    "spec": {
+      "systemType": "core.systemtype.rwr",
+      "parameters": { "maxRange": "150 km", "frequencyMin": "2 GHz", "frequencyMax": "18 GHz", "sensitivity": -60, "bearingAccuracy": 15 }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "SystemTemplate", "id": "core.system.iff.generic_transponder", "version": "1.0.0",
+    "meta": { "name": "Generic IFF transponder", "tags": ["generic"] },
+    "spec": {
+      "systemType": "core.systemtype.iff",
+      "parameters": { "role": "transponder", "supportedModes": ["1", "2", "3A", "C"] },
+      "initialState": { "transponderOn": true, "mode3Code": "1200" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "SystemTemplate", "id": "core.system.iff.generic_combined", "extends": "core.system.iff.generic_transponder", "version": "1.0.0",
+    "meta": { "name": "Generic military IFF (interrogator + transponder)", "tags": ["generic"] },
+    "spec": {
+      "parameters": { "role": "combined", "supportedModes": { "$append": ["4", "5"] } },
+      "initialState": { "mode4Enabled": true }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "SystemTemplate", "id": "core.system.cm.generic_chaff", "version": "1.0.0",
+    "meta": { "name": "Generic chaff dispenser", "tags": ["generic"] },
+    "spec": {
+      "systemType": "core.systemtype.chaff_dispenser",
+      "parameters": {
+        "capacity": 30, "cartridgeRcs": 60,
+        "programs": {
+          "p1_single": { "burstCount": 1 },
+          "p2_burst":  { "burstCount": 4, "burstInterval": "300 ms", "salvoCount": 2, "salvoInterval": "1.5 s" }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "SystemTemplate", "id": "core.system.cm.generic_flare", "version": "1.0.0",
+    "meta": { "name": "Generic flare dispenser", "tags": ["generic"] },
+    "spec": {
+      "systemType": "core.systemtype.flare_dispenser",
+      "parameters": {
+        "capacity": 30, "irIntensity": "25 kW/sr",
+        "programs": { "p1_pair": { "burstCount": 2, "burstInterval": "250 ms" } }
+      }
+    }
+  }
+]

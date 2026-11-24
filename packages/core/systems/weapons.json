@@ -1,0 +1,55 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.generic_fighter_stores",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic fighter stores"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "srm": {
+            "munition": "core.munition.generic_srm",
+            "count": 2
+          },
+          "mrm": {
+            "munition": "core.munition.generic_mrm",
+            "count": 4
+          },
+          "gun": {
+            "munition": "core.munition.generic_gun_20mm",
+            "count": 500
+          }
+        },
+        "maxSimultaneousEngagements": 2,
+        "minLaunchInterval": "2 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.weapon.generic_sam_launcher",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic SAM launcher"
+    },
+    "spec": {
+      "systemType": "core.systemtype.weapon_launcher",
+      "parameters": {
+        "loadout": {
+          "ready": {
+            "munition": "core.munition.generic_sam_mr",
+            "count": 4
+          }
+        },
+        "maxSimultaneousEngagements": 2,
+        "reloadTime": "10 min",
+        "minLaunchInterval": "5 s"
+      }
+    }
+  }
+]

@@ -1,0 +1,600 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.frequency_band",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Radar frequency bands (IEEE)"
+    },
+    "spec": {
+      "values": [
+        {
+          "value": "L",
+          "label": "L (1-2 GHz)"
+        },
+        {
+          "value": "S",
+          "label": "S (2-4 GHz)"
+        },
+        {
+          "value": "C",
+          "label": "C (4-8 GHz)"
+        },
+        {
+          "value": "X",
+          "label": "X (8-12 GHz)"
+        },
+        {
+          "value": "Ku",
+          "label": "Ku (12-18 GHz)"
+        },
+        {
+          "value": "K",
+          "label": "K (18-27 GHz)"
+        },
+        {
+          "value": "Ka",
+          "label": "Ka (27-40 GHz)"
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.radar_mode",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Radar modes"
+    },
+    "spec": {
+      "values": [
+        {
+          "value": "off",
+          "label": {
+            "tr": "Kapalı",
+            "en": "Off"
+          }
+        },
+        {
+          "value": "standby",
+          "label": {
+            "tr": "Bekleme",
+            "en": "Standby"
+          }
+        },
+        {
+          "value": "search",
+          "label": {
+            "tr": "Arama",
+            "en": "Search"
+          }
+        },
+        {
+          "value": "tws",
+          "label": "Track While Scan"
+        },
+        {
+          "value": "stt",
+          "label": "Single Target Track"
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.iff_mode",
+    "version": "1.0.0",
+    "meta": {
+      "name": "IFF modes"
+    },
+    "spec": {
+      "values": [
+        "1",
+        "2",
+        "3A",
+        "C",
+        "4",
+        "5",
+        "S"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.threat_level",
+    "version": "1.0.0",
+    "meta": {
+      "name": "RWR threat level"
+    },
+    "spec": {
+      "values": [
+        {
+          "value": "search",
+          "color": "#9e9e9e"
+        },
+        {
+          "value": "track",
+          "color": "#ffb300"
+        },
+        {
+          "value": "lock",
+          "color": "#e53935"
+        },
+        {
+          "value": "launch",
+          "color": "#b71c1c"
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.ir_band",
+    "version": "1.0.0",
+    "meta": {
+      "name": "IR spectral bands"
+    },
+    "spec": {
+      "values": [
+        "SWIR",
+        "MWIR",
+        "LWIR",
+        "dual"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.turn_direction",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Turn direction"
+    },
+    "spec": {
+      "values": [
+        "left",
+        "right",
+        "away",
+        "toward",
+        "shortest"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.guidance",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Guidance type"
+    },
+    "spec": {
+      "values": [
+        {
+          "value": "ir",
+          "label": "Infrared"
+        },
+        {
+          "value": "imaging_ir",
+          "label": "Imaging infrared"
+        },
+        {
+          "value": "sarh",
+          "label": "Semi-active radar"
+        },
+        {
+          "value": "arh",
+          "label": "Active radar"
+        },
+        {
+          "value": "command",
+          "label": "Command guidance"
+        },
+        {
+          "value": "sacl",
+          "label": "SACLOS (wire/radio)"
+        },
+        {
+          "value": "laser",
+          "label": "Semi-active laser"
+        },
+        {
+          "value": "gps_ins",
+          "label": "GPS/INS"
+        },
+        {
+          "value": "none",
+          "label": "Unguided"
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.roe",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Rules of engagement"
+    },
+    "spec": {
+      "values": [
+        {
+          "value": "hold",
+          "label": {
+            "tr": "Ateş yasak",
+            "en": "Weapons hold"
+          },
+          "description": "Sadece öz savunma"
+        },
+        {
+          "value": "tight",
+          "label": {
+            "tr": "Kısıtlı",
+            "en": "Weapons tight"
+          },
+          "description": "Sadece tanımlanmış düşmana"
+        },
+        {
+          "value": "free",
+          "label": {
+            "tr": "Serbest",
+            "en": "Weapons free"
+          },
+          "description": "Dost/tarafsız olmayan her hedefe"
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.domain",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Operational domain"
+    },
+    "spec": {
+      "values": [
+        "air",
+        "land",
+        "surface",
+        "subsurface",
+        "space"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.posture",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Dismounted posture"
+    },
+    "spec": {
+      "values": [
+        {
+          "value": "standing",
+          "label": {
+            "tr": "Ayakta",
+            "en": "Standing"
+          }
+        },
+        {
+          "value": "crouching",
+          "label": {
+            "tr": "Çömelmiş",
+            "en": "Crouching"
+          }
+        },
+        {
+          "value": "prone",
+          "label": {
+            "tr": "Yatar",
+            "en": "Prone"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.formation",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Formation"
+    },
+    "spec": {
+      "values": [
+        "column",
+        "line",
+        "wedge",
+        "vee",
+        "echelon_left",
+        "echelon_right",
+        "file",
+        "diamond",
+        "wall",
+        "trail",
+        "box",
+        "spread"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.echelon",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Echelon"
+    },
+    "spec": {
+      "values": [
+        {
+          "value": "fire_team",
+          "label": {
+            "tr": "Tim",
+            "en": "Fire team"
+          }
+        },
+        {
+          "value": "squad",
+          "label": {
+            "tr": "Manga",
+            "en": "Squad"
+          }
+        },
+        {
+          "value": "section",
+          "label": {
+            "tr": "Kısım",
+            "en": "Section"
+          }
+        },
+        {
+          "value": "platoon",
+          "label": {
+            "tr": "Takım",
+            "en": "Platoon"
+          }
+        },
+        {
+          "value": "company",
+          "label": {
+            "tr": "Bölük",
+            "en": "Company"
+          }
+        },
+        {
+          "value": "battalion",
+          "label": {
+            "tr": "Tabur",
+            "en": "Battalion"
+          }
+        },
+        {
+          "value": "battery",
+          "label": {
+            "tr": "Batarya",
+            "en": "Battery"
+          }
+        },
+        {
+          "value": "element",
+          "label": {
+            "tr": "Kol (2'li)",
+            "en": "Element"
+          }
+        },
+        {
+          "value": "flight",
+          "label": {
+            "tr": "Kol (4'lü)",
+            "en": "Flight"
+          }
+        },
+        {
+          "value": "squadron",
+          "label": {
+            "tr": "Filo",
+            "en": "Squadron"
+          }
+        },
+        {
+          "value": "group",
+          "label": {
+            "tr": "Grup (sivil)",
+            "en": "Group"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.armor_class",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Armor / hardness class"
+    },
+    "spec": {
+      "values": [
+        "none",
+        "light",
+        "medium",
+        "heavy"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.warhead",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Warhead type"
+    },
+    "spec": {
+      "values": [
+        "none",
+        "he",
+        "heat",
+        "tandem_heat",
+        "kinetic",
+        "frag",
+        "blast_frag",
+        "thermobaric",
+        "smoke"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.comms_band",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Comms band"
+    },
+    "spec": {
+      "values": [
+        "hf",
+        "vhf",
+        "uhf",
+        "l_band",
+        "satcom",
+        "link16",
+        "wifi"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.link_status",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Link status"
+    },
+    "spec": {
+      "values": [
+        "ok",
+        "degraded",
+        "lost"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.eo_band",
+    "version": "1.0.0",
+    "meta": {
+      "name": "EO/IR band"
+    },
+    "spec": {
+      "values": [
+        "visual",
+        "nir",
+        "swir",
+        "mwir",
+        "lwir"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.lost_link_action",
+    "version": "1.0.0",
+    "meta": {
+      "name": "UAV lost-link action"
+    },
+    "spec": {
+      "values": [
+        "return_home",
+        "loiter",
+        "continue_mission",
+        "land"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.disposition",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Civilian disposition"
+    },
+    "spec": {
+      "values": [
+        "calm",
+        "alarmed",
+        "panicked",
+        "hostile"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.laser_type",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Laser type"
+    },
+    "spec": {
+      "values": [
+        "rangefinder",
+        "designator",
+        "beam_rider"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.jamming_technique",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Jamming technique"
+    },
+    "spec": {
+      "values": [
+        "noise",
+        "barrage",
+        "spot",
+        "deception",
+        "drfm"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Enumeration",
+    "id": "core.enum.message_priority",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Message priority"
+    },
+    "spec": {
+      "values": [
+        "routine",
+        "priority",
+        "immediate",
+        "flash"
+      ]
+    }
+  }
+]

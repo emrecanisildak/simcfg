@@ -1,0 +1,226 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.life.generic_human",
+    "version": "1.0.0",
+    "abstract": true,
+    "meta": {
+      "name": "Generic human (base)"
+    },
+    "spec": {
+      "platformType": "core.platformtype.lifeform",
+      "parameters": {},
+      "systems": {
+        "eyes": {
+          "template": "core.system.visual.human_eyes"
+        }
+      },
+      "appearance": {
+        "model": "generic/human"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.life.generic_rifleman",
+    "extends": "core.platform.life.generic_human",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic rifleman"
+    },
+    "spec": {
+      "systems": {
+        "eyes": {
+          "template": "core.system.visual.human_nvg"
+        },
+        "weapon": {
+          "template": "core.system.weapon.rifle_556"
+        },
+        "armor": {
+          "template": "core.system.protection.body_armor"
+        }
+      },
+      "behaviors": {
+        "infantry": {
+          "behavior": "core.behavior.lifeform.infantry_combat"
+        }
+      },
+      "appearance": {
+        "sidc": "SFGPUCI---*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.life.generic_squad_leader",
+    "extends": "core.platform.life.generic_rifleman",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic squad / team leader"
+    },
+    "spec": {
+      "systems": {
+        "radio": {
+          "template": "core.system.comms.generic_manpack_radio"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.life.generic_machine_gunner",
+    "extends": "core.platform.life.generic_rifleman",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic machine gunner"
+    },
+    "spec": {
+      "parameters": {
+        "maxSpeed": 4
+      },
+      "systems": {
+        "weapon": {
+          "template": "core.system.weapon.lmg_762"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.life.generic_at_gunner",
+    "extends": "core.platform.life.generic_rifleman",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic anti-tank gunner"
+    },
+    "spec": {
+      "systems": {
+        "weapon": {
+          "template": "core.system.weapon.rpg_launcher"
+        },
+        "sidearm": {
+          "template": "core.system.weapon.rifle_556",
+          "parameters": {
+            "loadout": {
+              "mag": {
+                "count": 90
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.life.generic_manpads_gunner",
+    "extends": "core.platform.life.generic_rifleman",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic MANPADS gunner"
+    },
+    "spec": {
+      "systems": {
+        "manpads": {
+          "template": "core.system.weapon.manpads_launcher"
+        },
+        "iff": {
+          "template": "core.system.iff.generic_combined",
+          "parameters": {
+            "role": "interrogator"
+          }
+        }
+      },
+      "behaviors": {
+        "air_defense": {
+          "behavior": "core.behavior.ground.shorad",
+          "bindings": {
+            "launcher": "manpads",
+            "gun": null,
+            "eo": null
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.life.generic_forward_observer",
+    "extends": "core.platform.life.generic_rifleman",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic forward observer / JTAC"
+    },
+    "spec": {
+      "systems": {
+        "radio": {
+          "template": "core.system.comms.generic_manpack_radio"
+        },
+        "designator": {
+          "template": "core.system.laser.generic_portable_designator"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.life.generic_civilian",
+    "extends": "core.platform.life.generic_human",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic civilian"
+    },
+    "spec": {
+      "parameters": {
+        "maxSpeed": 4,
+        "mass": 75
+      },
+      "behaviors": {
+        "civilian": {
+          "behavior": "core.behavior.lifeform.civilian"
+        }
+      },
+      "appearance": {
+        "sidc": "SNGPUC----*****",
+        "model": "generic/civilian"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.life.generic_armed_irregular",
+    "extends": "core.platform.life.generic_human",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic armed irregular"
+    },
+    "spec": {
+      "systems": {
+        "weapon": {
+          "template": "core.system.weapon.rifle_556"
+        }
+      },
+      "behaviors": {
+        "infantry": {
+          "behavior": "core.behavior.lifeform.infantry_combat",
+          "parameters": {
+            "roe": "free",
+            "moraleBreak": 0.5
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SHGPUCI---*****"
+      }
+    }
+  }
+]

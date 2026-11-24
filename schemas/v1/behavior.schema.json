@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/behavior.schema.json",
+  "title": "Behavior - kural tabanlı davranış seti",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "Behavior" },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "parameters": { "$ref": "common.schema.json#/$defs/descriptorMap" },
+        "variables": { "$ref": "common.schema.json#/$defs/descriptorMap" },
+        "requires": {
+          "type": "object",
+          "properties": {
+            "platformType": { "$ref": "common.schema.json#/$defs/id" },
+            "systems": {
+              "type": "object",
+              "description": "rol -> gereken sistem tipi. Platforma takılırken mount'lara bağlanır.",
+              "propertyNames": { "$ref": "common.schema.json#/$defs/localKey" },
+              "additionalProperties": {
+                "type": "object",
+                "required": ["systemType"],
+                "properties": {
+                  "systemType": { "$ref": "common.schema.json#/$defs/id" },
+                  "optional": { "type": "boolean" },
+                  "description": { "$ref": "common.schema.json#/$defs/text" }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "arbitration": {
+          "type": "object",
+          "properties": {
+            "policy": { "enum": ["priority", "first", "all"] },
+            "preemption": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        "rules": { "$ref": "common.schema.json#/$defs/ruleMap" },
+        "ui": { "$ref": "common.schema.json#/$defs/uiHints" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,6 @@
+#!/bin/sh
+# simcfg araç zinciri sarmalayıcısı. Varsa proje sanal ortamını kullanır.
+DIR="$(cd "$(dirname "$0")/.." && pwd)"
+PY="$DIR/.venv/bin/python"
+[ -x "$PY" ] || PY="python3"
+PYTHONPATH="$DIR/tools${PYTHONPATH:+:$PYTHONPATH}" exec "$PY" -m simcfg --root "${SIMCFG_ROOT:-$DIR}" "$@"

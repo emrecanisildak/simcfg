@@ -1,0 +1,266 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.armor",
+    "extends": "core.systemtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Armor / passive protection"
+    },
+    "spec": {
+      "category": "protection",
+      "implementation": "engine.protection.armor",
+      "parameters": {
+        "armorClass": {
+          "type": "enum",
+          "enumRef": "core.enum.armor_class",
+          "default": "light"
+        },
+        "frontal": {
+          "type": "number",
+          "unit": "mm",
+          "default": 0,
+          "min": 0,
+          "label": "RHA eşdeğeri - ön",
+          "ui": {
+            "group": "RHA"
+          }
+        },
+        "side": {
+          "type": "number",
+          "unit": "mm",
+          "default": 0,
+          "min": 0,
+          "ui": {
+            "group": "RHA"
+          }
+        },
+        "rear": {
+          "type": "number",
+          "unit": "mm",
+          "default": 0,
+          "min": 0,
+          "ui": {
+            "group": "RHA"
+          }
+        },
+        "top": {
+          "type": "number",
+          "unit": "mm",
+          "default": 0,
+          "min": 0,
+          "ui": {
+            "group": "RHA"
+          }
+        },
+        "era": {
+          "type": "boolean",
+          "default": false,
+          "label": "Reaktif zırh"
+        }
+      },
+      "state": {
+        "integrity": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 1,
+          "readonly": true
+        }
+      },
+      "ui": {
+        "icon": "shield"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.aps",
+    "extends": "core.systemtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Active protection system (hard-kill)"
+    },
+    "spec": {
+      "category": "protection",
+      "implementation": "engine.protection.aps",
+      "parameters": {
+        "interceptors": {
+          "type": "integer",
+          "required": true,
+          "min": 0
+        },
+        "reactionTime": {
+          "type": "number",
+          "unit": "s",
+          "default": 0.3,
+          "min": 0
+        },
+        "coverageAzimuth": {
+          "type": "number",
+          "unit": "deg",
+          "default": 360,
+          "min": 0,
+          "max": 360
+        },
+        "pk": {
+          "type": "number",
+          "default": 0.8,
+          "min": 0,
+          "max": 1
+        },
+        "minThreatSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "default": 70,
+          "min": 0
+        }
+      },
+      "state": {
+        "remaining": {
+          "type": "integer",
+          "min": 0,
+          "defaultFrom": "parameters.interceptors"
+        },
+        "armed": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "commands": {
+        "setArmed": {
+          "label": "Arm / safe",
+          "parameters": {
+            "armed": {
+              "type": "boolean",
+              "required": true
+            }
+          }
+        }
+      },
+      "emits": [
+        "core.event.aps.intercept"
+      ],
+      "ui": {
+        "icon": "aps"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.smoke_launcher",
+    "extends": "core.systemtype.cm_dispenser",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Smoke grenade launcher"
+    },
+    "spec": {
+      "implementation": "engine.cm.smoke",
+      "parameters": {
+        "obscurantBands": {
+          "type": "list",
+          "items": {
+            "type": "enum",
+            "enumRef": "core.enum.eo_band"
+          },
+          "default": [
+            "visual",
+            "nir",
+            "mwir",
+            "lwir"
+          ]
+        },
+        "smokeDuration": {
+          "type": "number",
+          "unit": "s",
+          "default": 60,
+          "min": 0
+        },
+        "screenRadius": {
+          "type": "number",
+          "unit": "m",
+          "default": 30,
+          "min": 0
+        }
+      },
+      "ui": {
+        "icon": "smoke",
+        "color": "#757575"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.cargo_bay",
+    "extends": "core.systemtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Cargo bay / troop compartment"
+    },
+    "spec": {
+      "category": "logistics",
+      "implementation": "engine.logistics.cargo",
+      "parameters": {
+        "seats": {
+          "type": "integer",
+          "default": 0,
+          "min": 0
+        },
+        "maxPayload": {
+          "type": "number",
+          "unit": "kg",
+          "default": 0,
+          "min": 0
+        },
+        "rampLoad": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "state": {
+        "occupants": {
+          "type": "integer",
+          "default": 0,
+          "min": 0,
+          "readonly": true
+        }
+      },
+      "commands": {
+        "load": {
+          "label": "Load",
+          "parameters": {
+            "entity": {
+              "type": "entityRef",
+              "required": true
+            }
+          }
+        },
+        "unload": {
+          "label": "Unload",
+          "parameters": {
+            "position": {
+              "type": "geoPoint",
+              "nullable": true,
+              "default": null
+            },
+            "all": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        }
+      },
+      "emits": [
+        "core.event.cargo.loaded",
+        "core.event.cargo.unloaded"
+      ],
+      "ui": {
+        "icon": "cargo"
+      }
+    }
+  }
+]

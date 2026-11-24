@@ -1,0 +1,605 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.tracked_vehicle",
+    "extends": "core.platformtype.ground_vehicle",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Tracked vehicle (MBT, IFV, SPG...)"
+    },
+    "spec": {
+      "implementation": "engine.dynamics.tracked",
+      "parameters": {
+        "offRoadSpeedFactor": {
+          "default": 0.7
+        },
+        "fordingDepth": {
+          "type": "number",
+          "unit": "m",
+          "default": 1.2,
+          "min": 0
+        },
+        "trenchCrossing": {
+          "type": "number",
+          "unit": "m",
+          "default": 2.5,
+          "min": 0
+        }
+      },
+      "ui": {
+        "icon": "tank"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.wheeled_vehicle",
+    "extends": "core.platformtype.ground_vehicle",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Wheeled vehicle (APC, truck, car...)"
+    },
+    "spec": {
+      "implementation": "engine.dynamics.wheeled",
+      "parameters": {
+        "offRoadSpeedFactor": {
+          "default": 0.4
+        },
+        "roadOnly": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "ui": {
+        "icon": "truck"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.rotary_wing",
+    "extends": "core.platformtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Rotary wing (helicopter)"
+    },
+    "spec": {
+      "domain": "air",
+      "implementation": "engine.dynamics.rotary_wing",
+      "parameters": {
+        "cruiseSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "hoverCeiling": {
+          "type": "number",
+          "unit": "m",
+          "required": true,
+          "min": 0,
+          "label": "OGE hover ceiling",
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "serviceCeiling": {
+          "type": "number",
+          "unit": "m",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "climbRate": {
+          "type": "number",
+          "unit": "m/s",
+          "default": 10,
+          "min": 0,
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "maxBank": {
+          "type": "number",
+          "unit": "deg",
+          "default": 45,
+          "min": 0,
+          "max": 90,
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "maxG": {
+          "type": "number",
+          "unit": "g",
+          "default": 3,
+          "min": 1,
+          "max": 6,
+          "ui": {
+            "group": "Performance"
+          }
+        },
+        "fuelCapacity": {
+          "type": "number",
+          "unit": "kg",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Fuel"
+          }
+        },
+        "fuelFlowCruise": {
+          "type": "number",
+          "unit": "kg/s",
+          "default": 0.15,
+          "min": 0,
+          "ui": {
+            "group": "Fuel"
+          }
+        },
+        "fuelFlowHover": {
+          "type": "number",
+          "unit": "kg/s",
+          "default": 0.2,
+          "min": 0,
+          "ui": {
+            "group": "Fuel"
+          }
+        }
+      },
+      "state": {
+        "fuel": {
+          "type": "number",
+          "unit": "kg",
+          "min": 0,
+          "defaultFrom": "parameters.fuelCapacity"
+        },
+        "onGround": {
+          "type": "boolean",
+          "default": false
+        },
+        "hovering": {
+          "type": "boolean",
+          "default": false,
+          "readonly": true
+        }
+      },
+      "emits": [
+        "core.event.platform.waypoint_reached",
+        "core.event.platform.route_completed",
+        "core.event.platform.landed",
+        "core.event.platform.took_off"
+      ],
+      "ui": {
+        "icon": "helicopter"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.multirotor",
+    "extends": "core.platformtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Multirotor drone"
+    },
+    "spec": {
+      "domain": "air",
+      "implementation": "engine.dynamics.multirotor",
+      "parameters": {
+        "cruiseSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "required": true,
+          "min": 0
+        },
+        "maxAltitude": {
+          "type": "number",
+          "unit": "m",
+          "default": 500,
+          "min": 0,
+          "description": "AGL"
+        },
+        "endurance": {
+          "type": "number",
+          "unit": "s",
+          "required": true,
+          "min": 0
+        },
+        "maxWindSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "default": 12,
+          "min": 0
+        },
+        "payload": {
+          "type": "number",
+          "unit": "kg",
+          "default": 0,
+          "min": 0
+        }
+      },
+      "state": {
+        "batteryLevel": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 1
+        },
+        "onGround": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "emits": [
+        "core.event.platform.waypoint_reached",
+        "core.event.platform.route_completed",
+        "core.event.platform.landed",
+        "core.event.platform.took_off"
+      ],
+      "ui": {
+        "icon": "drone"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.uav",
+    "extends": "core.platformtype.fixed_wing",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Fixed-wing UAV"
+    },
+    "spec": {
+      "implementation": "engine.dynamics.uav",
+      "parameters": {
+        "controlRange": {
+          "type": "number",
+          "unit": "m",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Control"
+          }
+        },
+        "endurance": {
+          "type": "number",
+          "unit": "s",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Fuel"
+          }
+        },
+        "autonomy": {
+          "type": "enum",
+          "values": [
+            "remote",
+            "waypoint",
+            "autonomous"
+          ],
+          "default": "waypoint",
+          "ui": {
+            "group": "Control"
+          }
+        },
+        "lostLinkAction": {
+          "type": "enum",
+          "enumRef": "core.enum.lost_link_action",
+          "default": "return_home",
+          "ui": {
+            "group": "Control"
+          }
+        }
+      },
+      "ui": {
+        "icon": "uav"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.loitering_munition",
+    "extends": "core.platformtype.uav",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Loitering munition"
+    },
+    "spec": {
+      "implementation": "engine.dynamics.loitering_munition",
+      "parameters": {
+        "warheadMass": {
+          "type": "number",
+          "unit": "kg",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Warhead"
+          }
+        },
+        "warhead": {
+          "type": "enum",
+          "enumRef": "core.enum.warhead",
+          "default": "frag",
+          "ui": {
+            "group": "Warhead"
+          }
+        },
+        "lethalRadius": {
+          "type": "number",
+          "unit": "m",
+          "default": 10,
+          "min": 0,
+          "ui": {
+            "group": "Warhead"
+          }
+        },
+        "penetration": {
+          "type": "number",
+          "unit": "mm",
+          "default": 0,
+          "min": 0,
+          "ui": {
+            "group": "Warhead"
+          }
+        },
+        "terminalSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "default": 60,
+          "min": 0,
+          "ui": {
+            "group": "Warhead"
+          }
+        },
+        "targetDomains": {
+          "type": "list",
+          "items": {
+            "type": "enum",
+            "enumRef": "core.enum.domain"
+          },
+          "default": [
+            "land"
+          ],
+          "ui": {
+            "group": "Warhead"
+          }
+        }
+      },
+      "ui": {
+        "icon": "loitering"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.lifeform",
+    "extends": "core.platformtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Lifeform (dismounted human)"
+    },
+    "spec": {
+      "domain": "land",
+      "implementation": "engine.dynamics.lifeform",
+      "parameters": {
+        "mass": {
+          "default": 80
+        },
+        "length": {
+          "default": 0.5
+        },
+        "maxSpeed": {
+          "default": 5,
+          "label": "Koşu hızı"
+        },
+        "rcs": {
+          "default": {
+            "breakpoints": [
+              [
+                0,
+                180
+              ]
+            ],
+            "values": [
+              1,
+              1
+            ]
+          }
+        },
+        "irSignature": {
+          "default": 100
+        },
+        "walkSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "default": 1.4,
+          "min": 0
+        },
+        "crawlSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "default": 0.3,
+          "min": 0
+        },
+        "carryLoad": {
+          "type": "number",
+          "unit": "kg",
+          "default": 25,
+          "min": 0
+        },
+        "fitness": {
+          "type": "number",
+          "default": 0.8,
+          "min": 0,
+          "max": 1
+        }
+      },
+      "state": {
+        "posture": {
+          "type": "enum",
+          "enumRef": "core.enum.posture",
+          "default": "standing"
+        },
+        "morale": {
+          "type": "number",
+          "default": 1,
+          "min": 0,
+          "max": 1
+        },
+        "disposition": {
+          "type": "enum",
+          "enumRef": "core.enum.disposition",
+          "default": "calm"
+        },
+        "suppressed": {
+          "type": "boolean",
+          "default": false,
+          "readonly": true
+        },
+        "mounted": {
+          "type": "boolean",
+          "default": false,
+          "readonly": true
+        },
+        "inCover": {
+          "type": "boolean",
+          "default": false,
+          "readonly": true
+        }
+      },
+      "emits": [
+        "core.event.platform.mounted",
+        "core.event.platform.dismounted",
+        "core.event.platform.waypoint_reached",
+        "core.event.platform.route_completed"
+      ],
+      "ui": {
+        "icon": "person"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.surface_vessel",
+    "extends": "core.platformtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Surface vessel"
+    },
+    "spec": {
+      "domain": "surface",
+      "implementation": "engine.dynamics.surface_vessel",
+      "parameters": {
+        "cruiseSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "required": true,
+          "min": 0
+        },
+        "displacement": {
+          "type": "number",
+          "unit": "kg",
+          "required": true,
+          "min": 0
+        },
+        "draft": {
+          "type": "number",
+          "unit": "m",
+          "default": 3,
+          "min": 0
+        },
+        "turningRadius": {
+          "type": "number",
+          "unit": "m",
+          "default": 300,
+          "min": 0
+        },
+        "fuelCapacity": {
+          "type": "number",
+          "unit": "kg",
+          "required": true,
+          "min": 0
+        },
+        "fuelFlowCruise": {
+          "type": "number",
+          "unit": "kg/s",
+          "default": 0.5,
+          "min": 0
+        },
+        "seaStateLimit": {
+          "type": "integer",
+          "default": 6,
+          "min": 0,
+          "max": 9
+        }
+      },
+      "state": {
+        "fuel": {
+          "type": "number",
+          "unit": "kg",
+          "min": 0,
+          "defaultFrom": "parameters.fuelCapacity"
+        }
+      },
+      "emits": [
+        "core.event.platform.waypoint_reached",
+        "core.event.platform.route_completed"
+      ],
+      "ui": {
+        "icon": "ship"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformType",
+    "id": "core.platformtype.structure",
+    "extends": "core.platformtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Fixed structure / site"
+    },
+    "spec": {
+      "domain": "land",
+      "implementation": "engine.static.structure",
+      "parameters": {
+        "maxSpeed": {
+          "default": 0
+        },
+        "hardness": {
+          "type": "enum",
+          "enumRef": "core.enum.armor_class",
+          "default": "medium"
+        },
+        "footprintRadius": {
+          "type": "number",
+          "unit": "m",
+          "default": 20,
+          "min": 0
+        },
+        "floors": {
+          "type": "integer",
+          "default": 1,
+          "min": 0
+        }
+      },
+      "ui": {
+        "icon": "building"
+      }
+    }
+  }
+]

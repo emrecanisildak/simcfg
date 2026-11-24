@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/system-type.schema.json",
+  "title": "SystemType - generic sistem sınıfı (radar, RWR, IFF, dispenser...)",
+  "description": "Bir sistem sınıfının parametre şemasını, gözlemlenebilir durumunu, komutlarını ve yaydığı olayları tanımlar. Motor tarafında 'implementation' ile bir eklentiye bağlanır.",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "SystemType" },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "implementation": { "type": "string", "description": "Motor eklenti kimliği (ör. engine.sensor.radar)." },
+        "parameters": { "$ref": "common.schema.json#/$defs/descriptorMap" },
+        "state": { "$ref": "common.schema.json#/$defs/descriptorMap" },
+        "commands": {
+          "type": "object",
+          "propertyNames": { "$ref": "common.schema.json#/$defs/localKey" },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "label": { "$ref": "common.schema.json#/$defs/text" },
+              "description": { "$ref": "common.schema.json#/$defs/text" },
+              "parameters": { "$ref": "common.schema.json#/$defs/descriptorMap" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "emits": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/id" }, "uniqueItems": true },
+        "ui": { "$ref": "common.schema.json#/$defs/uiHints" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

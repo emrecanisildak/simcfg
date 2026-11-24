@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/munition.schema.json",
+  "title": "Munition - değerleri doldurulmuş mühimmat modeli",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "Munition" },
+    "spec": {
+      "type": "object",
+      "required": ["munitionType"],
+      "properties": {
+        "munitionType": { "$ref": "common.schema.json#/$defs/id" },
+        "parameters": { "$ref": "common.schema.json#/$defs/valueMap" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,242 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.engage",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Angaje ol / ateşle",
+        "en": "Engage"
+      }
+    },
+    "spec": {
+      "category": "weapon",
+      "channels": [
+        "weapons"
+      ],
+      "durative": false,
+      "parameters": {
+        "launcher": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.weapon_launcher"
+          }
+        },
+        "target": {
+          "type": "entityRef",
+          "required": true
+        },
+        "munition": {
+          "type": "ref",
+          "refKind": "Munition",
+          "nullable": true,
+          "default": null
+        },
+        "salvo": {
+          "type": "integer",
+          "default": 1,
+          "min": 1,
+          "max": 8
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "launcher",
+        "command": "fire",
+        "args": {
+          "target": {
+            "param": "target"
+          },
+          "munition": {
+            "param": "munition"
+          },
+          "salvo": {
+            "param": "salvo"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.set_master_arm",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Master arm",
+        "en": "Set master arm"
+      }
+    },
+    "spec": {
+      "category": "weapon",
+      "channels": [],
+      "durative": false,
+      "parameters": {
+        "launcher": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.weapon_launcher"
+          }
+        },
+        "armed": {
+          "type": "boolean",
+          "required": true
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "launcher",
+        "command": "setMasterArm",
+        "args": {
+          "armed": {
+            "param": "armed"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.cease_fire",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Ateşi kes",
+        "en": "Cease fire"
+      }
+    },
+    "spec": {
+      "category": "weapon",
+      "channels": [
+        "weapons"
+      ],
+      "durative": false,
+      "parameters": {
+        "launcher": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.weapon_launcher"
+          }
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "launcher",
+        "command": "ceaseFire",
+        "args": {}
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.fire_at_position",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Mevziye/noktaya atış",
+        "en": "Fire at position"
+      }
+    },
+    "spec": {
+      "category": "weapon",
+      "channels": [
+        "weapons"
+      ],
+      "durative": false,
+      "parameters": {
+        "launcher": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.weapon_launcher"
+          }
+        },
+        "position": {
+          "type": "geoPoint",
+          "required": true
+        },
+        "munition": {
+          "type": "ref",
+          "refKind": "Munition",
+          "nullable": true,
+          "default": null
+        },
+        "rounds": {
+          "type": "integer",
+          "default": 1,
+          "min": 1
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "launcher",
+        "command": "fireAt",
+        "args": {
+          "position": {
+            "param": "position"
+          },
+          "munition": {
+            "param": "munition"
+          },
+          "rounds": {
+            "param": "rounds"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.suppress",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Baskı ateşi",
+        "en": "Suppressive fire"
+      }
+    },
+    "spec": {
+      "category": "weapon",
+      "channels": [
+        "weapons"
+      ],
+      "durative": true,
+      "parameters": {
+        "launcher": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.weapon_launcher"
+          }
+        },
+        "target": {
+          "type": "entityRef",
+          "required": true
+        },
+        "duration": {
+          "type": "number",
+          "unit": "s",
+          "default": 10,
+          "min": 0
+        },
+        "rounds": {
+          "type": "integer",
+          "default": 30,
+          "min": 1
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.weapon.suppress"
+      }
+    }
+  }
+]

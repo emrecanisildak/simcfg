@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/unit-template.schema.json",
+  "title": "UnitTemplate - organizasyon / birlik şablonu (tim, manga, takım, batarya, kol...)",
+  "description": "Üyeler (platform şablonu x adet) ve alt birliklerden oluşur. Senaryoda bir birlik örneği, formasyon konumlarıyla tek tek varlıklara açılır.",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "UnitTemplate" },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "echelon": { "type": "string", "description": "core.enum.echelon değeri" },
+        "domain": { "type": "string" },
+        "symbol": { "type": "string", "description": "MIL-STD-2525 / APP-6 birlik sembolü" },
+        "formation": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "description": "core.enum.formation değeri" },
+            "spacing": { "$ref": "common.schema.json#/$defs/quantity" }
+          },
+          "additionalProperties": false
+        },
+        "members": {
+          "type": "object",
+          "propertyNames": { "$ref": "common.schema.json#/$defs/localKey" },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "platform": { "$ref": "common.schema.json#/$defs/id" },
+              "count": { "type": "integer", "minimum": 1 },
+              "role": { "type": "string" },
+              "leader": { "type": "boolean" },
+              "overrides": { "type": "object", "description": "Her üyenin PlatformTemplate.spec'ine uygulanan yama." }
+            },
+            "additionalProperties": false
+          }
+        },
+        "subunits": {
+          "type": "object",
+          "propertyNames": { "$ref": "common.schema.json#/$defs/localKey" },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "unit": { "$ref": "common.schema.json#/$defs/id" },
+              "count": { "type": "integer", "minimum": 1 }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

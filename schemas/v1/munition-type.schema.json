@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/munition-type.schema.json",
+  "title": "MunitionType - mühimmat sınıfı (güdümlü füze, balistik mermi...)",
+  "description": "SystemType ile aynı desen: parametre şeması + motor eklentisi. Somut mühimmatlar 'Munition' dokümanlarıdır.",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "MunitionType" },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "implementation": { "type": "string", "description": "Uçuş/güdüm modeli eklentisi." },
+        "parameters": { "$ref": "common.schema.json#/$defs/descriptorMap" },
+        "ui": { "$ref": "common.schema.json#/$defs/uiHints" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

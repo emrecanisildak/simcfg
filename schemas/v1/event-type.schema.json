@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/event-type.schema.json",
+  "title": "EventType - kuralları tetikleyebilen olay",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "EventType" },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "source": { "enum": ["scenario", "platform", "system", "behavior"] },
+        "payload": { "$ref": "common.schema.json#/$defs/descriptorMap" },
+        "ui": { "$ref": "common.schema.json#/$defs/uiHints" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

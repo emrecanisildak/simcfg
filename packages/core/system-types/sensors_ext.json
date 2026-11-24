@@ -1,0 +1,348 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.eo_ir",
+    "extends": "core.systemtype.sensor",
+    "version": "1.0.0",
+    "meta": {
+      "name": "EO/IR sensor (camera, FLIR, targeting pod)"
+    },
+    "spec": {
+      "category": "sensor",
+      "implementation": "engine.sensor.eo_ir",
+      "parameters": {
+        "bands": {
+          "type": "list",
+          "items": {
+            "type": "enum",
+            "enumRef": "core.enum.eo_band"
+          },
+          "default": [
+            "visual",
+            "mwir"
+          ],
+          "ui": {
+            "group": "Optics"
+          }
+        },
+        "fovWide": {
+          "type": "number",
+          "unit": "deg",
+          "default": 30,
+          "min": 0.1,
+          "max": 180,
+          "ui": {
+            "group": "Optics"
+          }
+        },
+        "fovNarrow": {
+          "type": "number",
+          "unit": "deg",
+          "default": 2,
+          "min": 0.05,
+          "max": 180,
+          "ui": {
+            "group": "Optics"
+          }
+        },
+        "recognitionRange": {
+          "type": "number",
+          "unit": "m",
+          "nullable": true,
+          "default": null,
+          "min": 0,
+          "description": "DRI: tanıma menzili",
+          "ui": {
+            "group": "DRI"
+          }
+        },
+        "identificationRange": {
+          "type": "number",
+          "unit": "m",
+          "nullable": true,
+          "default": null,
+          "min": 0,
+          "description": "DRI: teşhis menzili",
+          "ui": {
+            "group": "DRI"
+          }
+        },
+        "slewRate": {
+          "type": "number",
+          "unit": "deg/s",
+          "default": 60,
+          "min": 0,
+          "ui": {
+            "group": "Gimbal"
+          }
+        },
+        "autoTrack": {
+          "type": "boolean",
+          "default": true,
+          "ui": {
+            "group": "Processing"
+          }
+        },
+        "laserRangefinder": {
+          "type": "boolean",
+          "default": false,
+          "ui": {
+            "group": "Processing"
+          }
+        }
+      },
+      "state": {
+        "mode": {
+          "type": "enum",
+          "values": [
+            "off",
+            "wide",
+            "narrow",
+            "track"
+          ],
+          "default": "wide"
+        },
+        "trackTarget": {
+          "type": "entityRef",
+          "nullable": true,
+          "default": null,
+          "readonly": true
+        }
+      },
+      "commands": {
+        "pointAt": {
+          "label": "Point / track",
+          "parameters": {
+            "target": {
+              "type": "entityRef",
+              "nullable": true,
+              "default": null
+            },
+            "position": {
+              "type": "geoPoint",
+              "nullable": true,
+              "default": null
+            },
+            "track": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "setMode": {
+          "label": "Set mode",
+          "parameters": {
+            "mode": {
+              "type": "enum",
+              "values": [
+                "off",
+                "wide",
+                "narrow",
+                "track"
+              ],
+              "required": true
+            }
+          }
+        }
+      },
+      "ui": {
+        "icon": "camera",
+        "color": "#00897b"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.visual",
+    "extends": "core.systemtype.sensor",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Visual observation (eyes, periscope, NVG)"
+    },
+    "spec": {
+      "category": "sensor",
+      "implementation": "engine.sensor.visual",
+      "parameters": {
+        "nightVision": {
+          "type": "boolean",
+          "default": false
+        },
+        "recognitionRange": {
+          "type": "number",
+          "unit": "m",
+          "nullable": true,
+          "default": null,
+          "min": 0
+        },
+        "identificationRange": {
+          "type": "number",
+          "unit": "m",
+          "nullable": true,
+          "default": null,
+          "min": 0
+        }
+      },
+      "state": {
+        "nightVisionOn": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "ui": {
+        "icon": "eye"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.maws",
+    "extends": "core.systemtype.sensor",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Missile approach warning system"
+    },
+    "spec": {
+      "category": "ew",
+      "implementation": "engine.ew.maws",
+      "parameters": {
+        "warningTime": {
+          "type": "number",
+          "unit": "s",
+          "default": 3,
+          "min": 0,
+          "description": "Ortalama uyarı süresi"
+        },
+        "falseAlarmRate": {
+          "type": "number",
+          "unit": "Hz",
+          "default": 0.0001,
+          "min": 0
+        }
+      },
+      "emits": [
+        "core.event.mws.missile_approach"
+      ],
+      "ui": {
+        "icon": "maws"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.lwr",
+    "extends": "core.systemtype.sensor",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Laser warning receiver"
+    },
+    "spec": {
+      "category": "ew",
+      "implementation": "engine.ew.lwr",
+      "parameters": {
+        "detects": {
+          "type": "list",
+          "items": {
+            "type": "enum",
+            "enumRef": "core.enum.laser_type"
+          },
+          "default": [
+            "rangefinder",
+            "designator",
+            "beam_rider"
+          ]
+        }
+      },
+      "emits": [
+        "core.event.lwr.laser_warning"
+      ],
+      "ui": {
+        "icon": "lwr"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.laser_designator",
+    "extends": "core.systemtype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Laser designator / rangefinder"
+    },
+    "spec": {
+      "category": "targeting",
+      "implementation": "engine.targeting.laser_designator",
+      "parameters": {
+        "maxRange": {
+          "type": "number",
+          "unit": "m",
+          "default": 10000,
+          "min": 0
+        },
+        "defaultCode": {
+          "type": "string",
+          "pattern": "^[12][1-8][1-8][1-8]$",
+          "default": "1688",
+          "description": "PRF kodu"
+        },
+        "rangefinderOnly": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "state": {
+        "lasing": {
+          "type": "boolean",
+          "default": false,
+          "readonly": true
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^[12][1-8][1-8][1-8]$",
+          "defaultFrom": "parameters.defaultCode"
+        },
+        "designatedTarget": {
+          "type": "entityRef",
+          "nullable": true,
+          "default": null,
+          "readonly": true
+        }
+      },
+      "commands": {
+        "designate": {
+          "label": "Designate",
+          "parameters": {
+            "target": {
+              "type": "entityRef",
+              "required": true
+            },
+            "code": {
+              "type": "string",
+              "nullable": true,
+              "default": null
+            },
+            "duration": {
+              "type": "number",
+              "unit": "s",
+              "nullable": true,
+              "default": null,
+              "min": 0
+            }
+          }
+        },
+        "stopDesignating": {
+          "label": "Stop",
+          "parameters": {}
+        }
+      },
+      "ui": {
+        "icon": "laser",
+        "color": "#d81b60"
+      }
+    }
+  }
+]

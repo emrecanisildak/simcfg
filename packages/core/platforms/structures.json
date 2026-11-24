@@ -1,0 +1,74 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.structure.generic_building",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic building"
+    },
+    "spec": {
+      "platformType": "core.platformtype.structure",
+      "parameters": {
+        "mass": "500 t",
+        "hardness": "medium",
+        "floors": 3,
+        "footprintRadius": "15 m"
+      },
+      "appearance": {
+        "sidc": "SNGPI-----*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.structure.generic_command_post",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic command post"
+    },
+    "spec": {
+      "platformType": "core.platformtype.structure",
+      "parameters": {
+        "mass": "50 t",
+        "hardness": "heavy",
+        "footprintRadius": "30 m"
+      },
+      "systems": {
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        },
+        "uhf": {
+          "template": "core.system.comms.generic_uhf_air_radio"
+        },
+        "link16": {
+          "template": "core.system.comms.generic_link16"
+        }
+      },
+      "appearance": {
+        "sidc": "SFGPUH----*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.structure.generic_bridge",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic bridge"
+    },
+    "spec": {
+      "platformType": "core.platformtype.structure",
+      "parameters": {
+        "mass": "2000 t",
+        "hardness": "heavy",
+        "footprintRadius": "100 m"
+      },
+      "appearance": {
+        "sidc": "SNGPIB----*****"
+      }
+    }
+  }
+]

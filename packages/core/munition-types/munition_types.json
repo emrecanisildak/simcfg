@@ -1,0 +1,303 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "MunitionType",
+    "id": "core.munitiontype.base",
+    "version": "1.0.0",
+    "abstract": true,
+    "meta": {
+      "name": "Base munition"
+    },
+    "spec": {
+      "category": "munition",
+      "parameters": {
+        "mass": {
+          "type": "number",
+          "unit": "kg",
+          "default": 100,
+          "min": 0,
+          "ui": {
+            "group": "Physical"
+          }
+        },
+        "guidance": {
+          "type": "enum",
+          "enumRef": "core.enum.guidance",
+          "required": true,
+          "ui": {
+            "group": "Guidance"
+          }
+        },
+        "minRange": {
+          "type": "number",
+          "unit": "m",
+          "default": 0,
+          "min": 0,
+          "ui": {
+            "group": "Kinematics"
+          }
+        },
+        "maxRange": {
+          "type": "number",
+          "unit": "m",
+          "required": true,
+          "min": 0,
+          "ui": {
+            "group": "Kinematics"
+          }
+        },
+        "speed": {
+          "type": "number",
+          "unit": "m/s",
+          "required": true,
+          "min": 0,
+          "description": "Ortalama uçuş hızı",
+          "ui": {
+            "group": "Kinematics"
+          }
+        },
+        "maxFlightTime": {
+          "type": "number",
+          "unit": "s",
+          "default": 60,
+          "min": 0,
+          "ui": {
+            "group": "Kinematics"
+          }
+        },
+        "lethalRadius": {
+          "type": "number",
+          "unit": "m",
+          "default": 10,
+          "min": 0,
+          "ui": {
+            "group": "Warhead"
+          }
+        },
+        "pk": {
+          "type": "number",
+          "default": 0.7,
+          "min": 0,
+          "max": 1,
+          "label": "Single-shot Pk",
+          "ui": {
+            "group": "Warhead"
+          }
+        },
+        "launchWarning": {
+          "type": "boolean",
+          "default": true,
+          "description": "Atış RWR/MAWS tarafından 'missile_launch' olarak algılanabilir mi?",
+          "ui": {
+            "group": "Signatures"
+          }
+        },
+        "cmSusceptibility": {
+          "type": "object",
+          "description": "Karşı tedbirlerin bu mühimmatı kandırma olasılığı (atım başına).",
+          "ui": {
+            "group": "Countermeasures"
+          },
+          "fields": {
+            "chaff": {
+              "type": "number",
+              "default": 0,
+              "min": 0,
+              "max": 1
+            },
+            "flare": {
+              "type": "number",
+              "default": 0,
+              "min": 0,
+              "max": 1
+            }
+          }
+        },
+        "warhead": {
+          "type": "enum",
+          "enumRef": "core.enum.warhead",
+          "default": "he",
+          "ui": {
+            "group": "Warhead"
+          }
+        },
+        "penetration": {
+          "type": "number",
+          "unit": "mm",
+          "default": 0,
+          "min": 0,
+          "label": "RHA penetrasyonu",
+          "ui": {
+            "group": "Warhead"
+          }
+        },
+        "targetDomains": {
+          "type": "list",
+          "items": {
+            "type": "enum",
+            "enumRef": "core.enum.domain"
+          },
+          "default": [
+            "air",
+            "land",
+            "surface"
+          ],
+          "description": "Angaje edilebilecek hedef ortamları",
+          "ui": {
+            "group": "Employment"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "MunitionType",
+    "id": "core.munitiontype.guided_missile",
+    "extends": "core.munitiontype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Guided missile"
+    },
+    "spec": {
+      "implementation": "engine.munition.guided_missile",
+      "parameters": {
+        "maxG": {
+          "type": "number",
+          "unit": "g",
+          "default": 30,
+          "min": 1,
+          "ui": {
+            "group": "Kinematics"
+          }
+        },
+        "seekerFov": {
+          "type": "number",
+          "unit": "deg",
+          "default": 40,
+          "min": 0,
+          "max": 180,
+          "ui": {
+            "group": "Guidance"
+          }
+        },
+        "seekerRange": {
+          "type": "number",
+          "unit": "m",
+          "nullable": true,
+          "default": null,
+          "min": 0,
+          "ui": {
+            "group": "Guidance"
+          }
+        },
+        "navigationGain": {
+          "type": "number",
+          "default": 4,
+          "min": 1,
+          "max": 10,
+          "ui": {
+            "group": "Guidance",
+            "advanced": true
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "MunitionType",
+    "id": "core.munitiontype.ballistic",
+    "extends": "core.munitiontype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Ballistic round"
+    },
+    "spec": {
+      "implementation": "engine.munition.ballistic",
+      "parameters": {
+        "guidance": {
+          "default": "none"
+        },
+        "dispersion": {
+          "type": "number",
+          "unit": "mil",
+          "default": 5,
+          "min": 0,
+          "ui": {
+            "group": "Accuracy"
+          }
+        },
+        "rateOfFire": {
+          "type": "number",
+          "unit": "Hz",
+          "default": 100,
+          "min": 0,
+          "label": "Rounds per second",
+          "ui": {
+            "group": "Accuracy"
+          }
+        },
+        "indirect": {
+          "type": "boolean",
+          "default": false,
+          "description": "Endirekt atış (topçu/havan)",
+          "ui": {
+            "group": "Accuracy"
+          }
+        },
+        "cep": {
+          "type": "number",
+          "unit": "m",
+          "default": 0,
+          "min": 0,
+          "label": "CEP",
+          "ui": {
+            "group": "Accuracy"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "MunitionType",
+    "id": "core.munitiontype.guided_bomb",
+    "extends": "core.munitiontype.base",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Guided bomb"
+    },
+    "spec": {
+      "implementation": "engine.munition.guided_bomb",
+      "parameters": {
+        "minReleaseAltitude": {
+          "type": "number",
+          "unit": "m",
+          "default": 300,
+          "min": 0,
+          "ui": {
+            "group": "Release"
+          }
+        },
+        "maxReleaseAltitude": {
+          "type": "number",
+          "unit": "m",
+          "default": 12000,
+          "min": 0,
+          "ui": {
+            "group": "Release"
+          }
+        },
+        "glideRatio": {
+          "type": "number",
+          "default": 3,
+          "min": 0,
+          "ui": {
+            "group": "Release"
+          }
+        }
+      }
+    }
+  }
+]

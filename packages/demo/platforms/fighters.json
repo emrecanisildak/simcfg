@@ -1,0 +1,182 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "demo.platform.fighter_mk2",
+    "extends": "core.platform.air.generic_fighter",
+    "version": "0.1.0",
+    "meta": {
+      "name": "Fighter Mk2",
+      "description": {
+        "tr": "Generic avcıdan türetilmiş: daha uzun menzilli radar, büyük flare şarjörü, yakıt yönetimi."
+      }
+    },
+    "spec": {
+      "parameters": {
+        "maxSpeed": "1450 km/h",
+        "fuelCapacity": "4100 kg"
+      },
+      "systems": {
+        "radar": {
+          "template": "demo.system.radar.fcr_long_range"
+        },
+        "flare": {
+          "parameters": {
+            "capacity": 60
+          }
+        },
+        "weapons": {
+          "parameters": {
+            "loadout": {
+              "mrm": {
+                "count": 6
+              }
+            }
+          }
+        }
+      },
+      "behaviors": {
+        "self_defense": {
+          "parameters": {
+            "chaffBurst": 5
+          }
+        },
+        "fuel": {
+          "behavior": "core.behavior.air.fuel_management",
+          "parameters": {
+            "bingoFraction": 0.3
+          }
+        },
+        "engage": {
+          "parameters": {
+            "preferredMunition": "core.munition.generic_mrm"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "demo.platform.fighter_mk2_export",
+    "extends": "demo.platform.fighter_mk2",
+    "version": "0.1.0",
+    "meta": {
+      "name": "Fighter Mk2 (export)",
+      "description": {
+        "tr": "Alt-sistem bulundurma örneği: chaff yok, sivil IFF, standart radar."
+      }
+    },
+    "spec": {
+      "systems": {
+        "chaff": {
+          "$delete": true
+        },
+        "iff": {
+          "template": "core.system.iff.generic_transponder"
+        },
+        "radar": {
+          "template": "core.system.radar.generic_fcr"
+        },
+        "weapons": {
+          "parameters": {
+            "loadout": {
+              "mrm": {
+                "$delete": true
+              },
+              "srm": {
+                "count": 4
+              }
+            }
+          }
+        }
+      },
+      "behaviors": {
+        "engage": {
+          "parameters": {
+            "preferredMunition": "core.munition.generic_srm"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "demo.platform.mixin.aft_dispensers",
+    "abstract": true,
+    "version": "0.1.0",
+    "meta": {
+      "name": "Mixin: aft dispensers",
+      "description": {
+        "tr": "Çoklu kalıtım (mixin) örneği: herhangi bir uçağa arka dispenser ekler."
+      }
+    },
+    "spec": {
+      "platformType": "core.platformtype.fixed_wing",
+      "systems": {
+        "chaff_aft": {
+          "template": "demo.system.cm.chaff_aft",
+          "placement": {
+            "offset": {
+              "x": -7
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "demo.platform.fighter_mk2_ew",
+    "extends": [
+      "demo.platform.fighter_mk2",
+      "demo.platform.mixin.aft_dispensers"
+    ],
+    "version": "0.1.0",
+    "meta": {
+      "name": "Fighter Mk2 EW",
+      "description": {
+        "tr": "Mk2 + arka dispenser mixin + agresif öz savunma davranışı."
+      }
+    },
+    "spec": {
+      "behaviors": {
+        "self_defense": {
+          "behavior": "demo.behavior.aggressive_self_defense"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "demo.platform.sam_battery",
+    "extends": "core.platform.land.generic_sam_site",
+    "version": "0.1.0",
+    "meta": {
+      "name": "SAM battery (medium range)"
+    },
+    "spec": {
+      "parameters": {
+        "setupTime": "3 min"
+      },
+      "systems": {
+        "search_radar": {
+          "parameters": {
+            "maxRange": "180 km",
+            "emitterId": "DEMO-SAM-SR"
+          }
+        }
+      },
+      "behaviors": {
+        "air_defense": {
+          "parameters": {
+            "activeMode": "tws"
+          }
+        }
+      }
+    }
+  }
+]

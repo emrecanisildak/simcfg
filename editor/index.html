@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>simcfg editör</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">simcfg <span>model &amp; davranış editörü</span></div>
+    <div class="top-actions">
+      <span id="counts" class="counts" title="Tüm çalışma alanı tanıları"></span>
+      <button id="btn-reload" class="ghost" title="Diskten yeniden yükle ve doğrula">Yenile</button>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="side">
+      <input id="filter" type="search" placeholder="Ara (id veya ad)…" autocomplete="off">
+      <nav id="tree"></nav>
+    </aside>
+    <main id="main"></main>
+  </div>
+  <section id="diag-panel" class="diag-panel">
+    <div class="diag-head">
+      <button data-scope="doc" class="diag-tab active">Bu doküman</button>
+      <button data-scope="all" class="diag-tab">Tümü</button>
+      <button id="diag-toggle" class="ghost small">▾</button>
+    </div>
+    <div id="diag-list" class="diag-list"></div>
+  </section>
+  <div id="modal" class="modal" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>

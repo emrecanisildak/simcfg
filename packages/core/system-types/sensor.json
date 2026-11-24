@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../schemas/v1/system-type.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "SystemType",
+  "id": "core.systemtype.sensor",
+  "extends": "core.systemtype.base",
+  "version": "1.0.0",
+  "abstract": true,
+  "meta": { "name": "Base sensor" },
+  "spec": {
+    "category": "sensor",
+    "parameters": {
+      "maxRange":     { "type": "number", "unit": "m", "required": true, "min": 0, "ui": { "group": "Coverage", "order": 1 } },
+      "minRange":     { "type": "number", "unit": "m", "default": 0, "min": 0, "ui": { "group": "Coverage", "order": 2 } },
+      "azimuthLimit": { "type": "number", "unit": "deg", "default": 180, "min": 0, "max": 180, "description": "± yarım açı", "ui": { "group": "Coverage" } },
+      "elevationLimits": {
+        "type": "object", "ui": { "group": "Coverage" },
+        "fields": {
+          "min": { "type": "number", "unit": "deg", "default": -90, "min": -90, "max": 90 },
+          "max": { "type": "number", "unit": "deg", "default": 90, "min": -90, "max": 90 }
+        }
+      },
+      "updateRate": { "type": "number", "unit": "s", "default": 1, "min": 0.001, "ui": { "group": "Timing" } }
+    },
+    "emits": ["core.event.sensor.detection", "core.event.sensor.track_lost"]
+  }
+}

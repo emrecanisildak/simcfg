@@ -1,0 +1,84 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.load_cargo",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Yükle / bindir",
+        "en": "Load cargo"
+      }
+    },
+    "spec": {
+      "category": "logistics",
+      "channels": [],
+      "durative": false,
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.cargo_bay"
+          }
+        },
+        "entity": {
+          "type": "entityRef",
+          "required": true
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "system",
+        "command": "load",
+        "args": {
+          "entity": {
+            "param": "entity"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.unload_troops",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "İndir (asker/kargo)",
+        "en": "Unload"
+      }
+    },
+    "spec": {
+      "category": "logistics",
+      "channels": [],
+      "durative": false,
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.cargo_bay"
+          }
+        },
+        "position": {
+          "type": "geoPoint",
+          "nullable": true,
+          "default": null
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "system",
+        "command": "unload",
+        "args": {
+          "position": {
+            "param": "position"
+          },
+          "all": true
+        }
+      }
+    }
+  }
+]

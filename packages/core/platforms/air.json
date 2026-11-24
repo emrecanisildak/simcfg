@@ -1,0 +1,419 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.air.generic_fixed_wing",
+    "version": "1.0.0",
+    "abstract": true,
+    "meta": {
+      "name": "Generic fixed-wing",
+      "description": "Tüm generic uçakların kökü."
+    },
+    "spec": {
+      "platformType": "core.platformtype.fixed_wing",
+      "parameters": {
+        "mass": "12 t",
+        "length": 15,
+        "maxSpeed": "450 kts",
+        "minSpeed": "120 kts",
+        "cruiseSpeed": "350 kts",
+        "ceiling": "40000 ft",
+        "fuelCapacity": "5 t",
+        "maxG": 3
+      },
+      "systems": {
+        "iff": {
+          "template": "core.system.iff.generic_transponder"
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPMF----*****",
+        "model": "generic/fixed_wing"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.air.generic_fighter",
+    "extends": "core.platform.air.generic_fixed_wing",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic fighter",
+      "tags": [
+        "generic",
+        "fighter"
+      ]
+    },
+    "spec": {
+      "parameters": {
+        "mass": "15 t",
+        "length": 15,
+        "maxSpeed": "1300 km/h",
+        "minSpeed": "130 kts",
+        "cruiseSpeed": "480 kts",
+        "maxG": 9,
+        "ceiling": "50000 ft",
+        "climbRate": "250 m/s",
+        "fuelCapacity": "3200 kg",
+        "fuelFlowCruise": "0.9 kg/s",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              45,
+              90,
+              135,
+              180
+            ]
+          ],
+          "values": [
+            3,
+            5,
+            12,
+            6,
+            4
+          ]
+        },
+        "irSignature": "8 kW/sr"
+      },
+      "systems": {
+        "radar": {
+          "template": "core.system.radar.generic_fcr",
+          "placement": {
+            "offset": {
+              "x": 6
+            }
+          }
+        },
+        "rwr": {
+          "template": "core.system.rwr.generic"
+        },
+        "iff": {
+          "template": "core.system.iff.generic_combined"
+        },
+        "chaff": {
+          "template": "core.system.cm.generic_chaff"
+        },
+        "flare": {
+          "template": "core.system.cm.generic_flare"
+        },
+        "weapons": {
+          "template": "core.system.weapon.generic_fighter_stores"
+        }
+      },
+      "behaviors": {
+        "self_defense": {
+          "behavior": "core.behavior.air.self_defense"
+        },
+        "engage": {
+          "behavior": "core.behavior.air.engage_hostiles"
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPMFF---*****",
+        "model": "generic/fighter"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.air.generic_transport",
+    "extends": "core.platform.air.generic_fixed_wing",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic airliner / civil transport",
+      "tags": [
+        "generic",
+        "transport"
+      ]
+    },
+    "spec": {
+      "parameters": {
+        "mass": "70 t",
+        "length": 40,
+        "maxSpeed": "500 kts",
+        "minSpeed": "130 kts",
+        "cruiseSpeed": "450 kts",
+        "maxG": 2.5,
+        "ceiling": "41000 ft",
+        "fuelCapacity": "20 t",
+        "fuelFlowCruise": "0.7 kg/s",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              90,
+              180
+            ]
+          ],
+          "values": [
+            40,
+            100,
+            40
+          ]
+        }
+      },
+      "systems": {
+        "rwr": {
+          "template": "core.system.rwr.generic",
+          "fitted": false
+        },
+        "flare": {
+          "template": "core.system.cm.generic_flare",
+          "fitted": false,
+          "parameters": {
+            "capacity": 60
+          }
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        }
+      },
+      "behaviors": {
+        "self_defense": {
+          "behavior": "core.behavior.air.self_defense",
+          "enabled": false
+        },
+        "civil": {
+          "behavior": "core.behavior.air.civil_flight"
+        }
+      },
+      "appearance": {
+        "sidc": "SNAPCF----*****",
+        "model": "generic/airliner"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.air.generic_attack_aircraft",
+    "extends": "core.platform.air.generic_fighter",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic attack aircraft"
+    },
+    "spec": {
+      "parameters": {
+        "mass": "20 t",
+        "maxSpeed": "1000 km/h",
+        "minSpeed": "130 kts",
+        "cruiseSpeed": "420 kts",
+        "maxG": 7.5,
+        "ceiling": "45000 ft",
+        "fuelCapacity": "4.5 t"
+      },
+      "systems": {
+        "weapons": {
+          "template": "core.system.weapon.attack_aircraft_stores"
+        },
+        "pod": {
+          "template": "core.system.eo.generic_targeting_pod"
+        },
+        "designator": {
+          "template": "core.system.laser.generic_pod_designator"
+        },
+        "jammer": {
+          "template": "core.system.ew.generic_selfprotect_jammer"
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPMFA---*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.air.generic_aew",
+    "extends": "core.platform.air.generic_fixed_wing",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic AEW&C aircraft"
+    },
+    "spec": {
+      "parameters": {
+        "mass": "70 t",
+        "length": 45,
+        "maxSpeed": "450 kts",
+        "minSpeed": "140 kts",
+        "cruiseSpeed": "330 kts",
+        "ceiling": "35000 ft",
+        "fuelCapacity": "40 t",
+        "maxG": 2.5
+      },
+      "systems": {
+        "iff": {
+          "template": "core.system.iff.generic_combined"
+        },
+        "radar": {
+          "template": "core.system.radar.generic_aew"
+        },
+        "rwr": {
+          "template": "core.system.rwr.generic"
+        },
+        "link16": {
+          "template": "core.system.comms.generic_link16"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_uhf_air_radio"
+        }
+      },
+      "behaviors": {
+        "report": {
+          "behavior": "core.behavior.common.report_contacts",
+          "bindings": {
+            "link": "link16"
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPMFRW--*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.air.generic_military_transport",
+    "extends": "core.platform.air.generic_fixed_wing",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic military transport"
+    },
+    "spec": {
+      "parameters": {
+        "mass": "70 t",
+        "length": 35,
+        "maxSpeed": "330 kts",
+        "minSpeed": "110 kts",
+        "cruiseSpeed": "300 kts",
+        "ceiling": "37000 ft",
+        "fuelCapacity": "20 t",
+        "maxG": 2.5
+      },
+      "systems": {
+        "iff": {
+          "template": "core.system.iff.generic_combined"
+        },
+        "rwr": {
+          "template": "core.system.rwr.generic"
+        },
+        "maws": {
+          "template": "core.system.ew.generic_maws"
+        },
+        "flare": {
+          "template": "core.system.cm.generic_flare",
+          "parameters": {
+            "capacity": 120
+          }
+        },
+        "hold": {
+          "template": "core.system.cargo.transport_hold"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_uhf_air_radio"
+        }
+      },
+      "behaviors": {
+        "self_defense": {
+          "behavior": "core.behavior.air.self_defense"
+        },
+        "missile_defense": {
+          "behavior": "core.behavior.common.missile_warning_defense"
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPMFC---*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.air.generic_business_jet",
+    "extends": "core.platform.air.generic_transport",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic business jet"
+    },
+    "spec": {
+      "parameters": {
+        "mass": "20 t",
+        "length": 20,
+        "maxSpeed": "480 kts",
+        "minSpeed": "110 kts",
+        "cruiseSpeed": "430 kts",
+        "ceiling": "45000 ft",
+        "fuelCapacity": "6 t",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              90,
+              180
+            ]
+          ],
+          "values": [
+            8,
+            20,
+            8
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.air.generic_light_aircraft",
+    "extends": "core.platform.air.generic_fixed_wing",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic light aircraft (GA)"
+    },
+    "spec": {
+      "parameters": {
+        "mass": "1.1 t",
+        "length": 8,
+        "maxSpeed": "160 kts",
+        "minSpeed": "50 kts",
+        "cruiseSpeed": "120 kts",
+        "ceiling": "14000 ft",
+        "fuelCapacity": "150 kg",
+        "fuelFlowCruise": "0.01 kg/s",
+        "maxG": 3.8,
+        "climbRate": "4 m/s",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              180
+            ]
+          ],
+          "values": [
+            2,
+            2
+          ]
+        },
+        "irSignature": "300 W/sr"
+      },
+      "systems": {
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        }
+      },
+      "behaviors": {
+        "civil": {
+          "behavior": "core.behavior.air.civil_flight"
+        }
+      },
+      "appearance": {
+        "sidc": "SNAPCF----*****",
+        "model": "generic/light_aircraft"
+      }
+    }
+  }
+]

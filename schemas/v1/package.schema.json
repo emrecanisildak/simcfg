@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/package.schema.json",
+  "title": "Package - konfigürasyon paketi manifestosu",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "required": ["spec"],
+  "properties": {
+    "kind": { "const": "Package" },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "dependencies": {
+          "type": "object",
+          "description": "paketId -> sürüm aralığı (\"^1.0.0\", \">=1.2.0\", \"1.0.0\", \"*\")",
+          "additionalProperties": { "type": "string" }
+        },
+        "include": { "type": "array", "items": { "type": "string" } },
+        "exclude": { "type": "array", "items": { "type": "string" } },
+        "engine": {
+          "type": "object",
+          "description": "Bu paketin gerektirdiği motor eklentileri (implementation id önekleri).",
+          "properties": { "plugins": { "type": "array", "items": { "type": "string" } } },
+          "additionalProperties": false
+        }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

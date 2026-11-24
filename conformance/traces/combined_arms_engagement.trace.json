@@ -1,0 +1,5743 @@
+[
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_lift",
+    "owner": "plan",
+    "action": "core.action.follow_route",
+    "params": {
+      "route": "helo_ingress",
+      "startWaypoint": 0
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "civ_car",
+    "owner": "plan",
+    "action": "core.action.follow_route",
+    "params": {
+      "route": "road_east",
+      "startWaypoint": 0
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "civ_ga",
+    "owner": "plan",
+    "action": "core.action.follow_route",
+    "params": {
+      "route": "airway_civil",
+      "startWaypoint": 0
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "event",
+    "event": "core.event.scenario.started",
+    "payload": {}
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.arm_main",
+    "rule": "arm_main",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.arm_main",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "main_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.arm_main",
+    "system": "main_gun",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_tanks_wing_1",
+    "owner": "combat.arm_main",
+    "rule": "arm_main",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_tanks_wing_1",
+    "owner": "combat.arm_main",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "main_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_tanks_wing_1",
+    "owner": "combat.arm_main",
+    "system": "main_gun",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_tanks_wing_2",
+    "owner": "combat.arm_main",
+    "rule": "arm_main",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_tanks_wing_2",
+    "owner": "combat.arm_main",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "main_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_tanks_wing_2",
+    "owner": "combat.arm_main",
+    "system": "main_gun",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_tanks_wing_3",
+    "owner": "combat.arm_main",
+    "rule": "arm_main",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_tanks_wing_3",
+    "owner": "combat.arm_main",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "main_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_tanks_wing_3",
+    "owner": "combat.arm_main",
+    "system": "main_gun",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_ifv_1",
+    "owner": "combat.arm_main",
+    "rule": "arm_main",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_ifv_1",
+    "owner": "combat.arm_main",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "main_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_ifv_1",
+    "owner": "combat.arm_main",
+    "system": "cannon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_ifv_2",
+    "owner": "combat.arm_main",
+    "rule": "arm_main",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_ifv_2",
+    "owner": "combat.arm_main",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "main_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_ifv_2",
+    "owner": "combat.arm_main",
+    "system": "cannon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_ifv_3",
+    "owner": "combat.arm_main",
+    "rule": "arm_main",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_ifv_3",
+    "owner": "combat.arm_main",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "main_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_ifv_3",
+    "owner": "combat.arm_main",
+    "system": "cannon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_1_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_1_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_1_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_1_alpha_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_1_alpha_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_1_alpha_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_1_alpha_rifleman",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_1_alpha_rifleman",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_1_alpha_rifleman",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_1_alpha_gunner",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_1_alpha_gunner",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_1_alpha_gunner",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_1_alpha_at",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_1_alpha_at",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_1_alpha_at",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_1_bravo_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_1_bravo_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_1_bravo_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_1_bravo_rifleman",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_1_bravo_rifleman",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_1_bravo_rifleman",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_1_bravo_gunner",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_1_bravo_gunner",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_1_bravo_gunner",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_1_bravo_at",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_1_bravo_at",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_1_bravo_at",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_2_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_2_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_2_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_2_alpha_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_2_alpha_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_2_alpha_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_2_alpha_rifleman",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_2_alpha_rifleman",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_2_alpha_rifleman",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_2_alpha_gunner",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_2_alpha_gunner",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_2_alpha_gunner",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_2_alpha_at",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_2_alpha_at",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_2_alpha_at",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_2_bravo_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_2_bravo_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_2_bravo_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_2_bravo_rifleman",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_2_bravo_rifleman",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_2_bravo_rifleman",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_2_bravo_gunner",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_2_bravo_gunner",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_2_bravo_gunner",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_2_bravo_at",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_2_bravo_at",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_2_bravo_at",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_3_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_3_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_3_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_3_alpha_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_3_alpha_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_3_alpha_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_3_alpha_rifleman",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_3_alpha_rifleman",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_3_alpha_rifleman",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_3_alpha_gunner",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_3_alpha_gunner",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_3_alpha_gunner",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_3_alpha_at",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_3_alpha_at",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_3_alpha_at",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_3_bravo_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_3_bravo_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_3_bravo_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_3_bravo_rifleman",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_3_bravo_rifleman",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_3_bravo_rifleman",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_3_bravo_gunner",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_3_bravo_gunner",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_3_bravo_gunner",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_squad_3_bravo_at",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_squad_3_bravo_at",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_squad_3_bravo_at",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_squad_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_squad_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_squad_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_squad_alpha_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_squad_alpha_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_squad_alpha_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_squad_alpha_rifleman",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_squad_alpha_rifleman",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_squad_alpha_rifleman",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_squad_alpha_gunner",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_squad_alpha_gunner",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_squad_alpha_gunner",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_squad_alpha_at",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_squad_alpha_at",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_squad_alpha_at",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_squad_bravo_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_squad_bravo_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_squad_bravo_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_squad_bravo_rifleman",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_squad_bravo_rifleman",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_squad_bravo_rifleman",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_squad_bravo_gunner",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_squad_bravo_gunner",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_squad_bravo_gunner",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_squad_bravo_at",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_squad_bravo_at",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_squad_bravo_at",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_manpads_leader",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_manpads_leader",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_manpads_leader",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_manpads_gunner",
+    "owner": "infantry.arm",
+    "rule": "arm",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_manpads_gunner",
+    "owner": "infantry.arm",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_manpads_gunner",
+    "owner": "infantry.arm",
+    "system": "weapon",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_manpads_gunner",
+    "owner": "air_defense.arm_launcher",
+    "rule": "arm_launcher",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_manpads_gunner",
+    "owner": "air_defense.arm_launcher",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "launcher",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_manpads_gunner",
+    "owner": "air_defense.arm_launcher",
+    "system": "manpads",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_ad_shorad_1",
+    "owner": "air_defense.arm_launcher",
+    "rule": "arm_launcher",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_ad_shorad_1",
+    "owner": "air_defense.arm_launcher",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "launcher",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_ad_shorad_1",
+    "owner": "air_defense.arm_launcher",
+    "system": "launcher",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_ad_shorad_2",
+    "owner": "air_defense.arm_launcher",
+    "rule": "arm_launcher",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_ad_shorad_2",
+    "owner": "air_defense.arm_launcher",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "launcher",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_ad_shorad_2",
+    "owner": "air_defense.arm_launcher",
+    "system": "launcher",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.arm_secondary",
+    "rule": "arm_secondary",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.arm_secondary",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "secondary_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.arm_secondary",
+    "system": "coax",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_tanks_wing_1",
+    "owner": "combat.arm_secondary",
+    "rule": "arm_secondary",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_tanks_wing_1",
+    "owner": "combat.arm_secondary",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "secondary_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_tanks_wing_1",
+    "owner": "combat.arm_secondary",
+    "system": "coax",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_tanks_wing_2",
+    "owner": "combat.arm_secondary",
+    "rule": "arm_secondary",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_tanks_wing_2",
+    "owner": "combat.arm_secondary",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "secondary_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_tanks_wing_2",
+    "owner": "combat.arm_secondary",
+    "system": "coax",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_tanks_wing_3",
+    "owner": "combat.arm_secondary",
+    "rule": "arm_secondary",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_tanks_wing_3",
+    "owner": "combat.arm_secondary",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "secondary_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_tanks_wing_3",
+    "owner": "combat.arm_secondary",
+    "system": "coax",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_ifv_1",
+    "owner": "combat.arm_secondary",
+    "rule": "arm_secondary",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_ifv_1",
+    "owner": "combat.arm_secondary",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "secondary_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_ifv_1",
+    "owner": "combat.arm_secondary",
+    "system": "atgm",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_ifv_2",
+    "owner": "combat.arm_secondary",
+    "rule": "arm_secondary",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_ifv_2",
+    "owner": "combat.arm_secondary",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "secondary_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_ifv_2",
+    "owner": "combat.arm_secondary",
+    "system": "atgm",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_mech_ifv_3",
+    "owner": "combat.arm_secondary",
+    "rule": "arm_secondary",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_mech_ifv_3",
+    "owner": "combat.arm_secondary",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "secondary_weapon",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_mech_ifv_3",
+    "owner": "combat.arm_secondary",
+    "system": "atgm",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_ad_shorad_1",
+    "owner": "air_defense.arm_gun",
+    "rule": "arm_gun",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_ad_shorad_1",
+    "owner": "air_defense.arm_gun",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "gun",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_ad_shorad_1",
+    "owner": "air_defense.arm_gun",
+    "system": "gun",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_ad_shorad_2",
+    "owner": "air_defense.arm_gun",
+    "rule": "arm_gun",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_ad_shorad_2",
+    "owner": "air_defense.arm_gun",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "gun",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_ad_shorad_2",
+    "owner": "air_defense.arm_gun",
+    "system": "gun",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_uav",
+    "owner": "isr.start_orbit",
+    "rule": "start_orbit",
+    "priority": 20
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_uav",
+    "owner": "isr.start_orbit",
+    "action": "core.action.orbit",
+    "params": {
+      "center": {
+        "lat": 39.7015,
+        "lon": 27.351
+      },
+      "radius": 8000.0,
+      "altitude": 6000.0,
+      "direction": "clockwise"
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_lm",
+    "owner": "strike.search",
+    "rule": "search",
+    "priority": 20
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_lm",
+    "owner": "strike.search",
+    "action": "core.action.patrol_area",
+    "params": {
+      "area": "ea_north",
+      "pattern": "racetrack"
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_quad",
+    "owner": "isr.start_orbit",
+    "rule": "start_orbit",
+    "priority": 20
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_quad",
+    "owner": "isr.start_orbit",
+    "action": "core.action.orbit",
+    "params": {
+      "center": {
+        "lat": 39.66,
+        "lon": 27.3
+      },
+      "radius": 300.0,
+      "altitude": 120.0,
+      "direction": "clockwise"
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_attack_lead",
+    "owner": "attack.noe_on_start",
+    "rule": "noe_on_start",
+    "priority": 20
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_attack_lead",
+    "owner": "attack.noe_on_start",
+    "action": "core.action.terrain_follow",
+    "params": {
+      "altitudeAgl": 25,
+      "enabled": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_attack_lead",
+    "owner": "attack.noe_on_start",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "launcher",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_attack_lead",
+    "owner": "attack.noe_on_start",
+    "system": "hardpoints",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_attack_wing",
+    "owner": "attack.noe_on_start",
+    "rule": "noe_on_start",
+    "priority": 20
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_attack_wing",
+    "owner": "attack.noe_on_start",
+    "action": "core.action.terrain_follow",
+    "params": {
+      "altitudeAgl": 25,
+      "enabled": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_attack_wing",
+    "owner": "attack.noe_on_start",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "launcher",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_attack_wing",
+    "owner": "attack.noe_on_start",
+    "system": "hardpoints",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_attack_lead",
+    "owner": "attack.arm_gun",
+    "rule": "arm_gun",
+    "priority": 20
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_attack_lead",
+    "owner": "attack.arm_gun",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "gun",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_attack_lead",
+    "owner": "attack.arm_gun",
+    "system": "gun",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "blue_attack_wing",
+    "owner": "attack.arm_gun",
+    "rule": "arm_gun",
+    "priority": 20
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "blue_attack_wing",
+    "owner": "attack.arm_gun",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "gun",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "blue_attack_wing",
+    "owner": "attack.arm_gun",
+    "system": "gun",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "red_ad_fcp",
+    "owner": "air_defense.radar_up",
+    "rule": "radar_up",
+    "priority": 50
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_ad_fcp",
+    "owner": "air_defense.radar_up",
+    "action": "core.action.set_radar_mode",
+    "params": {
+      "system": "radar",
+      "mode": "search"
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_ad_fcp",
+    "owner": "air_defense.radar_up",
+    "system": "search_radar",
+    "command": "setMode",
+    "args": {
+      "mode": "search"
+    },
+    "stateChange": {
+      "mode": [
+        "standby",
+        "search"
+      ],
+      "emitting": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "red_ad_fcp",
+    "owner": "air_defense.radar_up",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "launcher",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "red_ad_fcp",
+    "owner": "air_defense.radar_up",
+    "system": "launcher",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "event",
+    "entity": "red_manpads_gunner",
+    "event": "core.event.sensor.detection",
+    "payload": {
+      "system": "eyes",
+      "target": "blue_attack_lead",
+      "identity": "hostile",
+      "range": 1700
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "rule.fire",
+    "entity": "red_manpads_gunner",
+    "owner": "air_defense.engage_missile",
+    "rule": "engage_missile",
+    "priority": 75
+  },
+  {
+    "t": 2.0,
+    "type": "action",
+    "entity": "red_manpads_gunner",
+    "owner": "air_defense.engage_missile",
+    "action": "core.action.engage",
+    "params": {
+      "launcher": "launcher",
+      "target": "blue_attack_lead",
+      "salvo": 1
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "command",
+    "entity": "red_manpads_gunner",
+    "owner": "air_defense.engage_missile",
+    "system": "manpads",
+    "command": "fire",
+    "args": {
+      "target": "blue_attack_lead",
+      "munition": null,
+      "salvo": 1
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "event",
+    "entity": "red_manpads_gunner",
+    "event": "core.event.weapon.launched",
+    "payload": {
+      "system": "manpads",
+      "munition": "core.munition.generic_manpads",
+      "target": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "event",
+    "entity": "blue_attack_lead",
+    "event": "core.event.platform.under_fire",
+    "payload": {
+      "by": "red_manpads_gunner",
+      "munition": "core.munition.generic_manpads",
+      "distance": 1698.3
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "event",
+    "entity": "blue_attack_lead",
+    "event": "core.event.mws.missile_approach",
+    "payload": {
+      "system": "maws",
+      "source": "red_manpads_gunner",
+      "bearing": 49.0,
+      "timeToImpact": 2.8
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "rule.fire",
+    "entity": "blue_attack_lead",
+    "owner": "missile_defense.flare_on_approach",
+    "rule": "flare_on_approach",
+    "priority": 100
+  },
+  {
+    "t": 2.0,
+    "type": "action",
+    "entity": "blue_attack_lead",
+    "owner": "missile_defense.flare_on_approach",
+    "action": "core.action.dispense_flare",
+    "params": {
+      "system": "flare",
+      "count": 4,
+      "interval": 0.15
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "command",
+    "entity": "blue_attack_lead",
+    "owner": "missile_defense.flare_on_approach",
+    "system": "flare",
+    "command": "dispense",
+    "args": {
+      "count": 4,
+      "interval": 0.15
+    },
+    "stateChange": {
+      "remaining": [
+        30,
+        26
+      ]
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "rule.fire",
+    "entity": "blue_attack_lead",
+    "owner": "missile_defense.evade_on_approach",
+    "rule": "evade_on_approach",
+    "priority": 95
+  },
+  {
+    "t": 2.0,
+    "type": "action",
+    "entity": "blue_attack_lead",
+    "owner": "missile_defense.evade_on_approach",
+    "action": "core.action.maneuver",
+    "params": {
+      "maneuver": "core.maneuver.break_turn",
+      "args": {
+        "g": 2.5,
+        "direction": "away"
+      },
+      "referenceBearing": 49.0
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "rule.fire",
+    "entity": "blue_attack_lead",
+    "owner": "missile_defense.chaff_on_rf_threat",
+    "rule": "chaff_on_rf_threat",
+    "priority": 90
+  },
+  {
+    "t": 2.0,
+    "type": "action",
+    "entity": "blue_attack_lead",
+    "owner": "missile_defense.chaff_on_rf_threat",
+    "action": "core.action.dispense_chaff",
+    "params": {
+      "system": "chaff",
+      "count": 2,
+      "interval": 0.3
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "command",
+    "entity": "blue_attack_lead",
+    "owner": "missile_defense.chaff_on_rf_threat",
+    "system": "chaff",
+    "command": "dispense",
+    "args": {
+      "count": 2,
+      "interval": 0.3
+    },
+    "stateChange": {
+      "remaining": [
+        30,
+        28
+      ]
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "event",
+    "entity": "blue_attack_wing",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.68,
+        "lon": 27.315
+      },
+      "distance": 339.7,
+      "munition": "core.munition.generic_manpads",
+      "by": "red_manpads_gunner"
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "event",
+    "entity": "blue_attack_lead",
+    "event": "core.event.cm.dispensed",
+    "payload": {
+      "system": "flare",
+      "count": 4
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "event",
+    "entity": "blue_attack_lead",
+    "event": "core.event.cm.dispensed",
+    "payload": {
+      "system": "chaff",
+      "count": 2
+    }
+  },
+  {
+    "t": 3.0,
+    "type": "channel.released",
+    "entity": "blue_attack_lead",
+    "channel": "movement",
+    "owner_": "missile_defense.evade_on_approach"
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "blue_attack_lead",
+    "event": "core.event.sensor.detection",
+    "payload": {
+      "system": "eo",
+      "target": "red_squad_leader",
+      "identity": "hostile",
+      "range": 3700
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "blue_attack_lead",
+    "owner": "attack.pop_up_attack",
+    "rule": "pop_up_attack",
+    "priority": 70
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "blue_attack_lead",
+    "owner": "attack.pop_up_attack",
+    "action": "core.action.maneuver",
+    "params": {
+      "maneuver": "core.maneuver.pop_up",
+      "args": {}
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "blue_attack_lead",
+    "owner": "attack.pop_up_attack",
+    "action": "core.action.engage",
+    "params": {
+      "launcher": "launcher",
+      "target": "red_squad_leader",
+      "munition": "core.munition.generic_heli_atgm",
+      "salvo": 1
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "command",
+    "entity": "blue_attack_lead",
+    "owner": "attack.pop_up_attack",
+    "system": "hardpoints",
+    "command": "fire",
+    "args": {
+      "target": "red_squad_leader",
+      "munition": "core.munition.generic_heli_atgm",
+      "salvo": 1
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "blue_attack_lead",
+    "event": "core.event.weapon.launched",
+    "payload": {
+      "system": "hardpoints",
+      "munition": "core.munition.generic_heli_atgm",
+      "target": "red_squad_leader"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "blue_attack_lead",
+    "owner": "attack.lase_for_missile",
+    "rule": "lase_for_missile",
+    "priority": 65
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "blue_attack_lead",
+    "owner": "attack.lase_for_missile",
+    "action": "core.action.designate_target",
+    "params": {
+      "system": "designator",
+      "target": "red_squad_leader",
+      "duration": 20
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "command",
+    "entity": "blue_attack_lead",
+    "owner": "attack.lase_for_missile",
+    "system": "designator",
+    "command": "designate",
+    "args": {
+      "target": "red_squad_leader",
+      "code": null,
+      "duration": 20
+    },
+    "stateChange": {
+      "lasing": [
+        false,
+        true
+      ],
+      "designatedTarget": [
+        null,
+        "red_squad_leader"
+      ]
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "blue_attack_lead",
+    "owner": "attack.remask",
+    "rule": "remask",
+    "priority": 40
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "blue_attack_lead",
+    "owner": "attack.remask",
+    "action": "core.action.terrain_follow",
+    "params": {
+      "altitudeAgl": 25,
+      "enabled": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "red_squad_leader",
+    "event": "core.event.platform.under_fire",
+    "payload": {
+      "by": "blue_attack_lead",
+      "munition": "core.munition.generic_heli_atgm",
+      "distance": 3666.6
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "red_squad_leader",
+    "owner": "infantry.take_cover",
+    "rule": "take_cover",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "red_squad_leader",
+    "owner": "infantry.take_cover",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "prone"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "red_squad_leader",
+    "owner": "infantry.take_cover",
+    "action": "core.action.take_cover",
+    "params": {
+      "searchRadius": 30.0
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "town_hall",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 259.2,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "red_squad_alpha_leader",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 25.0,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "red_squad_alpha_rifleman",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 18.0,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "red_squad_alpha_gunner",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 36.4,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "red_squad_alpha_at",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 20.6,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "red_squad_bravo_leader",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 49.9,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "red_squad_bravo_rifleman",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 41.2,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "red_squad_bravo_gunner",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 60.8,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "red_squad_bravo_at",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 36.0,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_1",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 349.2,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_1",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_1",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_1",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_2",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 353.0,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_2",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_2",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_2",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_3",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 356.6,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_3",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_3",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_3",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_4",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 360.4,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_4",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_4",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_4",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_5",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 347.8,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_5",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_5",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_5",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_6",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 351.5,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_6",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_6",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_6",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_7",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 355.2,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_7",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_7",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_7",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_8",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 359.0,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_8",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_8",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_8",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_9",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 346.4,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_9",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_9",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_9",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_10",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 350.1,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_10",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_10",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_10",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_11",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 353.8,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_11",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_11",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_11",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "event",
+    "entity": "civilians_person_12",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.700841,
+        "lon": 27.348206
+      },
+      "distance": 357.6,
+      "munition": "core.munition.generic_heli_atgm",
+      "by": "blue_attack_lead"
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_12",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_12",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 4.0,
+    "type": "action",
+    "entity": "civilians_person_12",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_tanks_lead",
+    "event": "core.event.sensor.detection",
+    "payload": {
+      "system": "sight",
+      "target": "red_squad_alpha_gunner",
+      "identity": "hostile",
+      "range": 2800
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "rule.fire",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.engage_main",
+    "rule": "engage_main",
+    "priority": 70
+  },
+  {
+    "t": 9.0,
+    "type": "action",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.engage_main",
+    "action": "core.action.engage",
+    "params": {
+      "launcher": "main_weapon",
+      "target": "red_squad_alpha_gunner",
+      "salvo": 1
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "command",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.engage_main",
+    "system": "main_gun",
+    "command": "fire",
+    "args": {
+      "target": "red_squad_alpha_gunner",
+      "munition": null,
+      "salvo": 1
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "rule.fire",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.report_contact",
+    "rule": "report_contact",
+    "priority": 10
+  },
+  {
+    "t": 9.0,
+    "type": "action",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.report_contact",
+    "action": "core.action.send_message",
+    "params": {
+      "system": "radio",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "command",
+    "entity": "blue_tanks_lead",
+    "owner": "combat.report_contact",
+    "system": "radio",
+    "command": "sendMessage",
+    "args": {
+      "to": null,
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_tanks_lead",
+    "event": "core.event.weapon.launched",
+    "payload": {
+      "system": "main_gun",
+      "munition": "core.munition.generic_120mm_apfsds",
+      "target": "red_squad_alpha_gunner"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "red_squad_alpha_gunner",
+    "event": "core.event.platform.under_fire",
+    "payload": {
+      "by": "blue_tanks_lead",
+      "munition": "core.munition.generic_120mm_apfsds",
+      "distance": 2992.5
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "rule.fire",
+    "entity": "red_squad_alpha_gunner",
+    "owner": "infantry.take_cover",
+    "rule": "take_cover",
+    "priority": 90
+  },
+  {
+    "t": 9.0,
+    "type": "action",
+    "entity": "red_squad_alpha_gunner",
+    "owner": "infantry.take_cover",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "prone"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "action",
+    "entity": "red_squad_alpha_gunner",
+    "owner": "infantry.take_cover",
+    "action": "core.action.take_cover",
+    "params": {
+      "searchRadius": 30.0
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "town_hall",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 273.9,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "red_squad_leader",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 36.4,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "red_squad_alpha_leader",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 14.1,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "red_squad_alpha_rifleman",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 20.0,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "red_squad_alpha_at",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 31.6,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "red_squad_bravo_leader",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 18.0,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "red_squad_bravo_rifleman",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 5.0,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "red_squad_bravo_gunner",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 25.0,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "red_squad_bravo_at",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 11.2,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_1",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 355.7,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_2",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 359.6,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_3",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 363.4,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_4",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 367.2,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_5",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 354.6,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_6",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 358.5,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_7",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 362.3,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_8",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 366.2,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_9",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 353.6,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_10",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 357.5,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_11",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 361.3,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "civilians_person_12",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.701127,
+        "lon": 27.348
+      },
+      "distance": 365.2,
+      "munition": "core.munition.generic_120mm_apfsds",
+      "by": "blue_tanks_lead"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_uav",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "c2",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_lift",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_cp",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_tanks_wing_1",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_tanks_wing_2",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_tanks_wing_3",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_ifv_1",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_ifv_2",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_ifv_3",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_squad_1_leader",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_squad_1_alpha_leader",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_squad_1_bravo_leader",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_squad_2_leader",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_squad_2_alpha_leader",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_squad_2_bravo_leader",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_squad_3_leader",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_squad_3_alpha_leader",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_mech_squad_3_bravo_leader",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_attack_lead",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "event",
+    "entity": "blue_attack_wing",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_tanks_lead",
+      "message": "contact",
+      "priority": "priority"
+    }
+  },
+  {
+    "t": 10.0,
+    "type": "event",
+    "entity": "blue_tanks_wing_1",
+    "event": "core.event.lwr.laser_warning",
+    "payload": {
+      "system": "lwr",
+      "laserType": "rangefinder",
+      "bearing": 40,
+      "source": "red_squad_alpha_at"
+    }
+  },
+  {
+    "t": 10.0,
+    "type": "rule.fire",
+    "entity": "blue_tanks_wing_1",
+    "owner": "protection.smoke_on_laser",
+    "rule": "smoke_on_laser",
+    "priority": 90
+  },
+  {
+    "t": 10.0,
+    "type": "action",
+    "entity": "blue_tanks_wing_1",
+    "owner": "protection.smoke_on_laser",
+    "action": "core.action.dispense_smoke",
+    "params": {
+      "system": "smoke",
+      "count": 4,
+      "interval": 0.2
+    }
+  },
+  {
+    "t": 10.0,
+    "type": "command",
+    "entity": "blue_tanks_wing_1",
+    "owner": "protection.smoke_on_laser",
+    "system": "smoke",
+    "command": "dispense",
+    "args": {
+      "count": 4,
+      "interval": 0.2
+    },
+    "stateChange": {
+      "remaining": [
+        12,
+        8
+      ]
+    }
+  },
+  {
+    "t": 10.0,
+    "type": "action",
+    "entity": "blue_tanks_wing_1",
+    "owner": "protection.smoke_on_laser",
+    "action": "core.action.maneuver",
+    "params": {
+      "maneuver": "core.maneuver.zigzag",
+      "referenceBearing": 40,
+      "args": {}
+    }
+  },
+  {
+    "t": 10.0,
+    "type": "event",
+    "entity": "blue_tanks_wing_1",
+    "event": "core.event.cm.dispensed",
+    "payload": {
+      "system": "smoke",
+      "count": 4
+    }
+  },
+  {
+    "t": 12.0,
+    "type": "event",
+    "entity": "blue_uav",
+    "event": "core.event.datalink.lost",
+    "payload": {
+      "system": "c2"
+    }
+  },
+  {
+    "t": 12.0,
+    "type": "rule.fire",
+    "entity": "blue_uav",
+    "owner": "lost_link.on_link_lost",
+    "rule": "on_link_lost",
+    "priority": 98
+  },
+  {
+    "t": 12.0,
+    "type": "channel.preempted",
+    "entity": "blue_uav",
+    "owner": "lost_link.on_link_lost",
+    "channel": "movement",
+    "previous": "isr.start_orbit"
+  },
+  {
+    "t": 12.0,
+    "type": "action",
+    "entity": "blue_uav",
+    "owner": "lost_link.on_link_lost",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "linkLost",
+      "value": true
+    }
+  },
+  {
+    "t": 12.0,
+    "type": "action",
+    "entity": "blue_uav",
+    "owner": "lost_link.on_link_lost",
+    "action": "core.action.log",
+    "params": {
+      "message": "Datalink lost",
+      "level": "warning"
+    }
+  },
+  {
+    "t": 12.0,
+    "type": "action",
+    "entity": "blue_uav",
+    "owner": "lost_link.on_link_lost",
+    "action": "core.action.return_to_base",
+    "params": {
+      "base": {
+        "lat": 39.45,
+        "lon": 26.95
+      }
+    }
+  },
+  {
+    "t": 12.0,
+    "type": "action.skipped",
+    "entity": "blue_uav",
+    "owner": "lost_link.on_link_lost",
+    "action": "core.action.orbit",
+    "reason": "when=false"
+  },
+  {
+    "t": 12.0,
+    "type": "action.skipped",
+    "entity": "blue_uav",
+    "owner": "lost_link.on_link_lost",
+    "action": "core.action.land",
+    "reason": "when=false"
+  },
+  {
+    "t": 14.0,
+    "type": "event",
+    "entity": "blue_uav",
+    "event": "core.event.datalink.restored",
+    "payload": {
+      "system": "c2"
+    }
+  },
+  {
+    "t": 14.0,
+    "type": "rule.fire",
+    "entity": "blue_uav",
+    "owner": "lost_link.on_link_restored",
+    "rule": "on_link_restored",
+    "priority": 98
+  },
+  {
+    "t": 14.0,
+    "type": "action",
+    "entity": "blue_uav",
+    "owner": "lost_link.on_link_restored",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "linkLost",
+      "value": false
+    }
+  },
+  {
+    "t": 14.0,
+    "type": "action",
+    "entity": "blue_uav",
+    "owner": "lost_link.on_link_restored",
+    "action": "core.action.log",
+    "params": {
+      "message": "Datalink restored",
+      "level": "info"
+    }
+  },
+  {
+    "t": 15.0,
+    "type": "event",
+    "entity": "blue_lift",
+    "event": "core.event.platform.waypoint_reached",
+    "payload": {
+      "route": "helo_ingress",
+      "waypoint": 2,
+      "waypointId": "lz"
+    }
+  },
+  {
+    "t": 15.0,
+    "type": "rule.fire",
+    "entity": "blue_lift",
+    "owner": "transport.arrive_lz",
+    "rule": "arrive_lz",
+    "priority": 70
+  },
+  {
+    "t": 15.0,
+    "type": "channel.preempted",
+    "entity": "blue_lift",
+    "owner": "transport.arrive_lz",
+    "channel": "movement",
+    "previous": "plan"
+  },
+  {
+    "t": 15.0,
+    "type": "action",
+    "entity": "blue_lift",
+    "owner": "transport.arrive_lz",
+    "action": "core.action.land",
+    "params": {}
+  },
+  {
+    "t": 15.0,
+    "type": "action",
+    "entity": "blue_lift",
+    "owner": "transport.arrive_lz",
+    "action": "core.action.unload_troops",
+    "params": {
+      "system": "cargo"
+    }
+  },
+  {
+    "t": 15.0,
+    "type": "command",
+    "entity": "blue_lift",
+    "owner": "transport.arrive_lz",
+    "system": "cabin",
+    "command": "unload",
+    "args": {
+      "position": null,
+      "all": true
+    },
+    "stateChange": {
+      "occupants": [
+        8,
+        0
+      ]
+    }
+  },
+  {
+    "t": 15.0,
+    "type": "action",
+    "entity": "blue_lift",
+    "owner": "transport.arrive_lz",
+    "action": "core.action.wait",
+    "params": {
+      "duration": 30
+    }
+  },
+  {
+    "t": 15.0,
+    "type": "action",
+    "entity": "blue_lift",
+    "owner": "transport.arrive_lz",
+    "action": "core.action.takeoff",
+    "params": {
+      "altitude": 300
+    }
+  },
+  {
+    "t": 15.0,
+    "type": "event",
+    "entity": "blue_lift",
+    "event": "core.event.platform.landed",
+    "payload": {
+      "position": {
+        "lat": 39.55,
+        "lon": 27.1
+      }
+    }
+  },
+  {
+    "t": 15.0,
+    "type": "event",
+    "entity": "blue_lift",
+    "event": "core.event.cargo.unloaded",
+    "payload": {
+      "system": "cabin",
+      "count": 8
+    }
+  },
+  {
+    "t": 15.0,
+    "type": "rule.fire",
+    "entity": "blue_lift",
+    "owner": "transport.report_unloaded",
+    "rule": "report_unloaded",
+    "priority": 20
+  },
+  {
+    "t": 15.0,
+    "type": "action",
+    "entity": "blue_lift",
+    "owner": "transport.report_unloaded",
+    "action": "core.action.log",
+    "params": {
+      "message": "Troops unloaded",
+      "level": "info"
+    }
+  },
+  {
+    "t": 15.0,
+    "type": "event",
+    "entity": "blue_lift",
+    "event": "core.event.platform.took_off",
+    "payload": {}
+  },
+  {
+    "t": 19.0,
+    "type": "event",
+    "entity": "red_lm",
+    "event": "core.event.sensor.detection",
+    "payload": {
+      "system": "seeker",
+      "target": "blue_tanks_wing_2",
+      "identity": "hostile",
+      "range": 1200
+    }
+  },
+  {
+    "t": 19.0,
+    "type": "rule.fire",
+    "entity": "red_lm",
+    "owner": "strike.strike",
+    "rule": "strike",
+    "priority": 80
+  },
+  {
+    "t": 19.0,
+    "type": "channel.preempted",
+    "entity": "red_lm",
+    "owner": "strike.strike",
+    "channel": "movement",
+    "previous": "strike.search"
+  },
+  {
+    "t": 19.0,
+    "type": "action",
+    "entity": "red_lm",
+    "owner": "strike.strike",
+    "action": "core.action.terminal_attack",
+    "params": {
+      "target": "blue_tanks_wing_2"
+    }
+  },
+  {
+    "t": 19.0,
+    "type": "event",
+    "entity": "blue_tanks_wing_2",
+    "event": "core.event.platform.under_fire",
+    "payload": {
+      "by": "red_lm",
+      "munition": "core.platform.uav.generic_loitering_munition",
+      "distance": 0
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_1",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_1",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_1",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_2",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_2",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_2",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_3",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_3",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_3",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_4",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_4",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_4",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_5",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_5",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_5",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_6",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_6",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_6",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_7",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_7",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_7",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_8",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_8",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_8",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_9",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_9",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_9",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_10",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_10",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_10",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_11",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_11",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_11",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_12",
+    "owner": "civilian.calm_down",
+    "rule": "calm_down",
+    "priority": 10
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_12",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": false
+    }
+  },
+  {
+    "t": 60.0,
+    "type": "action",
+    "entity": "civilians_person_12",
+    "owner": "civilian.calm_down",
+    "action": "core.action.set_posture",
+    "params": {
+      "posture": "standing"
+    }
+  },
+  {
+    "t": 300.0,
+    "type": "rule.fire",
+    "owner": "scenario.atc_divert_civil_traffic",
+    "rule": "atc_divert_civil_traffic",
+    "priority": 0
+  },
+  {
+    "t": 300.0,
+    "type": "action",
+    "entity": "blue_cp",
+    "owner": "scenario.atc_divert_civil_traffic",
+    "action": "core.action.send_message",
+    "params": {
+      "system": "radio",
+      "to": "civ_ga",
+      "message": "divert",
+      "priority": "immediate"
+    }
+  },
+  {
+    "t": 300.0,
+    "type": "event",
+    "entity": "civ_ga",
+    "event": "core.event.comms.message_received",
+    "payload": {
+      "system": "radio",
+      "from": "blue_cp",
+      "message": "divert",
+      "priority": "immediate"
+    }
+  },
+  {
+    "t": 300.0,
+    "type": "rule.fire",
+    "entity": "civ_ga",
+    "owner": "civil.divert_on_instruction",
+    "rule": "divert_on_instruction",
+    "priority": 80
+  },
+  {
+    "t": 300.0,
+    "type": "channel.preempted",
+    "entity": "civ_ga",
+    "owner": "civil.divert_on_instruction",
+    "channel": "movement",
+    "previous": "plan"
+  },
+  {
+    "t": 300.0,
+    "type": "action",
+    "entity": "civ_ga",
+    "owner": "civil.divert_on_instruction",
+    "action": "core.action.fly_to",
+    "params": {
+      "position": {
+        "lat": 39.45,
+        "lon": 26.95
+      }
+    }
+  },
+  {
+    "t": 300.0,
+    "type": "action",
+    "entity": "civ_ga",
+    "owner": "civil.divert_on_instruction",
+    "action": "core.action.log",
+    "params": {
+      "message": "Diverting on ATC instruction",
+      "level": "info"
+    }
+  },
+  {
+    "t": 300.0,
+    "type": "command",
+    "entity": "blue_cp",
+    "owner": "scenario.atc_divert_civil_traffic",
+    "system": "radio",
+    "command": "sendMessage",
+    "args": {
+      "to": "civ_ga",
+      "message": "divert",
+      "priority": "immediate"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "owner": "scenario.red_shelling",
+    "rule": "red_shelling",
+    "priority": 0
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "owner": "scenario.red_shelling",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "phase",
+      "value": 2
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "owner": "scenario.red_shelling",
+    "action": "core.action.log",
+    "params": {
+      "message": "Red artillery shelling the town",
+      "level": "alert"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "red_artillery_gun_1",
+    "owner": "scenario.red_shelling",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "howitzer",
+      "armed": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "command",
+    "entity": "red_artillery_gun_1",
+    "owner": "scenario.red_shelling",
+    "system": "howitzer",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "red_artillery_gun_1",
+    "owner": "scenario.red_shelling",
+    "action": "core.action.fire_at_position",
+    "params": {
+      "launcher": "howitzer",
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "rounds": 2
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "red_artillery_gun_1",
+    "event": "core.event.weapon.launched",
+    "payload": {
+      "system": "howitzer",
+      "munition": "core.munition.generic_155mm_he",
+      "target": null
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civ_drone",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 408.1,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "town_hall",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 456.8,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "red_squad_leader",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 708.7,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "red_squad_alpha_leader",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 719.6,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "red_squad_alpha_rifleman",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 706.2,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "red_squad_alpha_gunner",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 715.4,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "red_squad_alpha_at",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 692.8,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "red_squad_bravo_leader",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 731.3,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "red_squad_bravo_rifleman",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 717.7,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "red_squad_bravo_gunner",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 727.4,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "red_squad_bravo_at",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 704.2,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_1",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 359.8,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_1",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_1",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_1",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_2",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 356.0,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_2",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_2",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_2",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_3",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 352.3,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_3",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_3",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_3",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_4",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 348.4,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_4",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_4",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_4",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_5",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 361.1,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_5",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_5",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_5",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_6",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 357.3,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_6",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_6",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_6",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_7",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 353.5,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_7",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_7",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_7",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_8",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 349.7,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_8",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_8",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_8",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_9",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 362.4,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_9",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_9",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_9",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_10",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 358.6,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_10",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_10",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_10",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_11",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 354.9,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_11",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_11",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_11",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "event",
+    "entity": "civilians_person_12",
+    "event": "core.event.weapon.detonation_nearby",
+    "payload": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "distance": 351.1,
+      "munition": "core.munition.generic_155mm_he",
+      "by": "red_artillery_gun_1"
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "rule.fire",
+    "entity": "civilians_person_12",
+    "owner": "civilian.panic_detonation",
+    "rule": "panic_detonation",
+    "priority": 90
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_12",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "panicked",
+      "value": true
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "action",
+    "entity": "civilians_person_12",
+    "owner": "civilian.panic_detonation",
+    "action": "core.action.flee",
+    "params": {
+      "distance": 1000,
+      "speed": 3
+    }
+  },
+  {
+    "t": 600.0,
+    "type": "command",
+    "entity": "red_artillery_gun_1",
+    "owner": "scenario.red_shelling",
+    "system": "howitzer",
+    "command": "fireAt",
+    "args": {
+      "position": {
+        "lat": 39.703,
+        "lon": 27.356
+      },
+      "munition": null,
+      "rounds": 2
+    }
+  }
+]

@@ -1,0 +1,207 @@
+{
+  "$schema": "../../../schemas/v1/behavior.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "Behavior",
+  "id": "core.behavior.air.engage_hostiles",
+  "version": "1.0.0",
+  "meta": {
+    "name": {
+      "tr": "Düşmanla angajman (ROE)",
+      "en": "Engage hostiles (ROE)"
+    },
+    "description": {
+      "tr": "Sensör temaslarına angajman kuralları (ROE) çerçevesinde atış yapar."
+    }
+  },
+  "spec": {
+    "category": "offensive",
+    "requires": {
+      "systems": {
+        "launcher": {
+          "systemType": "core.systemtype.weapon_launcher"
+        }
+      }
+    },
+    "parameters": {
+      "roe": {
+        "type": "enum",
+        "enumRef": "core.enum.roe",
+        "default": "tight",
+        "overridableAt": "runtime",
+        "label": {
+          "tr": "Angajman kuralı",
+          "en": "ROE"
+        }
+      },
+      "preferredMunition": {
+        "type": "ref",
+        "refKind": "Munition",
+        "nullable": true,
+        "default": null
+      },
+      "salvo": {
+        "type": "integer",
+        "default": 1,
+        "min": 1,
+        "max": 4
+      },
+      "reengageDelay": {
+        "type": "number",
+        "unit": "s",
+        "default": 15,
+        "min": 0
+      }
+    },
+    "rules": {
+      "arm_on_start": {
+        "priority": 30,
+        "trigger": {
+          "event": "core.event.scenario.started"
+        },
+        "condition": {
+          "op": "ne",
+          "args": [
+            {
+              "param": "roe"
+            },
+            "hold"
+          ]
+        },
+        "actions": [
+          {
+            "action": "core.action.set_master_arm",
+            "params": {
+              "launcher": "launcher",
+              "armed": true
+            }
+          }
+        ]
+      },
+      "engage_contact": {
+        "label": {
+          "tr": "Temasa angaje ol",
+          "en": "Engage contact"
+        },
+        "priority": 70,
+        "trigger": {
+          "event": "core.event.sensor.detection"
+        },
+        "condition": {
+          "all": [
+            {
+              "op": "ne",
+              "args": [
+                {
+                  "param": "roe"
+                },
+                "hold"
+              ]
+            },
+            {
+              "any": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "event.identity"
+                    },
+                    "hostile"
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "param": "roe"
+                        },
+                        "free"
+                      ]
+                    },
+                    {
+                      "not": {
+                        "op": "in",
+                        "args": [
+                          {
+                            "var": "event.identity"
+                          },
+                          [
+                            "friend",
+                            "neutral"
+                          ]
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "cond": "core.cond.has_munition",
+              "params": {
+                "launcher": "launcher",
+                "munition": {
+                  "param": "preferredMunition"
+                }
+              }
+            },
+            {
+              "cond": "core.cond.target_in_weapon_range",
+              "params": {
+                "launcher": "launcher",
+                "target": {
+                  "var": "event.target"
+                },
+                "munition": {
+                  "param": "preferredMunition"
+                }
+              }
+            }
+          ]
+        },
+        "actions": [
+          {
+            "action": "core.action.engage",
+            "params": {
+              "launcher": "launcher",
+              "target": {
+                "var": "event.target"
+              },
+              "munition": {
+                "param": "preferredMunition"
+              },
+              "salvo": {
+                "param": "salvo"
+              }
+            }
+          }
+        ],
+        "cooldown": "15 s"
+      },
+      "winchester": {
+        "label": "Winchester",
+        "priority": 20,
+        "trigger": {
+          "event": "core.event.weapon.out_of_ammo"
+        },
+        "actions": [
+          {
+            "action": "core.action.log",
+            "params": {
+              "message": "Winchester - out of ammunition",
+              "level": "warning"
+            }
+          },
+          {
+            "action": "core.action.set_rule_enabled",
+            "params": {
+              "rule": "engage_contact",
+              "enabled": false
+            }
+          }
+        ]
+      }
+    }
+  }
+}

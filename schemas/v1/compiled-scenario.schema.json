@@ -1,0 +1,789 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/compiled-scenario.schema.json",
+  "title": "Derlenmiş senaryo (motor sözleşmesi) - simcfg/compiled/v1",
+  "description": "Motorun tek girdisi. Tüm kalıtım çözülmüş, birimler tanımlayıcı birimine çevrilmiş, varsayılanlar uygulanmış, roller bağlanmıştır. Motorlar bilinmeyen alanları YOK SAYMALIDIR (tolerant reader); bu sözleşme sadece geriye uyumlu biçimde genişler. Kırıcı değişiklik apiVersion'ı artırır.",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "scenario",
+    "time",
+    "sides",
+    "areas",
+    "routes",
+    "entities",
+    "rules",
+    "variables",
+    "munitions",
+    "catalog"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "simcfg/compiled/v1"
+    },
+    "sourceApiVersion": {
+      "type": "string"
+    },
+    "scenario": {
+      "type": "object",
+      "required": [
+        "id",
+        "lineage"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "lineage": {
+          "$ref": "#/$defs/lineage"
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "meta": {
+          "type": "object"
+        }
+      }
+    },
+    "time": {
+      "type": "object",
+      "required": [
+        "duration",
+        "timeStep",
+        "seed"
+      ],
+      "properties": {
+        "start": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "duration": {
+          "$ref": "#/$defs/seconds"
+        },
+        "timeStep": {
+          "$ref": "#/$defs/seconds"
+        },
+        "seed": {
+          "type": "integer"
+        }
+      }
+    },
+    "environment": {
+      "type": "object"
+    },
+    "sides": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "areas": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/area"
+      }
+    },
+    "routes": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/route"
+      }
+    },
+    "entities": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/entity"
+      }
+    },
+    "groups": {
+      "type": "object"
+    },
+    "variables": {
+      "type": "object"
+    },
+    "rules": {
+      "$ref": "#/$defs/ruleMap"
+    },
+    "munitions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "lineage",
+          "munitionType",
+          "implementation",
+          "parameters"
+        ],
+        "properties": {
+          "lineage": {
+            "$ref": "#/$defs/lineage"
+          },
+          "munitionType": {
+            "type": "string"
+          },
+          "typeLineage": {
+            "$ref": "#/$defs/lineage"
+          },
+          "implementation": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "parameters": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "catalog": {
+      "type": "object",
+      "description": "Kind -> id -> {lineage, spec}. Aksiyon/koşul/olay/manevra tanımları ve tip şemaları.",
+      "required": [
+        "ActionType",
+        "ConditionType",
+        "EventType",
+        "Maneuver"
+      ],
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "required": [
+            "lineage",
+            "spec"
+          ],
+          "properties": {
+            "lineage": {
+              "$ref": "#/$defs/lineage"
+            },
+            "spec": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "units": {
+      "type": "object",
+      "description": "Birlik hiyerarşisi: örnek anahtarı -> {template, echelon, parent, members, subunits, leader}",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "template",
+          "side",
+          "members",
+          "subunits"
+        ],
+        "properties": {
+          "template": {
+            "type": "string"
+          },
+          "lineage": {
+            "$ref": "#/$defs/lineage"
+          },
+          "echelon": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "side": {
+            "type": "string"
+          },
+          "parent": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subunits": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "leader": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "formation": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "lineage": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "geoPoint": {
+      "type": "object",
+      "required": [
+        "lat",
+        "lon"
+      ],
+      "properties": {
+        "lat": {
+          "type": "number"
+        },
+        "lon": {
+          "type": "number"
+        },
+        "alt": {
+          "type": "number"
+        }
+      }
+    },
+    "expression": {
+      "$ref": "https://simcfg.dev/schemas/v1/common.schema.json#/$defs/expression"
+    },
+    "invocation": {
+      "type": "object",
+      "required": [
+        "action",
+        "params"
+      ],
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "params": {
+          "type": "object",
+          "description": "Varsayılanlar uygulanmış; değerler literal veya ifade (var/param/op/...)."
+        },
+        "on": {
+          "type": "string"
+        },
+        "when": {
+          "$ref": "#/$defs/expression"
+        },
+        "timeout": {
+          "type": "number"
+        },
+        "onFailure": {
+          "enum": [
+            "abort",
+            "continue"
+          ]
+        }
+      }
+    },
+    "trigger": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "event"
+          ],
+          "properties": {
+            "event": {
+              "type": "string"
+            },
+            "filter": {
+              "$ref": "#/$defs/expression"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "every"
+          ],
+          "properties": {
+            "every": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "offset": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "at"
+          ],
+          "properties": {
+            "at": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "edge"
+          ],
+          "properties": {
+            "edge": {
+              "enum": [
+                "rising",
+                "falling",
+                "both"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "rule": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "priority",
+        "trigger",
+        "actions"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "disabledReason": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "number"
+        },
+        "trigger": {
+          "$ref": "#/$defs/trigger"
+        },
+        "condition": {
+          "$ref": "#/$defs/expression"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/invocation"
+          }
+        },
+        "cooldown": {
+          "$ref": "#/$defs/seconds"
+        },
+        "maxFires": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "ruleMap": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/rule"
+      }
+    },
+    "system": {
+      "type": "object",
+      "required": [
+        "template",
+        "lineage",
+        "systemType",
+        "typeLineage",
+        "implementation",
+        "parameters",
+        "initialState"
+      ],
+      "properties": {
+        "template": {
+          "type": "string"
+        },
+        "lineage": {
+          "$ref": "#/$defs/lineage"
+        },
+        "systemType": {
+          "type": "string"
+        },
+        "typeLineage": {
+          "$ref": "#/$defs/lineage"
+        },
+        "category": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "implementation": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "initialState": {
+          "type": "object"
+        },
+        "placement": {
+          "type": "object"
+        }
+      }
+    },
+    "behavior": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "behavior",
+            "enabled"
+          ],
+          "properties": {
+            "behavior": {
+              "type": "string"
+            },
+            "enabled": {
+              "const": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "behavior",
+            "lineage",
+            "enabled",
+            "bindings",
+            "parameters",
+            "variables",
+            "arbitration",
+            "rules"
+          ],
+          "properties": {
+            "behavior": {
+              "type": "string"
+            },
+            "lineage": {
+              "$ref": "#/$defs/lineage"
+            },
+            "enabled": {
+              "const": true
+            },
+            "bindings": {
+              "type": "object",
+              "description": "rol -> mount (null = bağlanmadı)",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "parameters": {
+              "type": "object"
+            },
+            "variables": {
+              "type": "object"
+            },
+            "arbitration": {
+              "type": "object",
+              "required": [
+                "policy",
+                "preemption"
+              ],
+              "properties": {
+                "policy": {
+                  "enum": [
+                    "priority",
+                    "first",
+                    "all"
+                  ]
+                },
+                "preemption": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "rules": {
+              "$ref": "#/$defs/ruleMap"
+            }
+          }
+        }
+      ]
+    },
+    "entity": {
+      "type": "object",
+      "required": [
+        "side",
+        "enabled",
+        "template",
+        "lineage",
+        "platformType",
+        "implementation",
+        "parameters",
+        "initialState",
+        "systems",
+        "behaviors",
+        "plan"
+      ],
+      "properties": {
+        "side": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "label": {},
+        "callsign": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        },
+        "lineage": {
+          "$ref": "#/$defs/lineage"
+        },
+        "platformType": {
+          "type": "string"
+        },
+        "typeLineage": {
+          "$ref": "#/$defs/lineage"
+        },
+        "domain": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "implementation": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "initialState": {
+          "type": "object"
+        },
+        "initialRoute": {
+          "type": "string"
+        },
+        "systems": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/system"
+          }
+        },
+        "unfittedSystems": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "behaviors": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/behavior"
+          }
+        },
+        "plan": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/invocation"
+          }
+        },
+        "appearance": {
+          "type": "object"
+        },
+        "unit": {
+          "type": "object",
+          "description": "Varlığın birlik içindeki yeri; leaderEntity formasyon tutma için.",
+          "properties": {
+            "instance": {
+              "type": "string"
+            },
+            "root": {
+              "type": "string"
+            },
+            "template": {
+              "type": "string"
+            },
+            "member": {
+              "type": "string"
+            },
+            "role": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "leader": {
+              "type": "boolean"
+            },
+            "leaderEntity": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "area": {
+      "type": "object",
+      "required": [
+        "type",
+        "geometry",
+        "active",
+        "sides",
+        "properties"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "typeLineage": {
+          "$ref": "#/$defs/lineage"
+        },
+        "geometry": {
+          "type": "object",
+          "required": [
+            "shape"
+          ],
+          "properties": {
+            "shape": {
+              "enum": [
+                "circle",
+                "polygon",
+                "corridor",
+                "sector",
+                "ellipse"
+              ]
+            },
+            "center": {
+              "$ref": "#/$defs/geoPoint"
+            },
+            "points": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/geoPoint"
+              }
+            },
+            "radius": {
+              "type": "number"
+            },
+            "minRadius": {
+              "type": "number"
+            },
+            "width": {
+              "type": "number"
+            },
+            "semiMajor": {
+              "type": "number"
+            },
+            "semiMinor": {
+              "type": "number"
+            },
+            "startBearing": {
+              "type": "number"
+            },
+            "endBearing": {
+              "type": "number"
+            },
+            "orientation": {
+              "type": "number"
+            }
+          }
+        },
+        "altitude": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "reference": {
+              "enum": [
+                "MSL",
+                "AGL"
+              ]
+            }
+          }
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "sides": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "properties": {
+          "type": "object"
+        }
+      }
+    },
+    "route": {
+      "type": "object",
+      "required": [
+        "loop",
+        "waypoints"
+      ],
+      "properties": {
+        "label": {},
+        "loop": {
+          "type": "boolean"
+        },
+        "waypoints": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "position"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "position": {
+                "$ref": "#/$defs/geoPoint"
+              },
+              "altitude": {
+                "type": "number"
+              },
+              "speed": {
+                "type": "number"
+              },
+              "hold": {
+                "type": "number"
+              },
+              "actions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/invocation"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

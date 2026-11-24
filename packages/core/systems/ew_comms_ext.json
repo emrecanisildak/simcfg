@@ -1,0 +1,263 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.ew.generic_maws",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic MAWS"
+    },
+    "spec": {
+      "systemType": "core.systemtype.maws",
+      "parameters": {
+        "maxRange": "10 km",
+        "warningTime": "3 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.ew.generic_lwr",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic LWR"
+    },
+    "spec": {
+      "systemType": "core.systemtype.lwr",
+      "parameters": {
+        "maxRange": "10 km"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.ew.generic_selfprotect_jammer",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic self-protection jammer pod"
+    },
+    "spec": {
+      "systemType": "core.systemtype.jammer",
+      "parameters": {
+        "bands": [
+          "C",
+          "X",
+          "Ku"
+        ],
+        "erp": "500 W",
+        "techniques": [
+          "noise",
+          "drfm"
+        ],
+        "mass": "150 kg"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.ew.generic_ground_jammer",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic ground stand-off jammer"
+    },
+    "spec": {
+      "systemType": "core.systemtype.jammer",
+      "parameters": {
+        "bands": [
+          "L",
+          "S",
+          "C"
+        ],
+        "erp": "5 kW",
+        "techniques": [
+          "barrage",
+          "spot"
+        ],
+        "maxTargets": 4,
+        "selfProtection": false
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.laser.generic_pod_designator",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic pod laser designator"
+    },
+    "spec": {
+      "systemType": "core.systemtype.laser_designator",
+      "parameters": {
+        "maxRange": "20 km"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.laser.generic_portable_designator",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic man-portable laser designator"
+    },
+    "spec": {
+      "systemType": "core.systemtype.laser_designator",
+      "parameters": {
+        "maxRange": "5 km",
+        "mass": "5 kg"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.comms.generic_vhf_radio",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic VHF radio"
+    },
+    "spec": {
+      "systemType": "core.systemtype.radio",
+      "parameters": {
+        "bands": [
+          "vhf"
+        ],
+        "maxRange": "30 km"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.comms.generic_uhf_air_radio",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic UHF air radio"
+    },
+    "spec": {
+      "systemType": "core.systemtype.radio",
+      "parameters": {
+        "bands": [
+          "uhf"
+        ],
+        "maxRange": "300 km"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.comms.generic_manpack_radio",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic manpack radio"
+    },
+    "spec": {
+      "systemType": "core.systemtype.radio",
+      "parameters": {
+        "bands": [
+          "vhf"
+        ],
+        "maxRange": "10 km",
+        "mass": "5 kg"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.comms.generic_link16",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic Link 16 terminal"
+    },
+    "spec": {
+      "systemType": "core.systemtype.datalink",
+      "parameters": {
+        "linkType": "link16",
+        "bands": [
+          "link16"
+        ],
+        "maxRange": "300 nmi",
+        "dataRate": "115 kbit/s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.comms.generic_uav_c2_link",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic UAV C2 link (LOS)"
+    },
+    "spec": {
+      "systemType": "core.systemtype.datalink",
+      "parameters": {
+        "linkType": "uav_c2",
+        "bands": [
+          "l_band"
+        ],
+        "maxRange": "200 km",
+        "dataRate": "10 Mbit/s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.comms.generic_satcom_link",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic SATCOM link"
+    },
+    "spec": {
+      "systemType": "core.systemtype.datalink",
+      "parameters": {
+        "linkType": "satcom",
+        "bands": [
+          "satcom"
+        ],
+        "maxRange": "40000 km",
+        "latency": "0.6 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.comms.generic_drone_link",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic small drone link"
+    },
+    "spec": {
+      "systemType": "core.systemtype.datalink",
+      "parameters": {
+        "linkType": "mesh",
+        "bands": [
+          "wifi"
+        ],
+        "maxRange": "5 km",
+        "encrypted": false
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.nav.generic_gnss_ins",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic GNSS/INS"
+    },
+    "spec": {
+      "systemType": "core.systemtype.navigation",
+      "parameters": {}
+    }
+  }
+]

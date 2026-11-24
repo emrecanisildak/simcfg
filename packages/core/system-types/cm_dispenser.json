@@ -1,0 +1,85 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.cm_dispenser",
+    "extends": "core.systemtype.base",
+    "version": "1.0.0",
+    "abstract": true,
+    "meta": { "name": "Countermeasure dispenser (base)" },
+    "spec": {
+      "category": "countermeasure",
+      "parameters": {
+        "capacity":    { "type": "integer", "required": true, "min": 0, "ui": { "group": "Magazine" } },
+        "minInterval": { "type": "number", "unit": "s", "default": 0.1, "min": 0, "ui": { "group": "Timing" } },
+        "ejectionVelocity": { "type": "number", "unit": "m/s", "default": 30, "min": 0, "ui": { "group": "Physical", "advanced": true } },
+        "programs": {
+          "type": "map",
+          "description": "Önceden tanımlı atım programları (program adı -> desen).",
+          "default": {},
+          "items": {
+            "type": "object",
+            "fields": {
+              "burstCount":    { "type": "integer", "default": 1, "min": 1 },
+              "burstInterval": { "type": "number", "unit": "s", "default": 0.1, "min": 0 },
+              "salvoCount":    { "type": "integer", "default": 1, "min": 1 },
+              "salvoInterval": { "type": "number", "unit": "s", "default": 1, "min": 0 }
+            }
+          },
+          "ui": { "group": "Programs", "widget": "table" }
+        }
+      },
+      "state": {
+        "remaining": { "type": "integer", "min": 0, "defaultFrom": "parameters.capacity", "overridableAt": "instance" },
+        "armed":     { "type": "boolean", "default": true }
+      },
+      "commands": {
+        "dispense": {
+          "label": "Dispense",
+          "parameters": {
+            "count":    { "type": "integer", "default": 1, "min": 1 },
+            "interval": { "type": "number", "unit": "s", "default": 0.2, "min": 0 }
+          }
+        },
+        "runProgram": { "label": "Run program", "parameters": { "program": { "type": "string", "required": true } } },
+        "setArmed":   { "label": "Arm / safe", "parameters": { "armed": { "type": "boolean", "required": true } } }
+      },
+      "emits": ["core.event.cm.dispensed", "core.event.cm.empty"]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.chaff_dispenser",
+    "extends": "core.systemtype.cm_dispenser",
+    "version": "1.0.0",
+    "meta": { "name": "Chaff dispenser", "tags": ["countermeasure", "rf"] },
+    "spec": {
+      "implementation": "engine.cm.chaff",
+      "parameters": {
+        "cartridgeRcs": { "type": "number", "unit": "m2", "default": 50, "min": 0, "ui": { "group": "Effect" } },
+        "bloomTime":    { "type": "number", "unit": "s", "default": 0.5, "min": 0, "ui": { "group": "Effect" } },
+        "lifetime":     { "type": "number", "unit": "s", "default": 20, "min": 0, "ui": { "group": "Effect" } },
+        "bands":        { "type": "list", "items": { "type": "enum", "enumRef": "core.enum.frequency_band" }, "default": ["C", "X", "Ku"], "ui": { "group": "Effect" } }
+      },
+      "ui": { "icon": "chaff", "color": "#8e24aa" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemType",
+    "id": "core.systemtype.flare_dispenser",
+    "extends": "core.systemtype.cm_dispenser",
+    "version": "1.0.0",
+    "meta": { "name": "Flare dispenser", "tags": ["countermeasure", "ir"] },
+    "spec": {
+      "implementation": "engine.cm.flare",
+      "parameters": {
+        "irIntensity":  { "type": "number", "unit": "W/sr", "default": 20000, "min": 0, "ui": { "group": "Effect" } },
+        "burnTime":     { "type": "number", "unit": "s", "default": 4, "min": 0, "ui": { "group": "Effect" } },
+        "spectralBand": { "type": "enum", "enumRef": "core.enum.ir_band", "default": "MWIR", "ui": { "group": "Effect" } }
+      },
+      "ui": { "icon": "flare", "color": "#e53935" }
+    }
+  }
+]

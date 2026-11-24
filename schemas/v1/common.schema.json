@@ -1,0 +1,677 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/common.schema.json",
+  "title": "simcfg ortak tanımlar",
+  "description": "Tüm doküman tiplerinin paylaştığı yapı taşları: kimlikler, metinler, birimli değerler, parametre tanımlayıcıları, ifadeler, aksiyon çağrıları ve kurallar.",
+  "$defs": {
+    "id": {
+      "description": "Global doküman kimliği: <paket>.<kategori>.<ad> (ör. core.systemtype.radar).",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)*$"
+    },
+    "localKey": {
+      "description": "Doküman içi anahtar (mount adı, kural adı, senaryo varlık adı...).",
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_\\-]*$"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.\\-]+)?$"
+    },
+    "text": {
+      "description": "Düz metin veya dil kodu -> metin eşlemesi (i18n).",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "author": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "classification": {
+          "type": "string"
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      },
+      "additionalProperties": false
+    },
+    "quantity": {
+      "description": "Birimli değer. Sayı = tanımlayıcının birimi; \"40 nmi\" veya {\"value\":40,\"unit\":\"nmi\"} = dönüştürülür.",
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string",
+          "pattern": "^\\s*-?\\d+(\\.\\d+)?([eE][-+]?\\d+)?\\s*[A-Za-z%/][A-Za-z0-9_%/^.]*\\s*$"
+        },
+        {
+          "type": "object",
+          "required": [
+            "value",
+            "unit"
+          ],
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "geoPoint": {
+      "type": "object",
+      "required": [
+        "lat",
+        "lon"
+      ],
+      "properties": {
+        "lat": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "lon": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "alt": {
+          "$ref": "#/$defs/quantity"
+        }
+      },
+      "additionalProperties": false
+    },
+    "paramType": {
+      "enum": [
+        "number",
+        "integer",
+        "boolean",
+        "string",
+        "enum",
+        "any",
+        "ref",
+        "systemRole",
+        "entityRef",
+        "areaRef",
+        "routeRef",
+        "sideRef",
+        "geoPoint",
+        "list",
+        "map",
+        "object",
+        "table",
+        "expression",
+        "action",
+        "actionList",
+        "args"
+      ]
+    },
+    "enumValue": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "label": {
+              "$ref": "#/$defs/text"
+            },
+            "description": {
+              "$ref": "#/$defs/text"
+            },
+            "color": {
+              "type": "string"
+            }
+          },
+          "patternProperties": {
+            "^x-": true
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "parameterDescriptor": {
+      "description": "Bir parametre/durum değişkeninin meta tanımı. Model editörü formları bu tanımdan üretir.",
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/paramType"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "default": true,
+        "defaultFrom": {
+          "type": "string",
+          "description": "Varsayılanı başka bir değerden al (ör. parameters.capacity)."
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "readonly": {
+          "type": "boolean",
+          "description": "Sadece motor tarafından yazılır (gözlemlenebilir durum)."
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "step": {
+          "type": "number"
+        },
+        "minItems": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxItems": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pattern": {
+          "type": "string"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/enumValue"
+          }
+        },
+        "enumRef": {
+          "$ref": "#/$defs/id"
+        },
+        "refKind": {
+          "type": "string"
+        },
+        "allowAbstract": {
+          "type": "boolean"
+        },
+        "constraint": {
+          "type": "object",
+          "properties": {
+            "systemType": {
+              "$ref": "#/$defs/id"
+            },
+            "platformType": {
+              "$ref": "#/$defs/id"
+            },
+            "areaType": {
+              "$ref": "#/$defs/id"
+            },
+            "munitionType": {
+              "$ref": "#/$defs/id"
+            }
+          },
+          "additionalProperties": false
+        },
+        "items": {
+          "$ref": "#/$defs/parameterDescriptor"
+        },
+        "fields": {
+          "$ref": "#/$defs/descriptorMap"
+        },
+        "axes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/localKey"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "label": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "argsOf": {
+          "$ref": "#/$defs/localKey",
+          "description": "args tipi: hangi kardeş parametrenin tanımına göre doğrulanacağı."
+        },
+        "argsFrom": {
+          "type": "string",
+          "description": "args tipi: hedef dokümandaki tanım yolu (parameters, state, commands.{command}.parameters)."
+        },
+        "partial": {
+          "type": "boolean",
+          "description": "args tipi: zorunlu alan kontrolü yapılmaz (kısmi güncelleme)."
+        },
+        "overridableAt": {
+          "enum": [
+            "template",
+            "instance",
+            "runtime"
+          ],
+          "description": "template: sadece şablonlarda/türetmede; instance: senaryo varlığında da; runtime: çalışma anında da değiştirilebilir."
+        },
+        "ui": {
+          "type": "object",
+          "properties": {
+            "group": {
+              "type": "string"
+            },
+            "order": {
+              "type": "number"
+            },
+            "widget": {
+              "type": "string"
+            },
+            "hidden": {
+              "type": "boolean"
+            },
+            "advanced": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      },
+      "additionalProperties": false
+    },
+    "descriptorMap": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/localKey"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/parameterDescriptor"
+      }
+    },
+    "valueMap": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/localKey"
+      }
+    },
+    "expression": {
+      "description": "JSON AST ifade dili. Literal | {var} | {param} | {op,args} | {cond,params} | {all} | {any} | {not}.",
+      "anyOf": [
+        {
+          "type": [
+            "number",
+            "string",
+            "boolean",
+            "null",
+            "array"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "var"
+          ],
+          "properties": {
+            "var": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "param"
+          ],
+          "properties": {
+            "param": {
+              "$ref": "#/$defs/localKey"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "op",
+            "args"
+          ],
+          "properties": {
+            "op": {
+              "enum": [
+                "eq",
+                "ne",
+                "lt",
+                "le",
+                "gt",
+                "ge",
+                "add",
+                "sub",
+                "mul",
+                "div",
+                "mod",
+                "neg",
+                "min",
+                "max",
+                "abs",
+                "between",
+                "in",
+                "exists",
+                "if"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/expression"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "cond"
+          ],
+          "properties": {
+            "cond": {
+              "$ref": "#/$defs/id"
+            },
+            "params": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "all"
+          ],
+          "properties": {
+            "all": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/expression"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "any"
+          ],
+          "properties": {
+            "any": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/expression"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "not"
+          ],
+          "properties": {
+            "not": {
+              "$ref": "#/$defs/expression"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "actionInvocation": {
+      "description": "Bir ActionType'ın parametrelerle çağrılması.",
+      "type": "object",
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/id"
+        },
+        "id": {
+          "$ref": "#/$defs/localKey"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "on": {
+          "$ref": "#/$defs/localKey",
+          "description": "Senaryo seviyesinde: aksiyonun uygulanacağı varlık."
+        },
+        "params": {
+          "type": "object"
+        },
+        "when": {
+          "$ref": "#/$defs/expression"
+        },
+        "onFailure": {
+          "enum": [
+            "abort",
+            "continue"
+          ]
+        },
+        "timeout": {
+          "$ref": "#/$defs/quantity"
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      },
+      "additionalProperties": false
+    },
+    "trigger": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "event"
+          ],
+          "properties": {
+            "event": {
+              "$ref": "#/$defs/id"
+            },
+            "filter": {
+              "$ref": "#/$defs/expression"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "every"
+          ],
+          "properties": {
+            "every": {
+              "$ref": "#/$defs/quantity"
+            },
+            "offset": {
+              "$ref": "#/$defs/quantity"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "at"
+          ],
+          "properties": {
+            "at": {
+              "$ref": "#/$defs/quantity"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "edge"
+          ],
+          "properties": {
+            "edge": {
+              "enum": [
+                "rising",
+                "falling",
+                "both"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "rule": {
+      "description": "Tetikleyici + koşul + aksiyonlar (ECA - Event/Condition/Action).",
+      "type": "object",
+      "required": [
+        "trigger",
+        "actions"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "description": {
+          "$ref": "#/$defs/text"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "priority": {
+          "type": "number"
+        },
+        "trigger": {
+          "$ref": "#/$defs/trigger"
+        },
+        "condition": {
+          "$ref": "#/$defs/expression"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/actionInvocation"
+          }
+        },
+        "cooldown": {
+          "$ref": "#/$defs/quantity"
+        },
+        "maxFires": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ui": {
+          "type": "object"
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      },
+      "additionalProperties": false
+    },
+    "ruleMap": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/localKey"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/rule"
+      }
+    },
+    "uiHints": {
+      "type": "object",
+      "properties": {
+        "icon": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "palette": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

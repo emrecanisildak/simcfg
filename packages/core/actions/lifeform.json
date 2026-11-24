@@ -1,0 +1,92 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.set_posture",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Duruş",
+        "en": "Set posture"
+      }
+    },
+    "spec": {
+      "category": "lifeform",
+      "channels": [
+        "posture"
+      ],
+      "durative": false,
+      "parameters": {
+        "posture": {
+          "type": "enum",
+          "enumRef": "core.enum.posture",
+          "required": true
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.lifeform.set_posture"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.take_cover",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Siper al",
+        "en": "Take cover"
+      }
+    },
+    "spec": {
+      "category": "lifeform",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "searchRadius": {
+          "type": "number",
+          "unit": "m",
+          "default": 50,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.lifeform.take_cover"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.mount",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Araca bin",
+        "en": "Mount carrier"
+      }
+    },
+    "spec": {
+      "category": "lifeform",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "carrier": {
+          "type": "entityRef",
+          "required": true
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.lifeform.mount"
+      }
+    }
+  }
+]

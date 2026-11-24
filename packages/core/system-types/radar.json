@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../schemas/v1/system-type.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "SystemType",
+  "id": "core.systemtype.radar",
+  "extends": "core.systemtype.sensor",
+  "version": "1.0.0",
+  "meta": { "name": "Radar", "tags": ["sensor", "active", "emitter"] },
+  "spec": {
+    "category": "sensor",
+    "implementation": "engine.sensor.radar",
+    "parameters": {
+      "emitterId":    { "type": "string", "description": "RWR/ESM kütüphanelerinde tanınma kimliği.", "ui": { "group": "Identification" } },
+      "band":         { "type": "enum", "enumRef": "core.enum.frequency_band", "default": "X", "ui": { "group": "RF" } },
+      "frequency":    { "type": "number", "unit": "Hz", "required": true, "min": 1e6, "ui": { "group": "RF" } },
+      "peakPower":    { "type": "number", "unit": "W", "required": true, "min": 0, "ui": { "group": "RF" } },
+      "antennaGain":  { "type": "number", "unit": "dB", "default": 30, "ui": { "group": "RF" } },
+      "pulseWidth":   { "type": "number", "unit": "s", "default": 1e-6, "min": 0, "ui": { "group": "Waveform", "advanced": true } },
+      "prf":          { "type": "number", "unit": "Hz", "default": 1000, "min": 0, "ui": { "group": "Waveform", "advanced": true } },
+      "noiseFigure":  { "type": "number", "unit": "dB", "default": 5, "ui": { "group": "Receiver", "advanced": true } },
+      "detectionThreshold": { "type": "number", "unit": "dB", "default": 13, "description": "Gerekli SNR", "ui": { "group": "Receiver" } },
+      "maxTracks":    { "type": "integer", "default": 10, "min": 1, "ui": { "group": "Processing" } },
+      "supportedModes": { "type": "list", "items": { "type": "enum", "enumRef": "core.enum.radar_mode" }, "default": ["off", "standby", "search", "tws"], "ui": { "group": "Processing" } }
+    },
+    "state": {
+      "mode":       { "type": "enum", "enumRef": "core.enum.radar_mode", "default": "standby" },
+      "emitting":   { "type": "boolean", "default": false, "readonly": true },
+      "trackCount": { "type": "integer", "default": 0, "readonly": true }
+    },
+    "commands": {
+      "setMode": { "label": "Set radar mode", "parameters": { "mode": { "type": "enum", "enumRef": "core.enum.radar_mode", "required": true } } }
+    },
+    "ui": { "icon": "radar", "color": "#1e88e5" }
+  }
+}

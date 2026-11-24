@@ -1,0 +1,388 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.platform.under_fire",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Under fire"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {
+        "by": {
+          "type": "entityRef"
+        },
+        "munition": {
+          "type": "string"
+        },
+        "distance": {
+          "type": "number",
+          "unit": "m"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.platform.damaged",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Damaged"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {
+        "damage": {
+          "type": "number",
+          "min": 0,
+          "max": 1
+        },
+        "killType": {
+          "type": "enum",
+          "values": [
+            "none",
+            "mobility",
+            "firepower",
+            "catastrophic"
+          ]
+        },
+        "by": {
+          "type": "entityRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.platform.landed",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Landed"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {
+        "position": {
+          "type": "geoPoint"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.platform.took_off",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Took off"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {}
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.platform.mounted",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Mounted a carrier"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {
+        "carrier": {
+          "type": "entityRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.platform.dismounted",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Dismounted"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {
+        "carrier": {
+          "type": "entityRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.weapon.detonation_nearby",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Detonation nearby"
+    },
+    "spec": {
+      "source": "platform",
+      "payload": {
+        "position": {
+          "type": "geoPoint"
+        },
+        "distance": {
+          "type": "number",
+          "unit": "m"
+        },
+        "munition": {
+          "type": "string"
+        },
+        "by": {
+          "type": "entityRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.mws.missile_approach",
+    "version": "1.0.0",
+    "meta": {
+      "name": "MAWS: missile approaching"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "bearing": {
+          "type": "number",
+          "unit": "deg"
+        },
+        "timeToImpact": {
+          "type": "number",
+          "unit": "s"
+        },
+        "source": {
+          "type": "entityRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.lwr.laser_warning",
+    "version": "1.0.0",
+    "meta": {
+      "name": "LWR: laser illumination"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "bearing": {
+          "type": "number",
+          "unit": "deg"
+        },
+        "laserType": {
+          "type": "enum",
+          "enumRef": "core.enum.laser_type"
+        },
+        "source": {
+          "type": "entityRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.aps.intercept",
+    "version": "1.0.0",
+    "meta": {
+      "name": "APS intercept"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "bearing": {
+          "type": "number",
+          "unit": "deg"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.comms.message_received",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Message received"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "from": {
+          "type": "entityRef"
+        },
+        "message": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "enum",
+          "enumRef": "core.enum.message_priority"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.datalink.lost",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Datalink lost"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.datalink.restored",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Datalink restored"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.nav.gnss_lost",
+    "version": "1.0.0",
+    "meta": {
+      "name": "GNSS lost"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.nav.gnss_restored",
+    "version": "1.0.0",
+    "meta": {
+      "name": "GNSS restored"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.ew.jamming_detected",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Jamming detected"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "bearing": {
+          "type": "number",
+          "unit": "deg"
+        },
+        "band": {
+          "type": "enum",
+          "enumRef": "core.enum.frequency_band"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.cargo.loaded",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Cargo/troops loaded"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "entity": {
+          "type": "entityRef"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "EventType",
+    "id": "core.event.cargo.unloaded",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Cargo/troops unloaded"
+    },
+    "spec": {
+      "source": "system",
+      "payload": {
+        "system": {
+          "type": "systemRole"
+        },
+        "count": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+]

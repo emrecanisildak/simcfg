@@ -1,0 +1,469 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.hold_position",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Mevzide kal",
+        "en": "Hold position"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "duration": {
+          "type": "number",
+          "unit": "s",
+          "nullable": true,
+          "default": null,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.hold"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.orbit",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Yörünge / bekleme paterni",
+        "en": "Orbit"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "center": {
+          "type": "geoPoint",
+          "required": true
+        },
+        "radius": {
+          "type": "number",
+          "unit": "m",
+          "default": 5000,
+          "min": 100
+        },
+        "altitude": {
+          "type": "number",
+          "unit": "m",
+          "nullable": true,
+          "default": null
+        },
+        "speed": {
+          "type": "number",
+          "unit": "m/s",
+          "nullable": true,
+          "default": null,
+          "min": 0
+        },
+        "direction": {
+          "type": "enum",
+          "values": [
+            "clockwise",
+            "counterclockwise"
+          ],
+          "default": "clockwise"
+        },
+        "duration": {
+          "type": "number",
+          "unit": "s",
+          "nullable": true,
+          "default": null,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.orbit"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.hover",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Havada asılı kal",
+        "en": "Hover"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "position": {
+          "type": "geoPoint",
+          "nullable": true,
+          "default": null
+        },
+        "altitudeAgl": {
+          "type": "number",
+          "unit": "m",
+          "default": 30,
+          "min": 0
+        },
+        "duration": {
+          "type": "number",
+          "unit": "s",
+          "nullable": true,
+          "default": null,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.hover"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.land",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "İniş",
+        "en": "Land"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "position": {
+          "type": "geoPoint",
+          "nullable": true,
+          "default": null
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.land"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.takeoff",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Kalkış",
+        "en": "Take off"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "altitude": {
+          "type": "number",
+          "unit": "m",
+          "default": 300,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.takeoff"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.follow_entity",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Varlığı takip et / refakat",
+        "en": "Follow / escort"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "target": {
+          "type": "entityRef",
+          "required": true
+        },
+        "range": {
+          "type": "number",
+          "unit": "m",
+          "default": 500,
+          "min": 0
+        },
+        "bearing": {
+          "type": "number",
+          "unit": "deg",
+          "default": 180,
+          "description": "Hedefe göre göreli konum"
+        },
+        "altitudeOffset": {
+          "type": "number",
+          "unit": "m",
+          "default": 0
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.follow"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.patrol_area",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Alan devriyesi",
+        "en": "Patrol area"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "area": {
+          "type": "areaRef",
+          "required": true
+        },
+        "pattern": {
+          "type": "enum",
+          "values": [
+            "random",
+            "racetrack",
+            "lawnmower",
+            "perimeter"
+          ],
+          "default": "random"
+        },
+        "speed": {
+          "type": "number",
+          "unit": "m/s",
+          "nullable": true,
+          "default": null,
+          "min": 0
+        },
+        "duration": {
+          "type": "number",
+          "unit": "s",
+          "nullable": true,
+          "default": null,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.patrol_area"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.flee",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Kaç / uzaklaş",
+        "en": "Flee"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "from": {
+          "type": "entityRef",
+          "nullable": true,
+          "default": null
+        },
+        "distance": {
+          "type": "number",
+          "unit": "m",
+          "default": 1000,
+          "min": 0
+        },
+        "speed": {
+          "type": "number",
+          "unit": "m/s",
+          "nullable": true,
+          "default": null,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.flee"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.return_to_base",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Üsse dön",
+        "en": "Return to base"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "base": {
+          "type": "geoPoint",
+          "nullable": true,
+          "default": null
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.rtb"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.terrain_follow",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Arazi takibi (NOE)",
+        "en": "Terrain following"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [],
+      "durative": false,
+      "parameters": {
+        "altitudeAgl": {
+          "type": "number",
+          "unit": "m",
+          "default": 30,
+          "min": 5
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.terrain_follow"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.set_formation",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Formasyon",
+        "en": "Set formation"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [],
+      "durative": false,
+      "parameters": {
+        "formation": {
+          "type": "enum",
+          "enumRef": "core.enum.formation",
+          "required": true
+        },
+        "spacing": {
+          "type": "number",
+          "unit": "m",
+          "default": 50,
+          "min": 1
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.set_formation"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.terminal_attack",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Terminal saldırı (kamikaze)",
+        "en": "Terminal attack"
+      }
+    },
+    "spec": {
+      "category": "movement",
+      "channels": [
+        "movement"
+      ],
+      "durative": true,
+      "parameters": {
+        "target": {
+          "type": "entityRef",
+          "required": true
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.movement.terminal_attack"
+      }
+    }
+  }
+]

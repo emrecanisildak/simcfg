@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/condition-type.schema.json",
+  "title": "ConditionType - kural editöründe kullanılabilen koşul",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "ConditionType" },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "parameters": { "$ref": "common.schema.json#/$defs/descriptorMap" },
+        "requires": {
+          "type": "object",
+          "properties": { "platformType": { "$ref": "common.schema.json#/$defs/id" } },
+          "additionalProperties": false
+        },
+        "implementation": {
+          "oneOf": [
+            {
+              "type": "object", "required": ["type", "handler"],
+              "properties": { "type": { "const": "native" }, "handler": { "type": "string" } },
+              "additionalProperties": false
+            },
+            {
+              "type": "object", "required": ["type", "body"],
+              "properties": { "type": { "const": "expression" }, "body": { "$ref": "common.schema.json#/$defs/expression" } },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "ui": { "$ref": "common.schema.json#/$defs/uiHints" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

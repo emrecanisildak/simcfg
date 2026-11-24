@@ -1,0 +1,49 @@
+[
+  {
+    "apiVersion": "simcfg/v1", "kind": "Behavior", "id": "core.behavior.air.route_patrol", "version": "1.0.0",
+    "meta": { "name": { "tr": "Rota devriyesi", "en": "Route patrol" } },
+    "spec": {
+      "category": "mission",
+      "parameters": {
+        "patrolRoute": { "type": "routeRef", "required": true },
+        "loop":        { "type": "boolean", "default": true }
+      },
+      "rules": {
+        "start_patrol": {
+          "priority": 20,
+          "trigger": { "event": "core.event.scenario.started" },
+          "actions": [ { "action": "core.action.follow_route", "params": { "route": { "param": "patrolRoute" }, "loop": { "param": "loop" } } } ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "Behavior", "id": "core.behavior.air.fuel_management", "version": "1.0.0",
+    "meta": { "name": { "tr": "Yakıt yönetimi (Bingo/RTB)", "en": "Fuel management" } },
+    "spec": {
+      "category": "mission",
+      "requires": { "platformType": "core.platformtype.fixed_wing" },
+      "parameters": {
+        "bingoFraction": { "type": "number", "default": 0.25, "min": 0, "max": 1 },
+        "homeBase":      { "type": "geoPoint", "nullable": true, "default": null }
+      },
+      "rules": {
+        "bingo_rtb": {
+          "priority": 90,
+          "trigger": { "every": "10 s" },
+          "condition": {
+            "all": [
+              { "cond": "core.cond.fuel_below", "params": { "fraction": { "param": "bingoFraction" } } },
+              { "op": "exists", "args": [ { "param": "homeBase" } ] }
+            ]
+          },
+          "actions": [
+            { "action": "core.action.log", "params": { "message": "BINGO fuel - RTB", "level": "alert" } },
+            { "action": "core.action.fly_to", "params": { "position": { "param": "homeBase" } } }
+          ],
+          "maxFires": 1
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,674 @@
+[
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "bandit_1",
+    "owner": "plan",
+    "action": "core.action.follow_route",
+    "params": {
+      "route": "red_ingress",
+      "startWaypoint": 0
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "airliner_1",
+    "owner": "plan",
+    "action": "core.action.follow_route",
+    "params": {
+      "route": "airway_track",
+      "startWaypoint": 0
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "event",
+    "event": "core.event.scenario.started",
+    "payload": {}
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "viper_1",
+    "owner": "engage.arm_on_start",
+    "rule": "arm_on_start",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "viper_1",
+    "owner": "engage.arm_on_start",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "launcher",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "viper_1",
+    "owner": "engage.arm_on_start",
+    "system": "weapons",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "viper_2",
+    "owner": "engage.arm_on_start",
+    "rule": "arm_on_start",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "viper_2",
+    "owner": "engage.arm_on_start",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "launcher",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "viper_2",
+    "owner": "engage.arm_on_start",
+    "system": "weapons",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "bandit_1",
+    "owner": "engage.arm_on_start",
+    "rule": "arm_on_start",
+    "priority": 30
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "bandit_1",
+    "owner": "engage.arm_on_start",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "launcher",
+      "armed": true
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "command",
+    "entity": "bandit_1",
+    "owner": "engage.arm_on_start",
+    "system": "weapons",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "viper_1",
+    "owner": "patrol.start_patrol",
+    "rule": "start_patrol",
+    "priority": 20
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "viper_1",
+    "owner": "patrol.start_patrol",
+    "action": "core.action.follow_route",
+    "params": {
+      "route": "cap_orbit",
+      "loop": true,
+      "startWaypoint": 0
+    }
+  },
+  {
+    "t": 0.0,
+    "type": "rule.fire",
+    "entity": "viper_2",
+    "owner": "patrol.start_patrol",
+    "rule": "start_patrol",
+    "priority": 20
+  },
+  {
+    "t": 0.0,
+    "type": "action",
+    "entity": "viper_2",
+    "owner": "patrol.start_patrol",
+    "action": "core.action.follow_route",
+    "params": {
+      "route": "cap_orbit",
+      "loop": true,
+      "startWaypoint": 0
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "rule.fire",
+    "entity": "sam_1",
+    "owner": "air_defense.radar_up",
+    "rule": "radar_up",
+    "priority": 50
+  },
+  {
+    "t": 2.0,
+    "type": "action",
+    "entity": "sam_1",
+    "owner": "air_defense.radar_up",
+    "action": "core.action.set_radar_mode",
+    "params": {
+      "system": "radar",
+      "mode": "tws"
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "command",
+    "entity": "sam_1",
+    "owner": "air_defense.radar_up",
+    "system": "search_radar",
+    "command": "setMode",
+    "args": {
+      "mode": "tws"
+    },
+    "stateChange": {
+      "mode": [
+        "standby",
+        "tws"
+      ],
+      "emitting": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "action",
+    "entity": "sam_1",
+    "owner": "air_defense.radar_up",
+    "action": "core.action.set_master_arm",
+    "params": {
+      "launcher": "launcher",
+      "armed": true
+    }
+  },
+  {
+    "t": 2.0,
+    "type": "command",
+    "entity": "sam_1",
+    "owner": "air_defense.radar_up",
+    "system": "launcher",
+    "command": "setMasterArm",
+    "args": {
+      "armed": true
+    },
+    "stateChange": {
+      "masterArm": [
+        false,
+        true
+      ]
+    }
+  },
+  {
+    "t": 3.0,
+    "type": "event",
+    "entity": "sam_1",
+    "event": "core.event.sensor.detection",
+    "payload": {
+      "system": "search_radar",
+      "target": "viper_1",
+      "range": 17000,
+      "bearing": 310,
+      "identity": "unknown"
+    }
+  },
+  {
+    "t": 3.0,
+    "type": "rule.fire",
+    "entity": "sam_1",
+    "owner": "air_defense.identify_contact",
+    "rule": "identify_contact",
+    "priority": 40
+  },
+  {
+    "t": 3.0,
+    "type": "action",
+    "entity": "sam_1",
+    "owner": "air_defense.identify_contact",
+    "action": "core.action.system_command",
+    "params": {
+      "system": "iff",
+      "command": "interrogate",
+      "args": {
+        "target": "viper_1",
+        "mode": "4"
+      }
+    }
+  },
+  {
+    "t": 3.0,
+    "type": "command",
+    "entity": "sam_1",
+    "owner": "air_defense.identify_contact",
+    "system": "iff",
+    "command": "interrogate",
+    "args": {
+      "target": "viper_1",
+      "mode": "4"
+    }
+  },
+  {
+    "t": 3.0,
+    "type": "event",
+    "entity": "sam_1",
+    "event": "core.event.iff.reply",
+    "payload": {
+      "system": "iff",
+      "target": "viper_1",
+      "mode": "4",
+      "code": "4521",
+      "valid": false
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "event",
+    "entity": "sam_1",
+    "event": "core.event.sensor.detection",
+    "payload": {
+      "system": "search_radar",
+      "target": "viper_1",
+      "range": 16500,
+      "bearing": 310,
+      "identity": "hostile"
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "rule.fire",
+    "entity": "sam_1",
+    "owner": "air_defense.engage_in_mez",
+    "rule": "engage_in_mez",
+    "priority": 70
+  },
+  {
+    "t": 5.0,
+    "type": "action",
+    "entity": "sam_1",
+    "owner": "air_defense.engage_in_mez",
+    "action": "core.action.engage",
+    "params": {
+      "launcher": "launcher",
+      "target": "viper_1",
+      "salvo": 2
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "command",
+    "entity": "sam_1",
+    "owner": "air_defense.engage_in_mez",
+    "system": "launcher",
+    "command": "fire",
+    "args": {
+      "target": "viper_1",
+      "munition": null,
+      "salvo": 2
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "event",
+    "entity": "sam_1",
+    "event": "core.event.weapon.launched",
+    "payload": {
+      "system": "launcher",
+      "munition": "core.munition.generic_sam_mr",
+      "target": "viper_1"
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "event",
+    "entity": "sam_1",
+    "event": "core.event.weapon.launched",
+    "payload": {
+      "system": "launcher",
+      "munition": "core.munition.generic_sam_mr",
+      "target": "viper_1"
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "event",
+    "entity": "viper_1",
+    "event": "core.event.rwr.missile_launch",
+    "payload": {
+      "system": "rwr",
+      "source": "sam_1",
+      "bearing": 130.9
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "rule.fire",
+    "entity": "viper_1",
+    "owner": "self_defense.flare_and_break_on_launch",
+    "rule": "flare_and_break_on_launch",
+    "priority": 100
+  },
+  {
+    "t": 5.0,
+    "type": "channel.preempted",
+    "entity": "viper_1",
+    "owner": "self_defense.flare_and_break_on_launch",
+    "channel": "movement",
+    "previous": "patrol.start_patrol"
+  },
+  {
+    "t": 5.0,
+    "type": "action",
+    "entity": "viper_1",
+    "owner": "self_defense.flare_and_break_on_launch",
+    "action": "core.action.parallel",
+    "params": {
+      "branches": [
+        "dispense_flare",
+        "maneuver"
+      ],
+      "policy": "all"
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "action",
+    "entity": "viper_1",
+    "owner": "self_defense.flare_and_break_on_launch",
+    "action": "core.action.dispense_flare",
+    "params": {
+      "system": "flare",
+      "count": 2,
+      "interval": 0.25
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "command",
+    "entity": "viper_1",
+    "owner": "self_defense.flare_and_break_on_launch",
+    "system": "flare",
+    "command": "dispense",
+    "args": {
+      "count": 2,
+      "interval": 0.25
+    },
+    "stateChange": {
+      "remaining": [
+        60,
+        58
+      ]
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "action",
+    "entity": "viper_1",
+    "owner": "self_defense.flare_and_break_on_launch",
+    "action": "core.action.maneuver",
+    "params": {
+      "maneuver": "core.maneuver.break_turn",
+      "args": {
+        "g": 7,
+        "direction": "away"
+      },
+      "referenceBearing": 130.9
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "event",
+    "entity": "viper_1",
+    "event": "core.event.platform.under_fire",
+    "payload": {
+      "by": "sam_1",
+      "munition": "core.munition.generic_sam_mr",
+      "distance": 18586.0
+    }
+  },
+  {
+    "t": 5.0,
+    "type": "event",
+    "entity": "viper_1",
+    "event": "core.event.cm.dispensed",
+    "payload": {
+      "system": "flare",
+      "count": 2
+    }
+  },
+  {
+    "t": 9.0,
+    "type": "channel.released",
+    "entity": "viper_1",
+    "channel": "movement",
+    "owner_": "self_defense.flare_and_break_on_launch"
+  },
+  {
+    "t": 10.0,
+    "type": "event",
+    "entity": "viper_1",
+    "event": "core.event.rwr.lock",
+    "payload": {
+      "system": "rwr",
+      "emitter": "DEMO-SAM-SR",
+      "source": "sam_1",
+      "bearing": 130
+    }
+  },
+  {
+    "t": 10.0,
+    "type": "rule.fire",
+    "entity": "viper_1",
+    "owner": "self_defense.chaff_on_lock",
+    "rule": "chaff_on_lock",
+    "priority": 80
+  },
+  {
+    "t": 10.0,
+    "type": "action",
+    "entity": "viper_1",
+    "owner": "self_defense.chaff_on_lock",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "lastThreatBearing",
+      "value": 130
+    }
+  },
+  {
+    "t": 10.0,
+    "type": "action",
+    "entity": "viper_1",
+    "owner": "self_defense.chaff_on_lock",
+    "action": "core.action.dispense_chaff",
+    "params": {
+      "system": "chaff",
+      "count": 5,
+      "interval": 0.3
+    }
+  },
+  {
+    "t": 10.0,
+    "type": "command",
+    "entity": "viper_1",
+    "owner": "self_defense.chaff_on_lock",
+    "system": "chaff",
+    "command": "dispense",
+    "args": {
+      "count": 5,
+      "interval": 0.3
+    },
+    "stateChange": {
+      "remaining": [
+        30,
+        25
+      ]
+    }
+  },
+  {
+    "t": 10.0,
+    "type": "event",
+    "entity": "viper_1",
+    "event": "core.event.cm.dispensed",
+    "payload": {
+      "system": "chaff",
+      "count": 5
+    }
+  },
+  {
+    "t": 12.0,
+    "type": "event",
+    "entity": "viper_1",
+    "event": "core.event.rwr.lock",
+    "payload": {
+      "system": "rwr",
+      "emitter": "DEMO-SAM-SR",
+      "source": "sam_1",
+      "bearing": 131
+    }
+  },
+  {
+    "t": 16.0,
+    "type": "event",
+    "entity": "viper_1",
+    "event": "core.event.rwr.lock",
+    "payload": {
+      "system": "rwr",
+      "emitter": "DEMO-SAM-SR",
+      "source": "sam_1",
+      "bearing": 132
+    }
+  },
+  {
+    "t": 16.0,
+    "type": "rule.fire",
+    "entity": "viper_1",
+    "owner": "self_defense.chaff_on_lock",
+    "rule": "chaff_on_lock",
+    "priority": 80
+  },
+  {
+    "t": 16.0,
+    "type": "action",
+    "entity": "viper_1",
+    "owner": "self_defense.chaff_on_lock",
+    "action": "core.action.set_variable",
+    "params": {
+      "name": "lastThreatBearing",
+      "value": 132
+    }
+  },
+  {
+    "t": 16.0,
+    "type": "action",
+    "entity": "viper_1",
+    "owner": "self_defense.chaff_on_lock",
+    "action": "core.action.dispense_chaff",
+    "params": {
+      "system": "chaff",
+      "count": 5,
+      "interval": 0.3
+    }
+  },
+  {
+    "t": 16.0,
+    "type": "command",
+    "entity": "viper_1",
+    "owner": "self_defense.chaff_on_lock",
+    "system": "chaff",
+    "command": "dispense",
+    "args": {
+      "count": 5,
+      "interval": 0.3
+    },
+    "stateChange": {
+      "remaining": [
+        25,
+        20
+      ]
+    }
+  },
+  {
+    "t": 16.0,
+    "type": "event",
+    "entity": "viper_1",
+    "event": "core.event.cm.dispensed",
+    "payload": {
+      "system": "chaff",
+      "count": 5
+    }
+  },
+  {
+    "t": 21.0,
+    "type": "event",
+    "entity": "viper_1",
+    "event": "core.event.rwr.missile_launch",
+    "payload": {
+      "system": "rwr",
+      "source": "sam_1",
+      "bearing": 133
+    }
+  },
+  {
+    "t": 21.0,
+    "type": "rule.fire",
+    "entity": "viper_1",
+    "owner": "self_defense.notch_without_flares",
+    "rule": "notch_without_flares",
+    "priority": 90
+  },
+  {
+    "t": 21.0,
+    "type": "action",
+    "entity": "viper_1",
+    "owner": "self_defense.notch_without_flares",
+    "action": "core.action.maneuver",
+    "params": {
+      "maneuver": "core.maneuver.notch",
+      "referenceBearing": 133,
+      "args": {}
+    }
+  }
+]

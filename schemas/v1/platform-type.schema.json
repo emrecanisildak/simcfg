@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/platform-type.schema.json",
+  "title": "PlatformType - platform sınıfı (sabit kanat, kara aracı, gemi...)",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "PlatformType" },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "domain": { "type": "string", "description": "air | land | surface | subsurface | space | ..." },
+        "implementation": { "type": "string", "description": "Dinamik model eklentisi." },
+        "parameters": { "$ref": "common.schema.json#/$defs/descriptorMap" },
+        "state": { "$ref": "common.schema.json#/$defs/descriptorMap" },
+        "emits": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/id" }, "uniqueItems": true },
+        "allowedSystemTypes": {
+          "type": "array",
+          "description": "Monte edilebilecek sistem tipleri (alt tipler dahil).",
+          "items": { "$ref": "common.schema.json#/$defs/id" }
+        },
+        "ui": { "$ref": "common.schema.json#/$defs/uiHints" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

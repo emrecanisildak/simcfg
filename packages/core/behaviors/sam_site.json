@@ -1,0 +1,266 @@
+{
+  "$schema": "../../../schemas/v1/behavior.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "Behavior",
+  "id": "core.behavior.ground.sam_site",
+  "version": "1.0.0",
+  "meta": {
+    "name": {
+      "tr": "SAM bataryası radar yönetimi",
+      "en": "SAM site emission control"
+    }
+  },
+  "spec": {
+    "category": "air-defense",
+    "requires": {
+      "systems": {
+        "radar": {
+          "systemType": "core.systemtype.radar"
+        },
+        "iff": {
+          "systemType": "core.systemtype.iff",
+          "optional": true
+        },
+        "launcher": {
+          "systemType": "core.systemtype.weapon_launcher",
+          "optional": true
+        }
+      }
+    },
+    "parameters": {
+      "engagementArea": {
+        "type": "areaRef",
+        "required": true
+      },
+      "activeMode": {
+        "type": "enum",
+        "enumRef": "core.enum.radar_mode",
+        "default": "search"
+      },
+      "interrogate": {
+        "type": "boolean",
+        "default": true
+      },
+      "roe": {
+        "type": "enum",
+        "enumRef": "core.enum.roe",
+        "default": "tight",
+        "overridableAt": "runtime"
+      },
+      "salvo": {
+        "type": "integer",
+        "default": 2,
+        "min": 1,
+        "max": 4
+      }
+    },
+    "rules": {
+      "radar_up": {
+        "priority": 50,
+        "trigger": {
+          "edge": "rising"
+        },
+        "condition": {
+          "cond": "core.cond.hostile_in_area",
+          "params": {
+            "area": {
+              "param": "engagementArea"
+            },
+            "domain": "air"
+          }
+        },
+        "actions": [
+          {
+            "action": "core.action.set_radar_mode",
+            "params": {
+              "system": "radar",
+              "mode": {
+                "param": "activeMode"
+              }
+            }
+          },
+          {
+            "action": "core.action.set_master_arm",
+            "params": {
+              "launcher": "launcher",
+              "armed": true
+            }
+          }
+        ]
+      },
+      "radar_down": {
+        "priority": 50,
+        "trigger": {
+          "edge": "falling"
+        },
+        "condition": {
+          "cond": "core.cond.hostile_in_area",
+          "params": {
+            "area": {
+              "param": "engagementArea"
+            },
+            "domain": "air"
+          }
+        },
+        "actions": [
+          {
+            "action": "core.action.set_radar_mode",
+            "params": {
+              "system": "radar",
+              "mode": "standby"
+            }
+          }
+        ]
+      },
+      "identify_contact": {
+        "priority": 40,
+        "trigger": {
+          "event": "core.event.sensor.detection",
+          "filter": {
+            "op": "eq",
+            "args": [
+              {
+                "var": "event.system"
+              },
+              "radar"
+            ]
+          }
+        },
+        "condition": {
+          "all": [
+            {
+              "param": "interrogate"
+            },
+            {
+              "op": "eq",
+              "args": [
+                {
+                  "var": "event.identity"
+                },
+                "unknown"
+              ]
+            }
+          ]
+        },
+        "actions": [
+          {
+            "action": "core.action.system_command",
+            "params": {
+              "system": "iff",
+              "command": "interrogate",
+              "args": {
+                "target": {
+                  "var": "event.target"
+                },
+                "mode": "4"
+              }
+            }
+          }
+        ],
+        "cooldown": "2 s"
+      },
+      "engage_in_mez": {
+        "label": {
+          "tr": "MEZ içindeki düşmana atış",
+          "en": "Engage in MEZ"
+        },
+        "priority": 70,
+        "trigger": {
+          "event": "core.event.sensor.detection",
+          "filter": {
+            "op": "eq",
+            "args": [
+              {
+                "var": "event.system"
+              },
+              "radar"
+            ]
+          }
+        },
+        "condition": {
+          "all": [
+            {
+              "op": "ne",
+              "args": [
+                {
+                  "param": "roe"
+                },
+                "hold"
+              ]
+            },
+            {
+              "any": [
+                {
+                  "op": "eq",
+                  "args": [
+                    {
+                      "var": "event.identity"
+                    },
+                    "hostile"
+                  ]
+                },
+                {
+                  "all": [
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "param": "roe"
+                        },
+                        "free"
+                      ]
+                    },
+                    {
+                      "op": "eq",
+                      "args": [
+                        {
+                          "var": "event.identity"
+                        },
+                        "unknown"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "cond": "core.cond.in_area",
+              "params": {
+                "area": {
+                  "param": "engagementArea"
+                },
+                "entity": {
+                  "var": "event.target"
+                }
+              }
+            },
+            {
+              "cond": "core.cond.target_in_weapon_range",
+              "params": {
+                "launcher": "launcher",
+                "target": {
+                  "var": "event.target"
+                }
+              }
+            }
+          ]
+        },
+        "actions": [
+          {
+            "action": "core.action.engage",
+            "params": {
+              "launcher": "launcher",
+              "target": {
+                "var": "event.target"
+              },
+              "salvo": {
+                "param": "salvo"
+              }
+            }
+          }
+        ],
+        "cooldown": "20 s"
+      }
+    }
+  }
+}

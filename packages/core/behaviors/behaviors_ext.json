@@ -1,0 +1,2662 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.common.missile_warning_defense",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Füze yaklaşma uyarısı savunması (MAWS)",
+        "en": "Missile warning defense"
+      },
+      "description": "RWR göremeyen IR/UV güdümlü tehditlere (MANPADS) karşı MAWS tabanlı tepki."
+    },
+    "spec": {
+      "category": "defensive",
+      "requires": {
+        "systems": {
+          "maws": {
+            "systemType": "core.systemtype.maws"
+          },
+          "flare": {
+            "systemType": "core.systemtype.flare_dispenser",
+            "optional": true
+          },
+          "chaff": {
+            "systemType": "core.systemtype.chaff_dispenser",
+            "optional": true
+          }
+        }
+      },
+      "parameters": {
+        "flareBurst": {
+          "type": "integer",
+          "default": 4,
+          "min": 1,
+          "max": 20
+        },
+        "breakG": {
+          "type": "number",
+          "unit": "g",
+          "default": 3,
+          "min": 1,
+          "max": 12
+        },
+        "evade": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "rules": {
+        "flare_on_approach": {
+          "priority": 100,
+          "trigger": {
+            "event": "core.event.mws.missile_approach"
+          },
+          "condition": {
+            "cond": "core.cond.cm_available",
+            "params": {
+              "system": "flare"
+            }
+          },
+          "actions": [
+            {
+              "action": "core.action.dispense_flare",
+              "params": {
+                "system": "flare",
+                "count": {
+                  "param": "flareBurst"
+                },
+                "interval": 0.15
+              }
+            }
+          ],
+          "cooldown": "2 s",
+          "label": {
+            "tr": "Yaklaşan füzeye flare",
+            "en": "Flares on approach"
+          }
+        },
+        "evade_on_approach": {
+          "priority": 95,
+          "trigger": {
+            "event": "core.event.mws.missile_approach"
+          },
+          "condition": {
+            "param": "evade"
+          },
+          "actions": [
+            {
+              "action": "core.action.maneuver",
+              "params": {
+                "maneuver": "core.maneuver.break_turn",
+                "args": {
+                  "g": {
+                    "param": "breakG"
+                  },
+                  "direction": "away"
+                },
+                "referenceBearing": {
+                  "var": "event.bearing"
+                }
+              }
+            }
+          ],
+          "cooldown": "5 s"
+        },
+        "chaff_on_rf_threat": {
+          "priority": 90,
+          "trigger": {
+            "event": "core.event.mws.missile_approach"
+          },
+          "condition": {
+            "cond": "core.cond.cm_available",
+            "params": {
+              "system": "chaff"
+            }
+          },
+          "actions": [
+            {
+              "action": "core.action.dispense_chaff",
+              "params": {
+                "system": "chaff",
+                "count": 2
+              }
+            }
+          ],
+          "cooldown": "2 s"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.common.report_contacts",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Temas raporlama",
+        "en": "Report contacts"
+      }
+    },
+    "spec": {
+      "category": "c2",
+      "requires": {
+        "systems": {
+          "link": {
+            "systemType": "core.systemtype.radio"
+          }
+        }
+      },
+      "parameters": {
+        "reportTo": {
+          "type": "entityRef",
+          "nullable": true,
+          "default": null,
+          "description": "Boş = ağdaki herkes"
+        },
+        "reportUnknown": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "rules": {
+        "report_track": {
+          "priority": 20,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "any": [
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "event.identity"
+                  },
+                  "hostile"
+                ]
+              },
+              {
+                "all": [
+                  {
+                    "param": "reportUnknown"
+                  },
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "event.identity"
+                      },
+                      "unknown"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.send_message",
+              "params": {
+                "system": "link",
+                "to": {
+                  "param": "reportTo"
+                },
+                "message": "track",
+                "priority": "priority"
+              }
+            }
+          ],
+          "cooldown": "10 s"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.ground.vehicle_combat",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Araç muharebesi",
+        "en": "Vehicle combat"
+      }
+    },
+    "spec": {
+      "category": "offensive",
+      "requires": {
+        "systems": {
+          "main_weapon": {
+            "systemType": "core.systemtype.weapon_launcher"
+          },
+          "secondary_weapon": {
+            "systemType": "core.systemtype.weapon_launcher",
+            "optional": true
+          },
+          "radio": {
+            "systemType": "core.systemtype.radio",
+            "optional": true
+          }
+        }
+      },
+      "parameters": {
+        "roe": {
+          "type": "enum",
+          "enumRef": "core.enum.roe",
+          "default": "tight",
+          "overridableAt": "runtime",
+          "label": {
+            "tr": "Angajman kuralı",
+            "en": "ROE"
+          }
+        },
+        "mainMunition": {
+          "type": "ref",
+          "refKind": "Munition",
+          "nullable": true,
+          "default": null
+        },
+        "salvo": {
+          "type": "integer",
+          "default": 1,
+          "min": 1,
+          "max": 10
+        },
+        "secondaryBurst": {
+          "type": "integer",
+          "default": 10,
+          "min": 1
+        },
+        "reportContacts": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "rules": {
+        "arm_main": {
+          "priority": 30,
+          "trigger": {
+            "event": "core.event.scenario.started"
+          },
+          "condition": {
+            "op": "ne",
+            "args": [
+              {
+                "param": "roe"
+              },
+              "hold"
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.set_master_arm",
+              "params": {
+                "launcher": "main_weapon",
+                "armed": true
+              }
+            }
+          ]
+        },
+        "arm_secondary": {
+          "priority": 30,
+          "trigger": {
+            "event": "core.event.scenario.started"
+          },
+          "condition": {
+            "op": "ne",
+            "args": [
+              {
+                "param": "roe"
+              },
+              "hold"
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.set_master_arm",
+              "params": {
+                "launcher": "secondary_weapon",
+                "armed": true
+              }
+            }
+          ]
+        },
+        "engage_main": {
+          "priority": 70,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "all": [
+              {
+                "op": "ne",
+                "args": [
+                  {
+                    "param": "roe"
+                  },
+                  "hold"
+                ]
+              },
+              {
+                "any": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "event.identity"
+                      },
+                      "hostile"
+                    ]
+                  },
+                  {
+                    "all": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "param": "roe"
+                          },
+                          "free"
+                        ]
+                      },
+                      {
+                        "not": {
+                          "op": "in",
+                          "args": [
+                            {
+                              "var": "event.identity"
+                            },
+                            [
+                              "friend",
+                              "neutral"
+                            ]
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "cond": "core.cond.has_munition",
+                "params": {
+                  "launcher": "main_weapon"
+                }
+              },
+              {
+                "cond": "core.cond.target_in_weapon_range",
+                "params": {
+                  "launcher": "main_weapon",
+                  "target": {
+                    "var": "event.target"
+                  },
+                  "munition": {
+                    "param": "mainMunition"
+                  }
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.engage",
+              "params": {
+                "launcher": "main_weapon",
+                "target": {
+                  "var": "event.target"
+                },
+                "munition": {
+                  "param": "mainMunition"
+                },
+                "salvo": {
+                  "param": "salvo"
+                }
+              }
+            }
+          ],
+          "cooldown": "6 s",
+          "label": {
+            "tr": "Ana silahla angajman",
+            "en": "Engage with main weapon"
+          }
+        },
+        "engage_secondary": {
+          "priority": 60,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "all": [
+              {
+                "op": "ne",
+                "args": [
+                  {
+                    "param": "roe"
+                  },
+                  "hold"
+                ]
+              },
+              {
+                "any": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "event.identity"
+                      },
+                      "hostile"
+                    ]
+                  },
+                  {
+                    "all": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "param": "roe"
+                          },
+                          "free"
+                        ]
+                      },
+                      {
+                        "not": {
+                          "op": "in",
+                          "args": [
+                            {
+                              "var": "event.identity"
+                            },
+                            [
+                              "friend",
+                              "neutral"
+                            ]
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "not": {
+                  "cond": "core.cond.target_in_weapon_range",
+                  "params": {
+                    "launcher": "main_weapon",
+                    "target": {
+                      "var": "event.target"
+                    }
+                  }
+                }
+              },
+              {
+                "cond": "core.cond.has_munition",
+                "params": {
+                  "launcher": "secondary_weapon"
+                }
+              },
+              {
+                "cond": "core.cond.target_in_weapon_range",
+                "params": {
+                  "launcher": "secondary_weapon",
+                  "target": {
+                    "var": "event.target"
+                  }
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.engage",
+              "params": {
+                "launcher": "secondary_weapon",
+                "target": {
+                  "var": "event.target"
+                },
+                "salvo": {
+                  "param": "secondaryBurst"
+                }
+              }
+            }
+          ],
+          "cooldown": "3 s",
+          "label": {
+            "tr": "Ana silah menzili dışındaysa ikincil silah",
+            "en": "Secondary weapon fallback"
+          }
+        },
+        "return_fire": {
+          "priority": 80,
+          "trigger": {
+            "event": "core.event.platform.under_fire"
+          },
+          "condition": {
+            "all": [
+              {
+                "op": "ne",
+                "args": [
+                  {
+                    "param": "roe"
+                  },
+                  "hold"
+                ]
+              },
+              {
+                "op": "exists",
+                "args": [
+                  {
+                    "var": "event.by"
+                  }
+                ]
+              },
+              {
+                "cond": "core.cond.has_munition",
+                "params": {
+                  "launcher": "main_weapon"
+                }
+              },
+              {
+                "cond": "core.cond.target_in_weapon_range",
+                "params": {
+                  "launcher": "main_weapon",
+                  "target": {
+                    "var": "event.by"
+                  }
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.engage",
+              "params": {
+                "launcher": "main_weapon",
+                "target": {
+                  "var": "event.by"
+                },
+                "salvo": {
+                  "param": "salvo"
+                }
+              }
+            }
+          ],
+          "cooldown": "6 s"
+        },
+        "report_contact": {
+          "priority": 10,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "all": [
+              {
+                "param": "reportContacts"
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "event.identity"
+                  },
+                  "hostile"
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.send_message",
+              "params": {
+                "system": "radio",
+                "message": "contact",
+                "priority": "priority"
+              }
+            }
+          ],
+          "cooldown": "30 s"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.ground.vehicle_self_protection",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Araç öz koruması (LWR / sis / APS)",
+        "en": "Vehicle self protection"
+      }
+    },
+    "spec": {
+      "category": "defensive",
+      "requires": {
+        "systems": {
+          "smoke": {
+            "systemType": "core.systemtype.smoke_launcher",
+            "optional": true
+          },
+          "lwr": {
+            "systemType": "core.systemtype.lwr",
+            "optional": true
+          },
+          "aps": {
+            "systemType": "core.systemtype.aps",
+            "optional": true
+          }
+        }
+      },
+      "parameters": {
+        "smokeSalvo": {
+          "type": "integer",
+          "default": 4,
+          "min": 1
+        },
+        "evadeOnWarning": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "rules": {
+        "smoke_on_laser": {
+          "priority": 90,
+          "trigger": {
+            "event": "core.event.lwr.laser_warning"
+          },
+          "condition": {
+            "all": [
+              {
+                "var": "self.systems.lwr.fitted"
+              },
+              {
+                "cond": "core.cond.cm_available",
+                "params": {
+                  "system": "smoke"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.dispense_smoke",
+              "params": {
+                "system": "smoke",
+                "count": {
+                  "param": "smokeSalvo"
+                }
+              }
+            },
+            {
+              "action": "core.action.maneuver",
+              "when": {
+                "param": "evadeOnWarning"
+              },
+              "params": {
+                "maneuver": "core.maneuver.zigzag",
+                "referenceBearing": {
+                  "var": "event.bearing"
+                }
+              }
+            }
+          ],
+          "cooldown": "15 s",
+          "label": {
+            "tr": "Lazer uyarısında sis + kaçınma",
+            "en": "Smoke on laser warning"
+          }
+        },
+        "aps_report": {
+          "priority": 10,
+          "trigger": {
+            "event": "core.event.aps.intercept"
+          },
+          "condition": {
+            "var": "self.systems.aps.fitted"
+          },
+          "actions": [
+            {
+              "action": "core.action.log",
+              "params": {
+                "message": "APS intercept",
+                "level": "warning"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.ground.shorad",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Kısa menzilli hava savunma (füze + top)",
+        "en": "SHORAD"
+      }
+    },
+    "spec": {
+      "category": "air-defense",
+      "requires": {
+        "systems": {
+          "launcher": {
+            "systemType": "core.systemtype.weapon_launcher"
+          },
+          "gun": {
+            "systemType": "core.systemtype.weapon_launcher",
+            "optional": true
+          },
+          "eo": {
+            "systemType": "core.systemtype.eo_ir",
+            "optional": true
+          }
+        }
+      },
+      "parameters": {
+        "roe": {
+          "type": "enum",
+          "enumRef": "core.enum.roe",
+          "default": "tight",
+          "overridableAt": "runtime",
+          "label": {
+            "tr": "Angajman kuralı",
+            "en": "ROE"
+          }
+        },
+        "salvo": {
+          "type": "integer",
+          "default": 1,
+          "min": 1,
+          "max": 4
+        },
+        "gunBurst": {
+          "type": "integer",
+          "default": 20,
+          "min": 1
+        }
+      },
+      "rules": {
+        "arm_launcher": {
+          "priority": 30,
+          "trigger": {
+            "event": "core.event.scenario.started"
+          },
+          "condition": {
+            "op": "ne",
+            "args": [
+              {
+                "param": "roe"
+              },
+              "hold"
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.set_master_arm",
+              "params": {
+                "launcher": "launcher",
+                "armed": true
+              }
+            }
+          ]
+        },
+        "arm_gun": {
+          "priority": 30,
+          "trigger": {
+            "event": "core.event.scenario.started"
+          },
+          "condition": {
+            "op": "ne",
+            "args": [
+              {
+                "param": "roe"
+              },
+              "hold"
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.set_master_arm",
+              "params": {
+                "launcher": "gun",
+                "armed": true
+              }
+            }
+          ]
+        },
+        "engage_missile": {
+          "priority": 75,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "all": [
+              {
+                "op": "ne",
+                "args": [
+                  {
+                    "param": "roe"
+                  },
+                  "hold"
+                ]
+              },
+              {
+                "any": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "event.identity"
+                      },
+                      "hostile"
+                    ]
+                  },
+                  {
+                    "all": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "param": "roe"
+                          },
+                          "free"
+                        ]
+                      },
+                      {
+                        "not": {
+                          "op": "in",
+                          "args": [
+                            {
+                              "var": "event.identity"
+                            },
+                            [
+                              "friend",
+                              "neutral"
+                            ]
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "cond": "core.cond.target_domain",
+                "params": {
+                  "target": {
+                    "var": "event.target"
+                  },
+                  "domain": "air"
+                }
+              },
+              {
+                "cond": "core.cond.has_munition",
+                "params": {
+                  "launcher": "launcher"
+                }
+              },
+              {
+                "cond": "core.cond.target_in_weapon_range",
+                "params": {
+                  "launcher": "launcher",
+                  "target": {
+                    "var": "event.target"
+                  }
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.engage",
+              "params": {
+                "launcher": "launcher",
+                "target": {
+                  "var": "event.target"
+                },
+                "salvo": {
+                  "param": "salvo"
+                }
+              }
+            }
+          ],
+          "cooldown": "8 s",
+          "label": {
+            "tr": "Füze ile angajman",
+            "en": "Missile engagement"
+          }
+        },
+        "engage_gun": {
+          "priority": 65,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "all": [
+              {
+                "op": "ne",
+                "args": [
+                  {
+                    "param": "roe"
+                  },
+                  "hold"
+                ]
+              },
+              {
+                "any": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "event.identity"
+                      },
+                      "hostile"
+                    ]
+                  },
+                  {
+                    "all": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "param": "roe"
+                          },
+                          "free"
+                        ]
+                      },
+                      {
+                        "not": {
+                          "op": "in",
+                          "args": [
+                            {
+                              "var": "event.identity"
+                            },
+                            [
+                              "friend",
+                              "neutral"
+                            ]
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "cond": "core.cond.target_domain",
+                "params": {
+                  "target": {
+                    "var": "event.target"
+                  },
+                  "domain": "air"
+                }
+              },
+              {
+                "not": {
+                  "cond": "core.cond.target_in_weapon_range",
+                  "params": {
+                    "launcher": "launcher",
+                    "target": {
+                      "var": "event.target"
+                    }
+                  }
+                }
+              },
+              {
+                "cond": "core.cond.has_munition",
+                "params": {
+                  "launcher": "gun"
+                }
+              },
+              {
+                "cond": "core.cond.target_in_weapon_range",
+                "params": {
+                  "launcher": "gun",
+                  "target": {
+                    "var": "event.target"
+                  }
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.engage",
+              "params": {
+                "launcher": "gun",
+                "target": {
+                  "var": "event.target"
+                },
+                "salvo": {
+                  "param": "gunBurst"
+                }
+              }
+            }
+          ],
+          "cooldown": "3 s",
+          "label": {
+            "tr": "Füze menzili dışında topla",
+            "en": "Gun engagement"
+          }
+        },
+        "eo_track": {
+          "priority": 30,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "all": [
+              {
+                "cond": "core.cond.target_domain",
+                "params": {
+                  "target": {
+                    "var": "event.target"
+                  },
+                  "domain": "air"
+                }
+              },
+              {
+                "op": "ne",
+                "args": [
+                  {
+                    "var": "event.identity"
+                  },
+                  "friend"
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.point_sensor",
+              "params": {
+                "system": "eo",
+                "target": {
+                  "var": "event.target"
+                },
+                "track": true
+              }
+            }
+          ],
+          "cooldown": "10 s"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.rotary.attack_helicopter",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Taarruz helikopteri (pop-up atış)",
+        "en": "Attack helicopter"
+      }
+    },
+    "spec": {
+      "category": "offensive",
+      "requires": {
+        "systems": {
+          "sensor": {
+            "systemType": "core.systemtype.eo_ir"
+          },
+          "launcher": {
+            "systemType": "core.systemtype.weapon_launcher"
+          },
+          "gun": {
+            "systemType": "core.systemtype.weapon_launcher",
+            "optional": true
+          },
+          "designator": {
+            "systemType": "core.systemtype.laser_designator",
+            "optional": true
+          }
+        },
+        "platformType": "core.platformtype.rotary_wing"
+      },
+      "parameters": {
+        "roe": {
+          "type": "enum",
+          "enumRef": "core.enum.roe",
+          "default": "tight",
+          "overridableAt": "runtime",
+          "label": {
+            "tr": "Angajman kuralı",
+            "en": "ROE"
+          }
+        },
+        "nap": {
+          "type": "number",
+          "unit": "m",
+          "default": 25,
+          "min": 5,
+          "label": "NOE irtifası (AGL)"
+        },
+        "atgm": {
+          "type": "ref",
+          "refKind": "Munition",
+          "nullable": true,
+          "default": "core.munition.generic_heli_atgm"
+        },
+        "laseTime": {
+          "type": "number",
+          "unit": "s",
+          "default": 20,
+          "min": 0
+        },
+        "gunBurst": {
+          "type": "integer",
+          "default": 20,
+          "min": 1
+        }
+      },
+      "rules": {
+        "noe_on_start": {
+          "priority": 20,
+          "trigger": {
+            "event": "core.event.scenario.started"
+          },
+          "condition": {
+            "op": "ne",
+            "args": [
+              {
+                "param": "roe"
+              },
+              "hold"
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.terrain_follow",
+              "params": {
+                "altitudeAgl": {
+                  "param": "nap"
+                },
+                "enabled": true
+              }
+            },
+            {
+              "action": "core.action.set_master_arm",
+              "params": {
+                "launcher": "launcher",
+                "armed": true
+              }
+            }
+          ]
+        },
+        "arm_gun": {
+          "priority": 20,
+          "trigger": {
+            "event": "core.event.scenario.started"
+          },
+          "condition": {
+            "op": "ne",
+            "args": [
+              {
+                "param": "roe"
+              },
+              "hold"
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.set_master_arm",
+              "params": {
+                "launcher": "gun",
+                "armed": true
+              }
+            }
+          ]
+        },
+        "pop_up_attack": {
+          "priority": 70,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "all": [
+              {
+                "op": "ne",
+                "args": [
+                  {
+                    "param": "roe"
+                  },
+                  "hold"
+                ]
+              },
+              {
+                "any": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "event.identity"
+                      },
+                      "hostile"
+                    ]
+                  },
+                  {
+                    "all": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "param": "roe"
+                          },
+                          "free"
+                        ]
+                      },
+                      {
+                        "not": {
+                          "op": "in",
+                          "args": [
+                            {
+                              "var": "event.identity"
+                            },
+                            [
+                              "friend",
+                              "neutral"
+                            ]
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "any": [
+                  {
+                    "cond": "core.cond.target_domain",
+                    "params": {
+                      "target": {
+                        "var": "event.target"
+                      },
+                      "domain": "land"
+                    }
+                  },
+                  {
+                    "cond": "core.cond.target_domain",
+                    "params": {
+                      "target": {
+                        "var": "event.target"
+                      },
+                      "domain": "surface"
+                    }
+                  }
+                ]
+              },
+              {
+                "cond": "core.cond.has_munition",
+                "params": {
+                  "launcher": "launcher"
+                }
+              },
+              {
+                "cond": "core.cond.target_in_weapon_range",
+                "params": {
+                  "launcher": "launcher",
+                  "target": {
+                    "var": "event.target"
+                  },
+                  "munition": {
+                    "param": "atgm"
+                  }
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.maneuver",
+              "params": {
+                "maneuver": "core.maneuver.pop_up"
+              }
+            },
+            {
+              "action": "core.action.engage",
+              "params": {
+                "launcher": "launcher",
+                "target": {
+                  "var": "event.target"
+                },
+                "munition": {
+                  "param": "atgm"
+                }
+              }
+            }
+          ],
+          "cooldown": "12 s",
+          "label": {
+            "tr": "Pop-up + ATGM",
+            "en": "Pop-up ATGM attack"
+          }
+        },
+        "gun_close_target": {
+          "priority": 60,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "all": [
+              {
+                "op": "ne",
+                "args": [
+                  {
+                    "param": "roe"
+                  },
+                  "hold"
+                ]
+              },
+              {
+                "any": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "event.identity"
+                      },
+                      "hostile"
+                    ]
+                  },
+                  {
+                    "all": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "param": "roe"
+                          },
+                          "free"
+                        ]
+                      },
+                      {
+                        "not": {
+                          "op": "in",
+                          "args": [
+                            {
+                              "var": "event.identity"
+                            },
+                            [
+                              "friend",
+                              "neutral"
+                            ]
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "not": {
+                  "cond": "core.cond.target_in_weapon_range",
+                  "params": {
+                    "launcher": "launcher",
+                    "target": {
+                      "var": "event.target"
+                    },
+                    "munition": {
+                      "param": "atgm"
+                    }
+                  }
+                }
+              },
+              {
+                "cond": "core.cond.has_munition",
+                "params": {
+                  "launcher": "gun"
+                }
+              },
+              {
+                "cond": "core.cond.target_in_weapon_range",
+                "params": {
+                  "launcher": "gun",
+                  "target": {
+                    "var": "event.target"
+                  }
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.engage",
+              "params": {
+                "launcher": "gun",
+                "target": {
+                  "var": "event.target"
+                },
+                "salvo": {
+                  "param": "gunBurst"
+                }
+              }
+            }
+          ],
+          "cooldown": "4 s"
+        },
+        "lase_for_missile": {
+          "priority": 65,
+          "trigger": {
+            "event": "core.event.weapon.launched",
+            "filter": {
+              "op": "eq",
+              "args": [
+                {
+                  "var": "event.munition"
+                },
+                {
+                  "param": "atgm"
+                }
+              ]
+            }
+          },
+          "actions": [
+            {
+              "action": "core.action.designate_target",
+              "params": {
+                "system": "designator",
+                "target": {
+                  "var": "event.target"
+                },
+                "duration": {
+                  "param": "laseTime"
+                }
+              }
+            }
+          ],
+          "label": {
+            "tr": "Atış sonrası lazer işaretleme",
+            "en": "Lase for missile"
+          }
+        },
+        "remask": {
+          "priority": 40,
+          "trigger": {
+            "event": "core.event.weapon.launched"
+          },
+          "actions": [
+            {
+              "action": "core.action.terrain_follow",
+              "params": {
+                "altitudeAgl": {
+                  "param": "nap"
+                },
+                "enabled": true
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.uav.isr_orbit",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "İHA keşif yörüngesi (ISR)",
+        "en": "UAV ISR orbit"
+      }
+    },
+    "spec": {
+      "category": "isr",
+      "requires": {
+        "systems": {
+          "sensor": {
+            "systemType": "core.systemtype.eo_ir"
+          },
+          "radio": {
+            "systemType": "core.systemtype.radio",
+            "optional": true
+          }
+        }
+      },
+      "parameters": {
+        "orbitCenter": {
+          "type": "geoPoint",
+          "nullable": true,
+          "default": null
+        },
+        "orbitRadius": {
+          "type": "number",
+          "unit": "m",
+          "default": 5000,
+          "min": 50
+        },
+        "orbitAltitude": {
+          "type": "number",
+          "unit": "m",
+          "default": 6000,
+          "min": 0
+        },
+        "reportTo": {
+          "type": "entityRef",
+          "nullable": true,
+          "default": null
+        }
+      },
+      "rules": {
+        "start_orbit": {
+          "priority": 20,
+          "trigger": {
+            "event": "core.event.scenario.started"
+          },
+          "condition": {
+            "op": "exists",
+            "args": [
+              {
+                "param": "orbitCenter"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.orbit",
+              "params": {
+                "center": {
+                  "param": "orbitCenter"
+                },
+                "radius": {
+                  "param": "orbitRadius"
+                },
+                "altitude": {
+                  "param": "orbitAltitude"
+                }
+              }
+            }
+          ]
+        },
+        "track_contact": {
+          "priority": 40,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "op": "ne",
+            "args": [
+              {
+                "var": "event.identity"
+              },
+              "friend"
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.point_sensor",
+              "params": {
+                "system": "sensor",
+                "target": {
+                  "var": "event.target"
+                },
+                "track": true
+              }
+            }
+          ],
+          "cooldown": "20 s"
+        },
+        "report_contact": {
+          "priority": 30,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "op": "eq",
+            "args": [
+              {
+                "var": "event.identity"
+              },
+              "hostile"
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.send_message",
+              "params": {
+                "system": "radio",
+                "to": {
+                  "param": "reportTo"
+                },
+                "message": "hostile contact",
+                "priority": "immediate"
+              }
+            }
+          ],
+          "cooldown": "30 s"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.uav.lost_link",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Bağlantı kaybı prosedürü",
+        "en": "Lost-link procedure"
+      }
+    },
+    "spec": {
+      "category": "safety",
+      "requires": {
+        "systems": {
+          "link": {
+            "systemType": "core.systemtype.datalink"
+          }
+        }
+      },
+      "parameters": {
+        "action": {
+          "type": "enum",
+          "enumRef": "core.enum.lost_link_action",
+          "default": "return_home"
+        },
+        "homeBase": {
+          "type": "geoPoint",
+          "nullable": true,
+          "default": null
+        },
+        "loiterRadius": {
+          "type": "number",
+          "unit": "m",
+          "default": 3000,
+          "min": 50
+        }
+      },
+      "variables": {
+        "linkLost": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "rules": {
+        "on_link_lost": {
+          "priority": 98,
+          "trigger": {
+            "event": "core.event.datalink.lost"
+          },
+          "actions": [
+            {
+              "action": "core.action.set_variable",
+              "params": {
+                "name": "linkLost",
+                "value": true
+              }
+            },
+            {
+              "action": "core.action.log",
+              "params": {
+                "message": "Datalink lost",
+                "level": "warning"
+              }
+            },
+            {
+              "action": "core.action.return_to_base",
+              "when": {
+                "op": "eq",
+                "args": [
+                  {
+                    "param": "action"
+                  },
+                  "return_home"
+                ]
+              },
+              "params": {
+                "base": {
+                  "param": "homeBase"
+                }
+              }
+            },
+            {
+              "action": "core.action.orbit",
+              "when": {
+                "op": "eq",
+                "args": [
+                  {
+                    "param": "action"
+                  },
+                  "loiter"
+                ]
+              },
+              "params": {
+                "center": {
+                  "var": "self.position"
+                },
+                "radius": {
+                  "param": "loiterRadius"
+                }
+              }
+            },
+            {
+              "action": "core.action.land",
+              "when": {
+                "op": "eq",
+                "args": [
+                  {
+                    "param": "action"
+                  },
+                  "land"
+                ]
+              },
+              "params": {}
+            }
+          ],
+          "label": {
+            "tr": "Bağlantı kesildi",
+            "en": "Link lost"
+          }
+        },
+        "on_link_restored": {
+          "priority": 98,
+          "trigger": {
+            "event": "core.event.datalink.restored"
+          },
+          "actions": [
+            {
+              "action": "core.action.set_variable",
+              "params": {
+                "name": "linkLost",
+                "value": false
+              }
+            },
+            {
+              "action": "core.action.log",
+              "params": {
+                "message": "Datalink restored",
+                "level": "info"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.uav.loiter_and_strike",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Dolanan mühimmat: ara ve vur",
+        "en": "Loiter and strike"
+      }
+    },
+    "spec": {
+      "category": "offensive",
+      "requires": {
+        "systems": {
+          "seeker": {
+            "systemType": "core.systemtype.eo_ir"
+          },
+          "link": {
+            "systemType": "core.systemtype.datalink",
+            "optional": true
+          }
+        },
+        "platformType": "core.platformtype.loitering_munition"
+      },
+      "parameters": {
+        "searchArea": {
+          "type": "areaRef",
+          "required": true
+        },
+        "roe": {
+          "type": "enum",
+          "enumRef": "core.enum.roe",
+          "default": "tight",
+          "overridableAt": "runtime",
+          "label": {
+            "tr": "Angajman kuralı",
+            "en": "ROE"
+          }
+        },
+        "requireOperatorConsent": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "rules": {
+        "search": {
+          "priority": 20,
+          "trigger": {
+            "event": "core.event.scenario.started"
+          },
+          "actions": [
+            {
+              "action": "core.action.patrol_area",
+              "params": {
+                "area": {
+                  "param": "searchArea"
+                },
+                "pattern": "racetrack"
+              }
+            }
+          ]
+        },
+        "strike": {
+          "priority": 80,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "all": [
+              {
+                "op": "ne",
+                "args": [
+                  {
+                    "param": "roe"
+                  },
+                  "hold"
+                ]
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "event.identity"
+                  },
+                  "hostile"
+                ]
+              },
+              {
+                "any": [
+                  {
+                    "cond": "core.cond.target_domain",
+                    "params": {
+                      "target": {
+                        "var": "event.target"
+                      },
+                      "domain": "land"
+                    }
+                  },
+                  {
+                    "cond": "core.cond.target_domain",
+                    "params": {
+                      "target": {
+                        "var": "event.target"
+                      },
+                      "domain": "surface"
+                    }
+                  }
+                ]
+              },
+              {
+                "cond": "core.cond.in_area",
+                "params": {
+                  "area": {
+                    "param": "searchArea"
+                  },
+                  "entity": {
+                    "var": "event.target"
+                  }
+                }
+              },
+              {
+                "not": {
+                  "param": "requireOperatorConsent"
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.terminal_attack",
+              "params": {
+                "target": {
+                  "var": "event.target"
+                }
+              }
+            }
+          ],
+          "maxFires": 1,
+          "label": {
+            "tr": "Terminal saldırı",
+            "en": "Terminal attack"
+          }
+        },
+        "request_consent": {
+          "priority": 50,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "all": [
+              {
+                "param": "requireOperatorConsent"
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "event.identity"
+                  },
+                  "hostile"
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.send_message",
+              "params": {
+                "system": "link",
+                "message": "target acquired - request consent",
+                "priority": "flash"
+              }
+            }
+          ],
+          "cooldown": "20 s"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.lifeform.infantry_combat",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Piyade muharebesi",
+        "en": "Infantry combat"
+      }
+    },
+    "spec": {
+      "category": "offensive",
+      "requires": {
+        "systems": {
+          "weapon": {
+            "systemType": "core.systemtype.weapon_launcher"
+          },
+          "radio": {
+            "systemType": "core.systemtype.radio",
+            "optional": true
+          }
+        },
+        "platformType": "core.platformtype.lifeform"
+      },
+      "parameters": {
+        "roe": {
+          "type": "enum",
+          "enumRef": "core.enum.roe",
+          "default": "tight",
+          "overridableAt": "runtime",
+          "label": {
+            "tr": "Angajman kuralı",
+            "en": "ROE"
+          }
+        },
+        "coverRadius": {
+          "type": "number",
+          "unit": "m",
+          "default": 50,
+          "min": 0
+        },
+        "burst": {
+          "type": "integer",
+          "default": 3,
+          "min": 1
+        },
+        "moraleBreak": {
+          "type": "number",
+          "default": 0.3,
+          "min": 0,
+          "max": 1,
+          "description": "Bu moralin altında temas kesilir"
+        }
+      },
+      "rules": {
+        "arm": {
+          "priority": 30,
+          "trigger": {
+            "event": "core.event.scenario.started"
+          },
+          "condition": {
+            "op": "ne",
+            "args": [
+              {
+                "param": "roe"
+              },
+              "hold"
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.set_master_arm",
+              "params": {
+                "launcher": "weapon",
+                "armed": true
+              }
+            }
+          ]
+        },
+        "take_cover": {
+          "priority": 90,
+          "trigger": {
+            "event": "core.event.platform.under_fire"
+          },
+          "actions": [
+            {
+              "action": "core.action.set_posture",
+              "params": {
+                "posture": "prone"
+              }
+            },
+            {
+              "action": "core.action.take_cover",
+              "params": {
+                "searchRadius": {
+                  "param": "coverRadius"
+                }
+              }
+            }
+          ],
+          "cooldown": "15 s",
+          "label": {
+            "tr": "Ateş altında siper al",
+            "en": "Take cover under fire"
+          }
+        },
+        "return_fire": {
+          "priority": 85,
+          "trigger": {
+            "event": "core.event.platform.under_fire"
+          },
+          "condition": {
+            "all": [
+              {
+                "op": "ne",
+                "args": [
+                  {
+                    "param": "roe"
+                  },
+                  "hold"
+                ]
+              },
+              {
+                "op": "exists",
+                "args": [
+                  {
+                    "var": "event.by"
+                  }
+                ]
+              },
+              {
+                "cond": "core.cond.has_munition",
+                "params": {
+                  "launcher": "weapon"
+                }
+              },
+              {
+                "cond": "core.cond.target_in_weapon_range",
+                "params": {
+                  "launcher": "weapon",
+                  "target": {
+                    "var": "event.by"
+                  }
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.engage",
+              "params": {
+                "launcher": "weapon",
+                "target": {
+                  "var": "event.by"
+                },
+                "salvo": {
+                  "param": "burst"
+                }
+              }
+            }
+          ],
+          "cooldown": "4 s"
+        },
+        "engage_hostile": {
+          "priority": 70,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "all": [
+              {
+                "op": "ne",
+                "args": [
+                  {
+                    "param": "roe"
+                  },
+                  "hold"
+                ]
+              },
+              {
+                "any": [
+                  {
+                    "op": "eq",
+                    "args": [
+                      {
+                        "var": "event.identity"
+                      },
+                      "hostile"
+                    ]
+                  },
+                  {
+                    "all": [
+                      {
+                        "op": "eq",
+                        "args": [
+                          {
+                            "param": "roe"
+                          },
+                          "free"
+                        ]
+                      },
+                      {
+                        "not": {
+                          "op": "in",
+                          "args": [
+                            {
+                              "var": "event.identity"
+                            },
+                            [
+                              "friend",
+                              "neutral"
+                            ]
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "cond": "core.cond.has_munition",
+                "params": {
+                  "launcher": "weapon"
+                }
+              },
+              {
+                "cond": "core.cond.target_in_weapon_range",
+                "params": {
+                  "launcher": "weapon",
+                  "target": {
+                    "var": "event.target"
+                  }
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.set_posture",
+              "params": {
+                "posture": "crouching"
+              }
+            },
+            {
+              "action": "core.action.engage",
+              "params": {
+                "launcher": "weapon",
+                "target": {
+                  "var": "event.target"
+                },
+                "salvo": {
+                  "param": "burst"
+                }
+              }
+            }
+          ],
+          "cooldown": "5 s"
+        },
+        "report_contact": {
+          "priority": 20,
+          "trigger": {
+            "event": "core.event.sensor.detection"
+          },
+          "condition": {
+            "op": "eq",
+            "args": [
+              {
+                "var": "event.identity"
+              },
+              "hostile"
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.send_message",
+              "params": {
+                "system": "radio",
+                "message": "contact",
+                "priority": "immediate"
+              }
+            }
+          ],
+          "cooldown": "60 s"
+        },
+        "break_contact": {
+          "priority": 95,
+          "trigger": {
+            "every": "10 s"
+          },
+          "condition": {
+            "cond": "core.cond.morale_below",
+            "params": {
+              "threshold": {
+                "param": "moraleBreak"
+              }
+            }
+          },
+          "actions": [
+            {
+              "action": "core.action.log",
+              "params": {
+                "message": "Breaking contact",
+                "level": "warning"
+              }
+            },
+            {
+              "action": "core.action.flee",
+              "params": {
+                "distance": 500
+              }
+            }
+          ],
+          "maxFires": 1
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.lifeform.civilian",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Sivil tepkisi",
+        "en": "Civilian reaction"
+      }
+    },
+    "spec": {
+      "category": "civil",
+      "requires": {
+        "platformType": "core.platformtype.lifeform"
+      },
+      "parameters": {
+        "panicRadius": {
+          "type": "number",
+          "unit": "m",
+          "default": 300,
+          "min": 0
+        },
+        "fleeDistance": {
+          "type": "number",
+          "unit": "m",
+          "default": 1000,
+          "min": 0
+        },
+        "fleeSpeed": {
+          "type": "number",
+          "unit": "m/s",
+          "default": 3,
+          "min": 0
+        }
+      },
+      "variables": {
+        "panicked": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "rules": {
+        "panic_under_fire": {
+          "priority": 90,
+          "trigger": {
+            "event": "core.event.platform.under_fire"
+          },
+          "actions": [
+            {
+              "action": "core.action.set_variable",
+              "params": {
+                "name": "panicked",
+                "value": true
+              }
+            },
+            {
+              "action": "core.action.set_posture",
+              "params": {
+                "posture": "prone"
+              }
+            },
+            {
+              "action": "core.action.flee",
+              "params": {
+                "from": {
+                  "var": "event.by"
+                },
+                "distance": {
+                  "param": "fleeDistance"
+                },
+                "speed": {
+                  "param": "fleeSpeed"
+                }
+              }
+            }
+          ],
+          "cooldown": "30 s"
+        },
+        "panic_detonation": {
+          "priority": 90,
+          "trigger": {
+            "event": "core.event.weapon.detonation_nearby"
+          },
+          "condition": {
+            "op": "le",
+            "args": [
+              {
+                "var": "event.distance"
+              },
+              {
+                "param": "panicRadius"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.set_variable",
+              "params": {
+                "name": "panicked",
+                "value": true
+              }
+            },
+            {
+              "action": "core.action.flee",
+              "params": {
+                "distance": {
+                  "param": "fleeDistance"
+                },
+                "speed": {
+                  "param": "fleeSpeed"
+                }
+              }
+            }
+          ],
+          "cooldown": "30 s",
+          "label": {
+            "tr": "Yakın patlamada kaç",
+            "en": "Flee nearby detonation"
+          }
+        },
+        "calm_down": {
+          "priority": 10,
+          "trigger": {
+            "every": "60 s"
+          },
+          "condition": {
+            "all": [
+              {
+                "var": "bb.panicked"
+              },
+              {
+                "not": {
+                  "cond": "core.cond.under_fire_recently",
+                  "params": {
+                    "within": "60 s"
+                  }
+                }
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.set_variable",
+              "params": {
+                "name": "panicked",
+                "value": false
+              }
+            },
+            {
+              "action": "core.action.set_posture",
+              "params": {
+                "posture": "standing"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.air.civil_flight",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Sivil uçuş (acil durum / ATC)",
+        "en": "Civil flight"
+      }
+    },
+    "spec": {
+      "category": "civil",
+      "requires": {
+        "systems": {
+          "transponder": {
+            "systemType": "core.systemtype.iff"
+          },
+          "radio": {
+            "systemType": "core.systemtype.radio",
+            "optional": true
+          }
+        }
+      },
+      "parameters": {
+        "divertAirport": {
+          "type": "geoPoint",
+          "nullable": true,
+          "default": null
+        },
+        "emergencySquawk": {
+          "type": "string",
+          "pattern": "^[0-7]{4}$",
+          "default": "7700"
+        }
+      },
+      "rules": {
+        "squawk_emergency": {
+          "priority": 90,
+          "trigger": {
+            "event": "core.event.platform.damaged"
+          },
+          "actions": [
+            {
+              "action": "core.action.squawk",
+              "params": {
+                "system": "transponder",
+                "code": {
+                  "param": "emergencySquawk"
+                }
+              }
+            },
+            {
+              "action": "core.action.log",
+              "params": {
+                "message": "MAYDAY - squawk emergency",
+                "level": "alert"
+              }
+            }
+          ],
+          "maxFires": 1
+        },
+        "divert_on_instruction": {
+          "priority": 80,
+          "trigger": {
+            "event": "core.event.comms.message_received"
+          },
+          "condition": {
+            "all": [
+              {
+                "var": "self.systems.radio.fitted"
+              },
+              {
+                "op": "eq",
+                "args": [
+                  {
+                    "var": "event.message"
+                  },
+                  "divert"
+                ]
+              },
+              {
+                "op": "exists",
+                "args": [
+                  {
+                    "param": "divertAirport"
+                  }
+                ]
+              }
+            ]
+          },
+          "actions": [
+            {
+              "action": "core.action.fly_to",
+              "params": {
+                "position": {
+                  "param": "divertAirport"
+                }
+              }
+            },
+            {
+              "action": "core.action.log",
+              "params": {
+                "message": "Diverting on ATC instruction",
+                "level": "info"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "Behavior",
+    "id": "core.behavior.transport.troop_transport",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Asker taşıma (LZ'de indir)",
+        "en": "Troop transport"
+      }
+    },
+    "spec": {
+      "category": "logistics",
+      "requires": {
+        "systems": {
+          "cargo": {
+            "systemType": "core.systemtype.cargo_bay"
+          }
+        }
+      },
+      "parameters": {
+        "unloadWaypoint": {
+          "type": "string",
+          "default": "lz",
+          "description": "Rotadaki indirme noktasının waypoint id'si"
+        },
+        "landBeforeUnload": {
+          "type": "boolean",
+          "default": true
+        },
+        "groundTime": {
+          "type": "number",
+          "unit": "s",
+          "default": 30,
+          "min": 0,
+          "description": "Yerde kalma süresi"
+        }
+      },
+      "rules": {
+        "arrive_lz": {
+          "priority": 70,
+          "trigger": {
+            "event": "core.event.platform.waypoint_reached",
+            "filter": {
+              "op": "eq",
+              "args": [
+                {
+                  "var": "event.waypointId"
+                },
+                {
+                  "param": "unloadWaypoint"
+                }
+              ]
+            }
+          },
+          "actions": [
+            {
+              "action": "core.action.land",
+              "when": {
+                "param": "landBeforeUnload"
+              },
+              "params": {}
+            },
+            {
+              "action": "core.action.unload_troops",
+              "params": {
+                "system": "cargo"
+              }
+            },
+            {
+              "action": "core.action.wait",
+              "params": {
+                "duration": {
+                  "param": "groundTime"
+                }
+              }
+            },
+            {
+              "action": "core.action.takeoff",
+              "when": {
+                "param": "landBeforeUnload"
+              },
+              "params": {}
+            }
+          ],
+          "label": {
+            "tr": "LZ'de in, indir, kalk",
+            "en": "Land, unload, depart"
+          }
+        },
+        "report_unloaded": {
+          "priority": 20,
+          "trigger": {
+            "event": "core.event.cargo.unloaded"
+          },
+          "actions": [
+            {
+              "action": "core.action.log",
+              "params": {
+                "message": "Troops unloaded",
+                "level": "info"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+]

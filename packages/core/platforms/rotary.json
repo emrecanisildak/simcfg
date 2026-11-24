@@ -1,0 +1,215 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.rotary.generic_helicopter",
+    "version": "1.0.0",
+    "abstract": true,
+    "meta": {
+      "name": "Generic helicopter (base)"
+    },
+    "spec": {
+      "platformType": "core.platformtype.rotary_wing",
+      "parameters": {
+        "mass": "5 t",
+        "length": 15,
+        "maxSpeed": "280 km/h",
+        "cruiseSpeed": "240 km/h",
+        "hoverCeiling": "2500 m",
+        "serviceCeiling": "5000 m",
+        "fuelCapacity": "800 kg",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              90,
+              180
+            ]
+          ],
+          "values": [
+            5,
+            15,
+            5
+          ]
+        },
+        "irSignature": "3 kW/sr"
+      },
+      "systems": {
+        "iff": {
+          "template": "core.system.iff.generic_transponder"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPMH----*****",
+        "model": "generic/helicopter"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.rotary.generic_attack_helicopter",
+    "extends": "core.platform.rotary.generic_helicopter",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic attack helicopter"
+    },
+    "spec": {
+      "parameters": {
+        "mass": "8 t",
+        "length": 17,
+        "maxSpeed": "300 km/h",
+        "cruiseSpeed": "260 km/h",
+        "hoverCeiling": "3000 m",
+        "serviceCeiling": "6000 m",
+        "fuelCapacity": "1.2 t"
+      },
+      "systems": {
+        "iff": {
+          "template": "core.system.iff.generic_combined"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_uhf_air_radio"
+        },
+        "eo": {
+          "template": "core.system.eo.generic_heli_turret"
+        },
+        "designator": {
+          "template": "core.system.laser.generic_pod_designator",
+          "parameters": {
+            "maxRange": "10 km"
+          }
+        },
+        "rwr": {
+          "template": "core.system.rwr.generic"
+        },
+        "maws": {
+          "template": "core.system.ew.generic_maws"
+        },
+        "lwr": {
+          "template": "core.system.ew.generic_lwr"
+        },
+        "chaff": {
+          "template": "core.system.cm.generic_chaff"
+        },
+        "flare": {
+          "template": "core.system.cm.generic_flare"
+        },
+        "gun": {
+          "template": "core.system.weapon.heli_gun_30"
+        },
+        "hardpoints": {
+          "template": "core.system.weapon.heli_hardpoints"
+        }
+      },
+      "behaviors": {
+        "attack": {
+          "behavior": "core.behavior.rotary.attack_helicopter",
+          "bindings": {
+            "sensor": "eo",
+            "launcher": "hardpoints",
+            "gun": "gun",
+            "designator": "designator"
+          }
+        },
+        "self_defense": {
+          "behavior": "core.behavior.air.self_defense",
+          "parameters": {
+            "breakG": 2.5
+          }
+        },
+        "missile_defense": {
+          "behavior": "core.behavior.common.missile_warning_defense",
+          "parameters": {
+            "breakG": 2.5
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPMHA---*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.rotary.generic_utility_helicopter",
+    "extends": "core.platform.rotary.generic_helicopter",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic utility / transport helicopter"
+    },
+    "spec": {
+      "parameters": {
+        "mass": "10 t",
+        "length": 19,
+        "maxSpeed": "290 km/h",
+        "cruiseSpeed": "250 km/h",
+        "hoverCeiling": "3000 m",
+        "serviceCeiling": "5800 m",
+        "fuelCapacity": "1.4 t"
+      },
+      "systems": {
+        "iff": {
+          "template": "core.system.iff.generic_combined"
+        },
+        "maws": {
+          "template": "core.system.ew.generic_maws"
+        },
+        "flare": {
+          "template": "core.system.cm.generic_flare"
+        },
+        "door_gun": {
+          "template": "core.system.weapon.door_gun_762"
+        },
+        "cabin": {
+          "template": "core.system.cargo.heli_cabin_11"
+        }
+      },
+      "behaviors": {
+        "missile_defense": {
+          "behavior": "core.behavior.common.missile_warning_defense",
+          "parameters": {
+            "breakG": 2
+          }
+        },
+        "transport": {
+          "behavior": "core.behavior.transport.troop_transport"
+        }
+      },
+      "appearance": {
+        "sidc": "SFAPMHU---*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.rotary.generic_civil_helicopter",
+    "extends": "core.platform.rotary.generic_helicopter",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic civil helicopter (EMS / news)"
+    },
+    "spec": {
+      "parameters": {
+        "mass": "3 t",
+        "length": 12,
+        "maxSpeed": "280 km/h",
+        "cruiseSpeed": "240 km/h",
+        "fuelCapacity": "600 kg"
+      },
+      "behaviors": {
+        "civil": {
+          "behavior": "core.behavior.air.civil_flight"
+        }
+      },
+      "appearance": {
+        "sidc": "SNAPCH----*****"
+      }
+    }
+  }
+]

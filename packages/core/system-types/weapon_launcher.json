@@ -1,0 +1,146 @@
+{
+  "$schema": "../../../schemas/v1/system-type.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "SystemType",
+  "id": "core.systemtype.weapon_launcher",
+  "extends": "core.systemtype.base",
+  "version": "1.0.0",
+  "meta": {
+    "name": "Weapon launcher / stores"
+  },
+  "spec": {
+    "category": "weapon",
+    "implementation": "engine.weapon.launcher",
+    "parameters": {
+      "loadout": {
+        "type": "map",
+        "description": "İstasyon/şarjör adı -> mühimmat ve adet.",
+        "default": {},
+        "ui": {
+          "group": "Loadout",
+          "widget": "table"
+        },
+        "items": {
+          "type": "object",
+          "fields": {
+            "munition": {
+              "type": "ref",
+              "refKind": "Munition",
+              "required": true,
+              "constraint": {
+                "munitionType": "core.munitiontype.base"
+              }
+            },
+            "count": {
+              "type": "integer",
+              "required": true,
+              "min": 0
+            }
+          }
+        }
+      },
+      "maxSimultaneousEngagements": {
+        "type": "integer",
+        "default": 1,
+        "min": 1,
+        "ui": {
+          "group": "Fire control"
+        }
+      },
+      "reloadTime": {
+        "type": "number",
+        "unit": "s",
+        "default": 0,
+        "min": 0,
+        "ui": {
+          "group": "Fire control"
+        }
+      },
+      "minLaunchInterval": {
+        "type": "number",
+        "unit": "s",
+        "default": 1,
+        "min": 0,
+        "ui": {
+          "group": "Fire control"
+        }
+      }
+    },
+    "state": {
+      "masterArm": {
+        "type": "boolean",
+        "default": false
+      },
+      "activeEngagements": {
+        "type": "integer",
+        "default": 0,
+        "readonly": true
+      }
+    },
+    "commands": {
+      "fire": {
+        "label": "Fire",
+        "parameters": {
+          "target": {
+            "type": "entityRef",
+            "required": true
+          },
+          "munition": {
+            "type": "ref",
+            "refKind": "Munition",
+            "nullable": true,
+            "default": null,
+            "description": "Boş = en uygun mühimmatı seç"
+          },
+          "salvo": {
+            "type": "integer",
+            "default": 1,
+            "min": 1
+          }
+        }
+      },
+      "ceaseFire": {
+        "label": "Cease fire",
+        "parameters": {}
+      },
+      "setMasterArm": {
+        "label": "Master arm",
+        "parameters": {
+          "armed": {
+            "type": "boolean",
+            "required": true
+          }
+        }
+      },
+      "fireAt": {
+        "label": "Fire at position (indirect / area)",
+        "parameters": {
+          "position": {
+            "type": "geoPoint",
+            "required": true
+          },
+          "munition": {
+            "type": "ref",
+            "refKind": "Munition",
+            "nullable": true,
+            "default": null
+          },
+          "rounds": {
+            "type": "integer",
+            "default": 1,
+            "min": 1
+          }
+        }
+      }
+    },
+    "emits": [
+      "core.event.weapon.launched",
+      "core.event.weapon.impact",
+      "core.event.weapon.out_of_ammo"
+    ],
+    "ui": {
+      "icon": "missile",
+      "color": "#6d4c41"
+    }
+  }
+}

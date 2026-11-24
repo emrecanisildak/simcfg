@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../schemas/v1/system-type.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "SystemType",
+  "id": "core.systemtype.rwr",
+  "extends": "core.systemtype.sensor",
+  "version": "1.0.0",
+  "meta": { "name": "Radar Warning Receiver", "tags": ["sensor", "passive", "ew"] },
+  "spec": {
+    "category": "ew",
+    "implementation": "engine.ew.rwr",
+    "parameters": {
+      "frequencyMin":    { "type": "number", "unit": "Hz", "default": 2e9, "ui": { "group": "RF" } },
+      "frequencyMax":    { "type": "number", "unit": "Hz", "default": 18e9, "ui": { "group": "RF" } },
+      "sensitivity":     { "type": "number", "unit": "dBm", "default": -65, "ui": { "group": "RF" } },
+      "bearingAccuracy": { "type": "number", "unit": "deg", "default": 10, "min": 0, "ui": { "group": "Performance" } },
+      "maxThreats":      { "type": "integer", "default": 16, "min": 1, "ui": { "group": "Performance" } },
+      "threatLibrary":   { "type": "list", "items": { "type": "string" }, "default": [], "description": "Tanınan emitterId listesi (boş = hepsi).", "ui": { "group": "Library" } },
+      "launchDetection": { "type": "boolean", "default": true, "description": "Füze atış uyarısı (ör. komut-güdüm sinyali) üretir mi?" }
+    },
+    "state": {
+      "threatCount":   { "type": "integer", "default": 0, "readonly": true },
+      "locked":        { "type": "boolean", "default": false, "readonly": true },
+      "launchWarning": { "type": "boolean", "default": false, "readonly": true },
+      "audioEnabled":  { "type": "boolean", "default": true }
+    },
+    "emits": ["core.event.rwr.new_threat", "core.event.rwr.lock", "core.event.rwr.missile_launch", "core.event.rwr.threat_lost"],
+    "ui": { "icon": "rwr", "color": "#fb8c00" }
+  }
+}

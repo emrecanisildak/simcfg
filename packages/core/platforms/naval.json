@@ -1,0 +1,220 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.sea.generic_patrol_boat",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic patrol boat"
+    },
+    "spec": {
+      "platformType": "core.platformtype.surface_vessel",
+      "parameters": {
+        "mass": "250 t",
+        "displacement": "250 t",
+        "length": 40,
+        "maxSpeed": "35 kts",
+        "cruiseSpeed": "20 kts",
+        "fuelCapacity": "30 t",
+        "draft": "2 m",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              90,
+              180
+            ]
+          ],
+          "values": [
+            100,
+            500,
+            100
+          ]
+        }
+      },
+      "systems": {
+        "radar": {
+          "template": "core.system.radar.generic_surface_search"
+        },
+        "eo": {
+          "template": "core.system.eo.generic_naval_eo"
+        },
+        "gun": {
+          "template": "core.system.weapon.boat_gun_30"
+        },
+        "mg": {
+          "template": "core.system.weapon.rws_mg_762"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        },
+        "iff": {
+          "template": "core.system.iff.generic_combined"
+        }
+      },
+      "behaviors": {
+        "combat": {
+          "behavior": "core.behavior.ground.vehicle_combat",
+          "bindings": {
+            "main_weapon": "gun",
+            "secondary_weapon": "mg"
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SFSPCP----*****",
+        "model": "generic/patrol_boat"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.sea.generic_frigate",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic frigate"
+    },
+    "spec": {
+      "platformType": "core.platformtype.surface_vessel",
+      "parameters": {
+        "mass": "4000 t",
+        "displacement": "4000 t",
+        "length": 130,
+        "maxSpeed": "29 kts",
+        "cruiseSpeed": "18 kts",
+        "fuelCapacity": "500 t",
+        "draft": "5 m",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              90,
+              180
+            ]
+          ],
+          "values": [
+            3000,
+            10000,
+            3000
+          ]
+        },
+        "irSignature": "50 kW/sr"
+      },
+      "systems": {
+        "air_radar": {
+          "template": "core.system.radar.generic_lr_search",
+          "initialState": {
+            "mode": "search"
+          }
+        },
+        "fire_control": {
+          "template": "core.system.radar.generic_fire_control_ground"
+        },
+        "surface_radar": {
+          "template": "core.system.radar.generic_surface_search"
+        },
+        "eo": {
+          "template": "core.system.eo.generic_naval_eo"
+        },
+        "vls": {
+          "template": "core.system.weapon.naval_sam_vls"
+        },
+        "gun": {
+          "template": "core.system.weapon.naval_gun_76"
+        },
+        "chaff": {
+          "template": "core.system.cm.generic_chaff",
+          "parameters": {
+            "capacity": 60
+          }
+        },
+        "jammer": {
+          "template": "core.system.ew.generic_selfprotect_jammer"
+        },
+        "esm": {
+          "template": "core.system.rwr.generic"
+        },
+        "link16": {
+          "template": "core.system.comms.generic_link16"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        },
+        "iff": {
+          "template": "core.system.iff.generic_combined"
+        }
+      },
+      "behaviors": {
+        "air_defense": {
+          "behavior": "core.behavior.ground.shorad",
+          "bindings": {
+            "launcher": "vls",
+            "gun": "gun",
+            "eo": "eo"
+          }
+        },
+        "report": {
+          "behavior": "core.behavior.common.report_contacts",
+          "bindings": {
+            "link": "link16"
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SFSPCLFF--*****",
+        "model": "generic/frigate"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.sea.generic_cargo_ship",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic cargo ship (civil)"
+    },
+    "spec": {
+      "platformType": "core.platformtype.surface_vessel",
+      "parameters": {
+        "mass": "30000 t",
+        "displacement": "30000 t",
+        "length": 180,
+        "maxSpeed": "16 kts",
+        "cruiseSpeed": "14 kts",
+        "fuelCapacity": "2000 t",
+        "draft": "10 m",
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              90,
+              180
+            ]
+          ],
+          "values": [
+            10000,
+            50000,
+            10000
+          ]
+        }
+      },
+      "systems": {
+        "radar": {
+          "template": "core.system.radar.generic_surface_search"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        },
+        "eyes": {
+          "template": "core.system.visual.human_eyes"
+        }
+      },
+      "appearance": {
+        "sidc": "SNSPXM----*****",
+        "model": "generic/cargo_ship"
+      }
+    }
+  }
+]

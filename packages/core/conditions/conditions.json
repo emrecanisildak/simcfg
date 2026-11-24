@@ -1,0 +1,351 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.in_area",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Alan içinde",
+        "en": "In area"
+      }
+    },
+    "spec": {
+      "category": "spatial",
+      "parameters": {
+        "area": {
+          "type": "areaRef",
+          "required": true
+        },
+        "entity": {
+          "type": "entityRef",
+          "description": "Boş = kendisi"
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.in_area"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.hostile_in_area",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Alanda düşman var",
+        "en": "Hostile in area"
+      }
+    },
+    "spec": {
+      "category": "spatial",
+      "parameters": {
+        "area": {
+          "type": "areaRef",
+          "required": true
+        },
+        "minCount": {
+          "type": "integer",
+          "default": 1,
+          "min": 1
+        },
+        "domain": {
+          "type": "enum",
+          "values": [
+            "any",
+            "air",
+            "land",
+            "surface"
+          ],
+          "default": "any"
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.hostile_in_area"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.within_range",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Menzil içinde",
+        "en": "Within range"
+      }
+    },
+    "spec": {
+      "category": "spatial",
+      "parameters": {
+        "target": {
+          "type": "entityRef",
+          "required": true
+        },
+        "range": {
+          "type": "number",
+          "unit": "m",
+          "required": true,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.within_range"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.system_ready",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Sistem hazır",
+        "en": "System ready"
+      },
+      "description": "Sistem takılı, enerjili ve arızasız."
+    },
+    "spec": {
+      "category": "system",
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.system_ready"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.cm_available",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Karşı tedbir mevcut",
+        "en": "Countermeasures available"
+      }
+    },
+    "spec": {
+      "category": "system",
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.cm_dispenser"
+          }
+        },
+        "minCount": {
+          "type": "integer",
+          "default": 1,
+          "min": 1
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.cm_available"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.random",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Olasılık",
+        "en": "Random chance"
+      },
+      "description": "Senaryo tohumuna (seed) bağlı deterministik rastgelelik."
+    },
+    "spec": {
+      "category": "logic",
+      "parameters": {
+        "probability": {
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "max": 1
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.random"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.fuel_below",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Yakıt eşik altında",
+        "en": "Fuel below"
+      },
+      "description": "Veriyle tanımlı (expression) koşul örneği."
+    },
+    "spec": {
+      "category": "platform",
+      "requires": {
+        "platformType": "core.platformtype.fixed_wing"
+      },
+      "parameters": {
+        "fraction": {
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "max": 1
+        }
+      },
+      "implementation": {
+        "type": "expression",
+        "body": {
+          "op": "lt",
+          "args": [
+            {
+              "var": "self.fuel"
+            },
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "param": "fraction"
+                },
+                {
+                  "var": "self.params.fuelCapacity"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.target_in_weapon_range",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Hedef silah menzilinde",
+        "en": "Target in weapon range"
+      }
+    },
+    "spec": {
+      "category": "weapon",
+      "parameters": {
+        "launcher": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.weapon_launcher"
+          }
+        },
+        "target": {
+          "type": "entityRef",
+          "required": true
+        },
+        "munition": {
+          "type": "ref",
+          "refKind": "Munition",
+          "nullable": true,
+          "default": null,
+          "description": "Boş = yüklü herhangi bir mühimmat"
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.target_in_weapon_range"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.has_munition",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Mühimmat mevcut",
+        "en": "Has munition"
+      }
+    },
+    "spec": {
+      "category": "weapon",
+      "parameters": {
+        "launcher": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.weapon_launcher"
+          }
+        },
+        "munition": {
+          "type": "ref",
+          "refKind": "Munition",
+          "nullable": true,
+          "default": null
+        },
+        "minCount": {
+          "type": "integer",
+          "default": 1,
+          "min": 1
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.has_munition"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.target_identity",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Hedef kimliği",
+        "en": "Target identity"
+      }
+    },
+    "spec": {
+      "category": "identification",
+      "parameters": {
+        "target": {
+          "type": "entityRef",
+          "required": true
+        },
+        "identity": {
+          "type": "enum",
+          "values": [
+            "hostile",
+            "friend",
+            "neutral",
+            "unknown"
+          ],
+          "required": true
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.target_identity"
+      }
+    }
+  }
+]

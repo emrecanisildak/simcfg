@@ -1,0 +1,73 @@
+[
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.set_system_state", "version": "1.0.0",
+    "meta": { "name": { "tr": "Sistem durumunu değiştir", "en": "Set system state" }, "description": "Generic: hedef sistemin yazılabilir durum alanlarını değiştirir." },
+    "spec": {
+      "category": "system", "channels": [], "durative": false,
+      "parameters": {
+        "system": { "type": "systemRole", "required": true },
+        "state":  { "type": "args", "argsOf": "system", "argsFrom": "state", "partial": true, "required": true }
+      },
+      "implementation": { "type": "native", "handler": "core.system.set_state" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.system_command", "version": "1.0.0",
+    "meta": { "name": { "tr": "Sistem komutu", "en": "System command" }, "description": "Generic: SystemType'ta tanımlı herhangi bir komutu çağırır." },
+    "spec": {
+      "category": "system", "channels": [], "durative": false,
+      "parameters": {
+        "system":  { "type": "systemRole", "required": true },
+        "command": { "type": "string", "required": true },
+        "args":    { "type": "args", "argsOf": "system", "argsFrom": "commands.{command}.parameters", "default": {} }
+      },
+      "implementation": { "type": "native", "handler": "core.system.command" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.set_power", "version": "1.0.0",
+    "meta": { "name": { "tr": "Sistemi aç/kapat", "en": "Set power" } },
+    "spec": {
+      "category": "system", "channels": [], "durative": false,
+      "parameters": {
+        "system": { "type": "systemRole", "required": true },
+        "on":     { "type": "boolean", "required": true }
+      },
+      "implementation": { "type": "command", "system": "system", "command": "setPower", "args": { "on": { "param": "on" } } }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.set_radar_mode", "version": "1.0.0",
+    "meta": { "name": { "tr": "Radar modu", "en": "Set radar mode" } },
+    "spec": {
+      "category": "sensor", "channels": ["emissions"], "durative": false,
+      "parameters": {
+        "system": { "type": "systemRole", "required": true, "constraint": { "systemType": "core.systemtype.radar" } },
+        "mode":   { "type": "enum", "enumRef": "core.enum.radar_mode", "required": true }
+      },
+      "implementation": { "type": "command", "system": "system", "command": "setMode", "args": { "mode": { "param": "mode" } } }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.squawk", "version": "1.0.0",
+    "meta": { "name": { "tr": "IFF kodu ayarla", "en": "Squawk" } },
+    "spec": {
+      "category": "identification", "channels": [], "durative": false,
+      "parameters": {
+        "system": { "type": "systemRole", "required": true, "constraint": { "systemType": "core.systemtype.iff" } },
+        "mode":   { "type": "enum", "enumRef": "core.enum.iff_mode", "default": "3A" },
+        "code":   { "type": "string", "pattern": "^[0-7]{2,4}$", "required": true }
+      },
+      "implementation": { "type": "command", "system": "system", "command": "setCode", "args": { "mode": { "param": "mode" }, "code": { "param": "code" } } }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.emcon", "version": "1.0.0",
+    "meta": { "name": { "tr": "EMCON seviyesi", "en": "Set EMCON" }, "description": "Tüm emitter'ları seviyeye göre yönetir." },
+    "spec": {
+      "category": "sensor", "channels": ["emissions"], "durative": false,
+      "parameters": { "level": { "type": "enum", "values": ["silent", "limited", "full"], "required": true } },
+      "implementation": { "type": "native", "handler": "core.system.emcon" }
+    }
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/area-type.schema.json",
+  "title": "AreaType - alan sınıfı (CAP, yasak bölge, tehdit bölgesi...)",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "AreaType" },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "properties": { "$ref": "common.schema.json#/$defs/descriptorMap" },
+        "allowedShapes": { "type": "array", "items": { "enum": ["circle", "polygon", "corridor", "sector", "ellipse"] } },
+        "style": {
+          "type": "object",
+          "properties": {
+            "stroke": { "type": "string" }, "fill": { "type": "string" },
+            "opacity": { "type": "number", "minimum": 0, "maximum": 1 },
+            "lineStyle": { "enum": ["solid", "dashed", "dotted"] }
+          },
+          "additionalProperties": true
+        }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

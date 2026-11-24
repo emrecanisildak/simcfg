@@ -1,0 +1,346 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.under_fire_recently",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Yakın zamanda ateş altında",
+        "en": "Under fire recently"
+      }
+    },
+    "spec": {
+      "category": "combat",
+      "parameters": {
+        "within": {
+          "type": "number",
+          "unit": "s",
+          "default": 10,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.under_fire_recently"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.damage_above",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Hasar eşik üstünde",
+        "en": "Damage above"
+      }
+    },
+    "spec": {
+      "category": "platform",
+      "parameters": {
+        "threshold": {
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "max": 1
+        }
+      },
+      "implementation": {
+        "type": "expression",
+        "body": {
+          "op": "gt",
+          "args": [
+            {
+              "var": "self.damage"
+            },
+            {
+              "param": "threshold"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.morale_below",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Moral eşik altında",
+        "en": "Morale below"
+      }
+    },
+    "spec": {
+      "category": "lifeform",
+      "parameters": {
+        "threshold": {
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "max": 1
+        }
+      },
+      "implementation": {
+        "type": "expression",
+        "body": {
+          "op": "lt",
+          "args": [
+            {
+              "var": "self.morale"
+            },
+            {
+              "param": "threshold"
+            }
+          ]
+        }
+      },
+      "requires": {
+        "platformType": "core.platformtype.lifeform"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.battery_below",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Batarya eşik altında",
+        "en": "Battery below"
+      }
+    },
+    "spec": {
+      "category": "platform",
+      "parameters": {
+        "fraction": {
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "max": 1
+        }
+      },
+      "implementation": {
+        "type": "expression",
+        "body": {
+          "op": "lt",
+          "args": [
+            {
+              "var": "self.batteryLevel"
+            },
+            {
+              "param": "fraction"
+            }
+          ]
+        }
+      },
+      "requires": {
+        "platformType": "core.platformtype.multirotor"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.target_domain",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Hedef ortamı",
+        "en": "Target domain"
+      }
+    },
+    "spec": {
+      "category": "identification",
+      "parameters": {
+        "target": {
+          "type": "entityRef",
+          "required": true
+        },
+        "domain": {
+          "type": "enum",
+          "enumRef": "core.enum.domain",
+          "required": true
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.target_domain"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.nearest_hostile_within",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "En yakın düşman menzilde",
+        "en": "Nearest hostile within"
+      }
+    },
+    "spec": {
+      "category": "spatial",
+      "parameters": {
+        "range": {
+          "type": "number",
+          "unit": "m",
+          "required": true,
+          "min": 0
+        },
+        "domain": {
+          "type": "enum",
+          "values": [
+            "any",
+            "air",
+            "land",
+            "surface"
+          ],
+          "default": "any"
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.nearest_hostile_within"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.line_of_sight",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Görüş hattı var",
+        "en": "Line of sight"
+      }
+    },
+    "spec": {
+      "category": "spatial",
+      "parameters": {
+        "target": {
+          "type": "entityRef",
+          "required": true
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.line_of_sight"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.is_night",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Gece",
+        "en": "Is night"
+      }
+    },
+    "spec": {
+      "category": "environment",
+      "parameters": {},
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.is_night"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.altitude_agl_below",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Yerden yükseklik altında",
+        "en": "AGL below"
+      }
+    },
+    "spec": {
+      "category": "platform",
+      "parameters": {
+        "altitude": {
+          "type": "number",
+          "unit": "m",
+          "required": true,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.altitude_agl_below"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.datalink_ok",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Veri bağı sağlam",
+        "en": "Datalink OK"
+      }
+    },
+    "spec": {
+      "category": "system",
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.datalink"
+          }
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.datalink_ok"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ConditionType",
+    "id": "core.cond.cargo_has_space",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Kargo yeri var",
+        "en": "Cargo has space"
+      }
+    },
+    "spec": {
+      "category": "system",
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.cargo_bay"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "default": 1,
+          "min": 1
+        }
+      },
+      "implementation": {
+        "type": "native",
+        "handler": "core.cond.cargo_has_space"
+      }
+    }
+  }
+]

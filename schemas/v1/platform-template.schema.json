@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/platform-template.schema.json",
+  "title": "PlatformTemplate - generic/türetilebilir platform modeli",
+  "allOf": [
+    {
+      "$ref": "document.schema.json"
+    }
+  ],
+  "$defs": {
+    "mount": {
+      "type": "object",
+      "description": "Platform üzerindeki bir sistem yuvası.",
+      "properties": {
+        "template": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "fitted": {
+          "type": "boolean",
+          "description": "Sistem platformda bulunuyor mu? false ise derlenmiş çıktıya girmez."
+        },
+        "label": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "parameters": {
+          "$ref": "common.schema.json#/$defs/valueMap"
+        },
+        "initialState": {
+          "$ref": "common.schema.json#/$defs/valueMap"
+        },
+        "placement": {
+          "type": "object",
+          "properties": {
+            "offset": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "$ref": "common.schema.json#/$defs/quantity"
+                },
+                "y": {
+                  "$ref": "common.schema.json#/$defs/quantity"
+                },
+                "z": {
+                  "$ref": "common.schema.json#/$defs/quantity"
+                }
+              },
+              "additionalProperties": false
+            },
+            "orientation": {
+              "type": "object",
+              "properties": {
+                "yaw": {
+                  "$ref": "common.schema.json#/$defs/quantity"
+                },
+                "pitch": {
+                  "$ref": "common.schema.json#/$defs/quantity"
+                },
+                "roll": {
+                  "$ref": "common.schema.json#/$defs/quantity"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      },
+      "additionalProperties": false
+    },
+    "behaviorAttachment": {
+      "type": "object",
+      "properties": {
+        "behavior": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "bindings": {
+          "type": "object",
+          "description": "davranış rolü -> mount anahtarı (null = bilinçli olarak bağlama)",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "$ref": "common.schema.json#/$defs/localKey"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "parameters": {
+          "$ref": "common.schema.json#/$defs/valueMap",
+          "description": "Davranış parametre DEĞERLERİ."
+        },
+        "rules": {
+          "type": "object",
+          "description": "Behavior.spec.rules üzerine yama: kural aç/kapa, öncelik değiştir, yeni kural ekle, $delete ile sil."
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "kind": {
+      "const": "PlatformTemplate"
+    },
+    "spec": {
+      "type": "object",
+      "required": [
+        "platformType"
+      ],
+      "properties": {
+        "platformType": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "parameters": {
+          "$ref": "common.schema.json#/$defs/valueMap"
+        },
+        "initialState": {
+          "$ref": "common.schema.json#/$defs/valueMap"
+        },
+        "systems": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "common.schema.json#/$defs/localKey"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/mount"
+          }
+        },
+        "behaviors": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "common.schema.json#/$defs/localKey"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/behaviorAttachment"
+          }
+        },
+        "appearance": {
+          "type": "object",
+          "properties": {
+            "sidc": {
+              "type": "string",
+              "description": "MIL-STD-2525 / APP-6 sembol kodu"
+            },
+            "model": {
+              "type": "string"
+            },
+            "icon": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      },
+      "additionalProperties": false
+    }
+  }
+}

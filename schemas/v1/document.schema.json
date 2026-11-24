@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/document.schema.json",
+  "title": "simcfg doküman zarfı",
+  "description": "Her konfigürasyon dokümanının ortak zarfı. 'spec' içeriği 'kind'a göre ilgili şema ile doğrulanır.",
+  "type": "object",
+  "required": ["apiVersion", "kind", "id"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "apiVersion": { "const": "simcfg/v1" },
+    "kind": { "type": "string", "pattern": "^[A-Z][A-Za-z0-9]*$" },
+    "id": { "$ref": "common.schema.json#/$defs/id" },
+    "version": { "$ref": "common.schema.json#/$defs/semver" },
+    "extends": {
+      "description": "Tekli veya çoklu kalıtım (mixin). Soldan sağa birleştirilir, en son bu doküman uygulanır.",
+      "oneOf": [
+        { "$ref": "common.schema.json#/$defs/id" },
+        { "type": "array", "minItems": 1, "items": { "$ref": "common.schema.json#/$defs/id" } }
+      ]
+    },
+    "abstract": { "type": "boolean", "description": "Soyut dokümanlar doğrudan örneklenemez, sadece türetilir." },
+    "deprecated": { "oneOf": [{ "type": "boolean" }, { "type": "string" }] },
+    "meta": { "$ref": "common.schema.json#/$defs/meta" },
+    "spec": { "type": "object" }
+  },
+  "patternProperties": { "^x-": true },
+  "additionalProperties": false
+}

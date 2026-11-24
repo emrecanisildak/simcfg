@@ -1,0 +1,27 @@
+[
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "demo.action.defensive_reaction", "version": "0.1.0",
+    "meta": { "name": { "tr": "Savunma reaksiyonu (bileşik)", "en": "Defensive reaction" }, "description": { "tr": "Veriyle tanımlı bileşik aksiyon: chaff + jink + kısa bekleme." } },
+    "spec": {
+      "category": "defensive", "channels": ["movement"], "durative": true,
+      "parameters": {
+        "chaffSystem":   { "type": "systemRole", "required": true, "constraint": { "systemType": "core.systemtype.chaff_dispenser" } },
+        "threatBearing": { "type": "number", "unit": "deg", "nullable": true, "default": null },
+        "g":             { "type": "number", "unit": "g", "default": 5, "min": 1, "max": 12 }
+      },
+      "implementation": {
+        "type": "composite",
+        "body": {
+          "action": "core.action.sequence",
+          "params": {
+            "steps": [
+              { "action": "core.action.dispense_chaff", "params": { "system": { "param": "chaffSystem" }, "count": 2 } },
+              { "action": "core.action.maneuver", "params": { "maneuver": "core.maneuver.jink", "args": { "g": { "param": "g" } }, "referenceBearing": { "param": "threatBearing" } } },
+              { "action": "core.action.wait", "params": { "duration": "2 s" } }
+            ]
+          }
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,170 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_lr_sam_site",
+    "extends": "core.platform.land.generic_sam_site",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic long-range SAM battery"
+    },
+    "spec": {
+      "parameters": {
+        "mass": "40 t",
+        "setupTime": "10 min"
+      },
+      "systems": {
+        "search_radar": {
+          "template": "core.system.radar.generic_lr_search"
+        },
+        "fire_control": {
+          "template": "core.system.radar.generic_fire_control_ground"
+        },
+        "launcher": {
+          "template": "core.system.weapon.lr_sam_launcher"
+        },
+        "link16": {
+          "template": "core.system.comms.generic_link16"
+        }
+      },
+      "appearance": {
+        "sidc": "SHGPUCDM--*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_shorad_vehicle",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic SHORAD vehicle (missile + gun)"
+    },
+    "spec": {
+      "platformType": "core.platformtype.tracked_vehicle",
+      "parameters": {
+        "mass": "35 t",
+        "length": 8,
+        "maxSpeed": "65 km/h",
+        "crew": 3
+      },
+      "systems": {
+        "armor": {
+          "template": "core.system.protection.armor_light"
+        },
+        "radar": {
+          "template": "core.system.radar.generic_shorad"
+        },
+        "eo": {
+          "template": "core.system.eo.generic_shorad_eo"
+        },
+        "launcher": {
+          "template": "core.system.weapon.shorad_launcher"
+        },
+        "gun": {
+          "template": "core.system.weapon.aaa_35_twin"
+        },
+        "iff": {
+          "template": "core.system.iff.generic_combined"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        }
+      },
+      "behaviors": {
+        "air_defense": {
+          "behavior": "core.behavior.ground.shorad"
+        }
+      },
+      "appearance": {
+        "sidc": "SHGPUCDS--*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_aaa_gun",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic towed AAA gun"
+    },
+    "spec": {
+      "platformType": "core.platformtype.wheeled_vehicle",
+      "parameters": {
+        "mass": "7 t",
+        "length": 7,
+        "maxSpeed": "40 km/h",
+        "crew": 3
+      },
+      "systems": {
+        "radar": {
+          "template": "core.system.radar.generic_aaa_fcr"
+        },
+        "gun": {
+          "template": "core.system.weapon.aaa_35_twin"
+        }
+      },
+      "behaviors": {
+        "air_defense": {
+          "behavior": "core.behavior.ground.shorad",
+          "bindings": {
+            "launcher": "gun",
+            "gun": null
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SHGPUCDG--*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_ewr_site",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic early-warning radar site"
+    },
+    "spec": {
+      "platformType": "core.platformtype.structure",
+      "parameters": {
+        "mass": "100 t",
+        "hardness": "light",
+        "footprintRadius": "100 m"
+      },
+      "systems": {
+        "radar": {
+          "template": "core.system.radar.generic_lr_search",
+          "parameters": {
+            "maxRange": "450 km"
+          },
+          "initialState": {
+            "mode": "search"
+          }
+        },
+        "link16": {
+          "template": "core.system.comms.generic_link16"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        },
+        "iff": {
+          "template": "core.system.iff.generic_combined"
+        }
+      },
+      "behaviors": {
+        "report": {
+          "behavior": "core.behavior.common.report_contacts",
+          "bindings": {
+            "link": "link16"
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SHGPUSRE--*****"
+      }
+    }
+  }
+]

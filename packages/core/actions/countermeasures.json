@@ -1,0 +1,176 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.dispense_countermeasure",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Karşı tedbir at",
+        "en": "Dispense countermeasure"
+      }
+    },
+    "spec": {
+      "category": "countermeasure",
+      "channels": [],
+      "durative": false,
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.cm_dispenser"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "default": 1,
+          "min": 1
+        },
+        "interval": {
+          "type": "number",
+          "unit": "s",
+          "default": 0.2,
+          "min": 0
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "system",
+        "command": "dispense",
+        "args": {
+          "count": {
+            "param": "count"
+          },
+          "interval": {
+            "param": "interval"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.dispense_chaff",
+    "extends": "core.action.dispense_countermeasure",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Chaff at",
+        "en": "Dispense chaff"
+      }
+    },
+    "spec": {
+      "parameters": {
+        "system": {
+          "constraint": {
+            "systemType": "core.systemtype.chaff_dispenser"
+          }
+        },
+        "count": {
+          "default": 4
+        },
+        "interval": {
+          "default": 0.3
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.dispense_flare",
+    "extends": "core.action.dispense_countermeasure",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Flare at",
+        "en": "Dispense flare"
+      }
+    },
+    "spec": {
+      "parameters": {
+        "system": {
+          "constraint": {
+            "systemType": "core.systemtype.flare_dispenser"
+          }
+        },
+        "count": {
+          "default": 2
+        },
+        "interval": {
+          "default": 0.25
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.run_cm_program",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Atım programı çalıştır",
+        "en": "Run dispense program"
+      }
+    },
+    "spec": {
+      "category": "countermeasure",
+      "channels": [],
+      "durative": true,
+      "parameters": {
+        "system": {
+          "type": "systemRole",
+          "required": true,
+          "constraint": {
+            "systemType": "core.systemtype.cm_dispenser"
+          }
+        },
+        "program": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "implementation": {
+        "type": "command",
+        "system": "system",
+        "command": "runProgram",
+        "args": {
+          "program": {
+            "param": "program"
+          }
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "ActionType",
+    "id": "core.action.dispense_smoke",
+    "extends": "core.action.dispense_countermeasure",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Sis at",
+        "en": "Dispense smoke"
+      }
+    },
+    "spec": {
+      "parameters": {
+        "system": {
+          "constraint": {
+            "systemType": "core.systemtype.smoke_launcher"
+          }
+        },
+        "count": {
+          "default": 2
+        },
+        "interval": {
+          "default": 0.2
+        }
+      }
+    }
+  }
+]

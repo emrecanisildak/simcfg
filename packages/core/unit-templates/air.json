@@ -1,0 +1,94 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "UnitTemplate",
+    "id": "core.unit.fighter_element",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Avcı kolu (2'li)",
+        "en": "Fighter element"
+      }
+    },
+    "spec": {
+      "echelon": "element",
+      "domain": "air",
+      "formation": {
+        "type": "line",
+        "spacing": "1 nmi"
+      },
+      "members": {
+        "lead": {
+          "platform": "core.platform.air.generic_fighter",
+          "count": 1,
+          "role": "flight lead",
+          "leader": true
+        },
+        "wing": {
+          "platform": "core.platform.air.generic_fighter",
+          "count": 1,
+          "role": "wingman"
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "UnitTemplate",
+    "id": "core.unit.fighter_flight",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Avcı kolu (4'lü)",
+        "en": "Fighter flight"
+      }
+    },
+    "spec": {
+      "echelon": "flight",
+      "domain": "air",
+      "formation": {
+        "type": "box",
+        "spacing": "3 nmi"
+      },
+      "subunits": {
+        "element": {
+          "unit": "core.unit.fighter_element",
+          "count": 2
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "UnitTemplate",
+    "id": "core.unit.attack_helicopter_section",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Taarruz helikopteri kısmı",
+        "en": "Attack helicopter section"
+      }
+    },
+    "spec": {
+      "echelon": "section",
+      "domain": "air",
+      "formation": {
+        "type": "echelon_right",
+        "spacing": "300 m"
+      },
+      "members": {
+        "lead": {
+          "platform": "core.platform.rotary.generic_attack_helicopter",
+          "count": 1,
+          "role": "lead",
+          "leader": true
+        },
+        "wing": {
+          "platform": "core.platform.rotary.generic_attack_helicopter",
+          "count": 1,
+          "role": "wing"
+        }
+      }
+    }
+  }
+]

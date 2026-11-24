@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schemas/v1/system-type.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "SystemType",
+  "id": "core.systemtype.iff",
+  "extends": "core.systemtype.base",
+  "version": "1.0.0",
+  "meta": { "name": "IFF (transponder / interrogator)", "tags": ["identification"] },
+  "spec": {
+    "category": "identification",
+    "implementation": "engine.iff",
+    "parameters": {
+      "role":           { "type": "enum", "values": ["transponder", "interrogator", "combined"], "default": "transponder" },
+      "supportedModes": { "type": "list", "items": { "type": "enum", "enumRef": "core.enum.iff_mode" }, "default": ["1", "2", "3A", "C"] },
+      "maxRange":       { "type": "number", "unit": "m", "default": 370400, "min": 0 },
+      "replyProbability": { "type": "number", "default": 0.98, "min": 0, "max": 1 }
+    },
+    "state": {
+      "transponderOn": { "type": "boolean", "default": true },
+      "mode1Code":     { "type": "string", "pattern": "^[0-7]{2}$", "default": "00" },
+      "mode2Code":     { "type": "string", "pattern": "^[0-7]{4}$", "default": "0000" },
+      "mode3Code":     { "type": "string", "pattern": "^[0-7]{4}$", "default": "1200" },
+      "mode4Enabled":  { "type": "boolean", "default": false },
+      "mode5Enabled":  { "type": "boolean", "default": false },
+      "emergency":     { "type": "boolean", "default": false }
+    },
+    "commands": {
+      "interrogate": {
+        "label": "Interrogate target",
+        "parameters": {
+          "target": { "type": "entityRef", "required": true },
+          "mode":   { "type": "enum", "enumRef": "core.enum.iff_mode", "default": "3A" }
+        }
+      },
+      "setCode": {
+        "label": "Set code",
+        "parameters": {
+          "mode": { "type": "enum", "enumRef": "core.enum.iff_mode", "required": true },
+          "code": { "type": "string", "pattern": "^[0-7]{2,4}$", "required": true }
+        }
+      }
+    },
+    "emits": ["core.event.iff.reply"],
+    "ui": { "icon": "iff", "color": "#43a047" }
+  }
+}

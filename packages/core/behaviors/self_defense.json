@@ -1,0 +1,87 @@
+{
+  "$schema": "../../../schemas/v1/behavior.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "Behavior",
+  "id": "core.behavior.air.self_defense",
+  "version": "1.0.0",
+  "meta": { "name": { "tr": "Hava aracı öz savunma", "en": "Aircraft self defense" }, "description": "RWR uyarılarına karşı chaff/flare atımı ve kaçınma manevrası." },
+  "spec": {
+    "category": "defensive",
+    "requires": {
+      "systems": {
+        "rwr":   { "systemType": "core.systemtype.rwr" },
+        "chaff": { "systemType": "core.systemtype.chaff_dispenser", "optional": true },
+        "flare": { "systemType": "core.systemtype.flare_dispenser", "optional": true }
+      }
+    },
+    "parameters": {
+      "reactToLock":   { "type": "boolean", "default": true, "label": { "tr": "Kilitlenmeye tepki", "en": "React to lock" } },
+      "chaffBurst":    { "type": "integer", "default": 4, "min": 1, "max": 20, "ui": { "group": "Chaff" } },
+      "chaffInterval": { "type": "number", "unit": "s", "default": 0.3, "min": 0, "ui": { "group": "Chaff" } },
+      "flareBurst":    { "type": "integer", "default": 2, "min": 1, "max": 20, "ui": { "group": "Flare" } },
+      "breakG":        { "type": "number", "unit": "g", "default": 6, "min": 1, "max": 12, "ui": { "group": "Maneuver" } },
+      "lockCooldown":  { "type": "number", "unit": "s", "default": 4, "min": 0, "overridableAt": "runtime" }
+    },
+    "variables": {
+      "lastThreatBearing": { "type": "number", "unit": "deg", "nullable": true, "default": null }
+    },
+    "arbitration": { "policy": "priority", "preemption": true },
+    "rules": {
+      "chaff_on_lock": {
+        "label": { "tr": "Kilitlenmede chaff", "en": "Chaff on lock" },
+        "priority": 80,
+        "trigger": { "event": "core.event.rwr.lock" },
+        "condition": {
+          "all": [
+            { "param": "reactToLock" },
+            { "cond": "core.cond.cm_available", "params": { "system": "chaff", "minCount": { "param": "chaffBurst" } } }
+          ]
+        },
+        "actions": [
+          { "action": "core.action.set_variable", "params": { "name": "lastThreatBearing", "value": { "var": "event.bearing" } } },
+          { "action": "core.action.dispense_chaff", "params": { "system": "chaff", "count": { "param": "chaffBurst" }, "interval": { "param": "chaffInterval" } } }
+        ],
+        "cooldown": "4 s"
+      },
+      "flare_and_break_on_launch": {
+        "label": { "tr": "Füze atışında flare + kırılma", "en": "Flare & break on launch" },
+        "priority": 100,
+        "trigger": { "event": "core.event.rwr.missile_launch" },
+        "condition": { "cond": "core.cond.cm_available", "params": { "system": "flare" } },
+        "actions": [
+          {
+            "action": "core.action.parallel",
+            "params": {
+              "branches": [
+                { "action": "core.action.dispense_flare", "params": { "system": "flare", "count": { "param": "flareBurst" } } },
+                {
+                  "action": "core.action.maneuver",
+                  "params": {
+                    "maneuver": "core.maneuver.break_turn",
+                    "args": { "g": { "param": "breakG" }, "direction": "away" },
+                    "referenceBearing": { "var": "event.bearing" }
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "cooldown": "3 s"
+      },
+      "notch_without_flares": {
+        "label": { "tr": "Flare yoksa notch", "en": "Notch when out of flares" },
+        "priority": 90,
+        "trigger": { "event": "core.event.rwr.missile_launch" },
+        "condition": { "not": { "cond": "core.cond.cm_available", "params": { "system": "flare" } } },
+        "actions": [
+          { "action": "core.action.maneuver", "params": { "maneuver": "core.maneuver.notch", "referenceBearing": { "var": "event.bearing" } } }
+        ]
+      },
+      "magazine_empty": {
+        "priority": 10,
+        "trigger": { "event": "core.event.cm.empty" },
+        "actions": [ { "action": "core.action.log", "params": { "message": "Countermeasure magazine empty", "level": "warning" } } ]
+      }
+    }
+  }
+}

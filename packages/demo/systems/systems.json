@@ -1,0 +1,14 @@
+[
+  {
+    "apiVersion": "simcfg/v1", "kind": "SystemTemplate", "id": "demo.system.radar.fcr_long_range",
+    "extends": "core.system.radar.generic_fcr", "version": "0.1.0",
+    "meta": { "name": "Long-range FCR (derived)" },
+    "spec": { "parameters": { "emitterId": "DEMO-FCR-LR", "peakPower": "8 kW", "maxRange": "120 nmi", "maxTracks": 32 } }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "SystemTemplate", "id": "demo.system.cm.chaff_aft",
+    "extends": "core.system.cm.generic_chaff", "version": "0.1.0",
+    "meta": { "name": "Aft chaff dispenser" },
+    "spec": { "parameters": { "capacity": 20, "programs": { "$replace": { "aft_burst": { "burstCount": 6, "burstInterval": "200 ms" } } } } }
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.sequence", "version": "1.0.0",
+    "meta": { "name": { "tr": "Sıralı", "en": "Sequence" } },
+    "spec": {
+      "category": "control", "durative": true,
+      "parameters": { "steps": { "type": "actionList", "required": true, "minItems": 1 } },
+      "implementation": { "type": "native", "handler": "core.control.sequence" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.parallel", "version": "1.0.0",
+    "meta": { "name": { "tr": "Paralel", "en": "Parallel" } },
+    "spec": {
+      "category": "control", "durative": true,
+      "parameters": {
+        "branches": { "type": "actionList", "required": true, "minItems": 1 },
+        "policy":   { "type": "enum", "values": ["all", "any"], "default": "all", "description": "all: hepsi bitince; any: ilki bitince tamamlanır." }
+      },
+      "implementation": { "type": "native", "handler": "core.control.parallel" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.repeat", "version": "1.0.0",
+    "meta": { "name": { "tr": "Tekrarla", "en": "Repeat" } },
+    "spec": {
+      "category": "control", "durative": true,
+      "parameters": {
+        "body":  { "type": "action", "required": true },
+        "count": { "type": "integer", "nullable": true, "default": null, "min": 1, "description": "Boş = sonsuz" },
+        "until": { "type": "expression", "nullable": true, "default": null }
+      },
+      "implementation": { "type": "native", "handler": "core.control.repeat" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.wait", "version": "1.0.0",
+    "meta": { "name": { "tr": "Bekle", "en": "Wait" } },
+    "spec": {
+      "category": "control", "durative": true,
+      "parameters": { "duration": { "type": "number", "unit": "s", "required": true, "min": 0 } },
+      "implementation": { "type": "native", "handler": "core.control.wait" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.set_variable", "version": "1.0.0",
+    "meta": { "name": { "tr": "Değişken ata", "en": "Set variable" }, "description": "Davranış karatahtasına (bb.*) değer yazar." },
+    "spec": {
+      "category": "control", "durative": false,
+      "parameters": {
+        "name":  { "type": "string", "required": true },
+        "value": { "type": "any", "required": true }
+      },
+      "implementation": { "type": "native", "handler": "core.control.set_variable" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.set_rule_enabled", "version": "1.0.0",
+    "meta": { "name": { "tr": "Kuralı aç/kapat", "en": "Enable/disable rule" }, "description": "Çalışma anında kural setini değiştirir." },
+    "spec": {
+      "category": "control", "durative": false,
+      "parameters": {
+        "behavior": { "type": "string", "description": "Davranış ek anahtarı (boş = mevcut davranış)", "nullable": true, "default": null },
+        "rule":     { "type": "string", "required": true },
+        "enabled":  { "type": "boolean", "required": true }
+      },
+      "implementation": { "type": "native", "handler": "core.control.set_rule_enabled" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "ActionType", "id": "core.action.log", "version": "1.0.0",
+    "meta": { "name": { "tr": "Kayıt/mesaj", "en": "Log" } },
+    "spec": {
+      "category": "control", "durative": false,
+      "parameters": {
+        "message": { "type": "string", "required": true },
+        "level":   { "type": "enum", "values": ["debug", "info", "warning", "alert"], "default": "info" }
+      },
+      "implementation": { "type": "native", "handler": "core.control.log" }
+    }
+  }
+]

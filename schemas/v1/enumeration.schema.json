@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/enumeration.schema.json",
+  "title": "Enumeration - yeniden kullanılabilir değer listesi",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "Enumeration" },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "values": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/enumValue" } }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

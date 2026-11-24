@@ -1,0 +1,685 @@
+{
+  "$schema": "../../../schemas/v1/scenario.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "Scenario",
+  "id": "demo.scenario.combined_arms",
+  "version": "0.1.0",
+  "meta": {
+    "name": "Combined Arms - Town Assault",
+    "description": {
+      "tr": "Birlik şablonları, kara/hava/İHA/insan/sivil unsurlar ve ROE ile müşterek harekât gösterimi."
+    }
+  },
+  "spec": {
+    "time": {
+      "start": "2026-06-02T05:30:00Z",
+      "duration": "1 h",
+      "timeStep": "100 ms",
+      "seed": 7
+    },
+    "environment": {
+      "weather": {
+        "visibility": "8 km",
+        "windSpeed": "10 kts",
+        "windDirection": 300
+      },
+      "terrain": "dted/level2"
+    },
+    "sides": {
+      "blue": {
+        "label": "Blue",
+        "color": "#1e88e5",
+        "relations": {
+          "red": "hostile",
+          "white": "neutral"
+        }
+      },
+      "red": {
+        "label": "Red",
+        "color": "#e53935",
+        "relations": {
+          "blue": "hostile",
+          "white": "neutral"
+        }
+      },
+      "white": {
+        "label": "Civil",
+        "color": "#9e9e9e",
+        "relations": {
+          "blue": "neutral",
+          "red": "neutral"
+        }
+      }
+    },
+    "areas": {
+      "town": {
+        "type": "core.areatype.urban_area",
+        "label": "Town",
+        "geometry": {
+          "shape": "polygon",
+          "points": [
+            {
+              "lat": 39.695,
+              "lon": 27.34
+            },
+            {
+              "lat": 39.695,
+              "lon": 27.362
+            },
+            {
+              "lat": 39.708,
+              "lon": 27.362
+            },
+            {
+              "lat": 39.708,
+              "lon": 27.34
+            }
+          ]
+        },
+        "properties": {
+          "populationDensity": 3000
+        }
+      },
+      "ea_north": {
+        "type": "core.areatype.engagement_area",
+        "label": "EA North",
+        "geometry": {
+          "shape": "circle",
+          "center": {
+            "lat": 39.66,
+            "lon": 27.3
+          },
+          "radius": "3 km"
+        },
+        "sides": [
+          "red"
+        ]
+      },
+      "lz_alpha": {
+        "type": "core.areatype.landing_zone",
+        "label": "LZ Alpha",
+        "geometry": {
+          "shape": "circle",
+          "center": {
+            "lat": 39.62,
+            "lon": 27.24
+          },
+          "radius": "200 m"
+        },
+        "sides": [
+          "blue"
+        ],
+        "properties": {
+          "capacity": 2
+        }
+      },
+      "roz_uav": {
+        "type": "core.areatype.restricted_operating_zone",
+        "geometry": {
+          "shape": "circle",
+          "center": {
+            "lat": 39.7015,
+            "lon": 27.351
+          },
+          "radius": "10 km"
+        },
+        "altitude": {
+          "min": "3000 m",
+          "max": "8000 m"
+        },
+        "sides": [
+          "blue"
+        ]
+      },
+      "red_mez": {
+        "type": "core.areatype.threat_zone",
+        "geometry": {
+          "shape": "circle",
+          "center": {
+            "lat": 39.8,
+            "lon": 27.45
+          },
+          "radius": "60 km"
+        },
+        "sides": [
+          "red"
+        ],
+        "properties": {
+          "threatSystem": "GEN-LRS",
+          "lethality": 0.6
+        }
+      },
+      "pl_blue": {
+        "type": "core.areatype.phase_line",
+        "geometry": {
+          "shape": "corridor",
+          "width": "200 m",
+          "points": [
+            {
+              "lat": 39.64,
+              "lon": 27.15
+            },
+            {
+              "lat": 39.64,
+              "lon": 27.4
+            }
+          ]
+        },
+        "properties": {
+          "name": "PL BLUE"
+        }
+      },
+      "minefield_1": {
+        "type": "core.areatype.minefield",
+        "geometry": {
+          "shape": "polygon",
+          "points": [
+            {
+              "lat": 39.67,
+              "lon": 27.318
+            },
+            {
+              "lat": 39.67,
+              "lon": 27.326
+            },
+            {
+              "lat": 39.674,
+              "lon": 27.326
+            },
+            {
+              "lat": 39.674,
+              "lon": 27.318
+            }
+          ]
+        },
+        "properties": {
+          "mineType": "at"
+        }
+      },
+      "safe_zone": {
+        "type": "core.areatype.safe_zone",
+        "geometry": {
+          "shape": "circle",
+          "center": {
+            "lat": 39.72,
+            "lon": 27.38
+          },
+          "radius": "500 m"
+        },
+        "sides": [
+          "white"
+        ]
+      }
+    },
+    "routes": {
+      "helo_ingress": {
+        "label": "Helo ingress to LZ Alpha",
+        "waypoints": [
+          {
+            "id": "sp",
+            "position": {
+              "lat": 39.55,
+              "lon": 27.1
+            },
+            "altitude": "50 m",
+            "speed": "200 km/h"
+          },
+          {
+            "id": "cp1",
+            "position": {
+              "lat": 39.59,
+              "lon": 27.18
+            },
+            "altitude": "30 m"
+          },
+          {
+            "id": "lz",
+            "position": {
+              "lat": 39.62,
+              "lon": 27.24
+            },
+            "altitude": "0 m",
+            "speed": "40 km/h"
+          },
+          {
+            "id": "rp",
+            "position": {
+              "lat": 39.55,
+              "lon": 27.1
+            },
+            "altitude": "50 m",
+            "speed": "220 km/h"
+          }
+        ]
+      },
+      "road_east": {
+        "waypoints": [
+          {
+            "position": {
+              "lat": 39.7,
+              "lon": 27.3
+            },
+            "speed": "60 km/h"
+          },
+          {
+            "position": {
+              "lat": 39.7,
+              "lon": 27.4
+            }
+          }
+        ]
+      },
+      "airway_civil": {
+        "waypoints": [
+          {
+            "position": {
+              "lat": 39.4,
+              "lon": 26.9
+            },
+            "altitude": "2500 m",
+            "speed": "110 kts"
+          },
+          {
+            "position": {
+              "lat": 40.0,
+              "lon": 27.8
+            }
+          }
+        ]
+      }
+    },
+    "units": {
+      "blue_tanks": {
+        "template": "core.unit.tank_platoon",
+        "side": "blue",
+        "callsign": "TIGER",
+        "position": {
+          "lat": 39.62,
+          "lon": 27.2
+        },
+        "heading": 45,
+        "allMembers": {
+          "behaviors": {
+            "combat": {
+              "parameters": {
+                "roe": "tight"
+              }
+            }
+          }
+        }
+      },
+      "blue_mech": {
+        "template": "core.unit.mech_infantry_platoon",
+        "side": "blue",
+        "callsign": "BADGER",
+        "position": {
+          "lat": 39.6,
+          "lon": 27.18
+        },
+        "heading": 45
+      },
+      "blue_attack": {
+        "template": "core.unit.attack_helicopter_section",
+        "side": "blue",
+        "callsign": "HAWK",
+        "position": {
+          "lat": 39.55,
+          "lon": 27.1
+        },
+        "heading": 30,
+        "initial": {
+          "altitude": "30 m",
+          "speed": "0 m/s"
+        }
+      },
+      "red_squad": {
+        "template": "core.unit.infantry_squad",
+        "side": "red",
+        "callsign": "RED-INF",
+        "position": {
+          "lat": 39.701,
+          "lon": 27.348
+        },
+        "heading": 225
+      },
+      "red_manpads": {
+        "template": "core.unit.manpads_team",
+        "side": "red",
+        "callsign": "RED-AD",
+        "position": {
+          "lat": 39.69,
+          "lon": 27.33
+        },
+        "heading": 225
+      },
+      "red_ad": {
+        "template": "core.unit.air_defense_battery",
+        "side": "red",
+        "callsign": "RED-SAM",
+        "position": {
+          "lat": 39.8,
+          "lon": 27.45
+        },
+        "heading": 225,
+        "overrides": {
+          "red_ad_fcp": {
+            "behaviors": {
+              "air_defense": {
+                "parameters": {
+                  "engagementArea": "red_mez"
+                }
+              }
+            }
+          }
+        }
+      },
+      "red_artillery": {
+        "template": "core.unit.artillery_battery",
+        "side": "red",
+        "callsign": "RED-ARTY",
+        "position": {
+          "lat": 39.85,
+          "lon": 27.55
+        },
+        "heading": 225
+      },
+      "civilians": {
+        "template": "core.unit.civilian_crowd",
+        "side": "white",
+        "callsign": "CIV",
+        "position": {
+          "lat": 39.702,
+          "lon": 27.352
+        },
+        "heading": 0
+      }
+    },
+    "entities": {
+      "blue_uav": {
+        "platform": "core.platform.uav.generic_male_uav",
+        "side": "blue",
+        "callsign": "REAPER 1",
+        "initial": {
+          "position": {
+            "lat": 39.55,
+            "lon": 27.05
+          },
+          "altitude": "6000 m",
+          "heading": 60,
+          "speed": "300 km/h"
+        },
+        "overrides": {
+          "behaviors": {
+            "isr": {
+              "parameters": {
+                "orbitCenter": {
+                  "lat": 39.7015,
+                  "lon": 27.351
+                },
+                "orbitRadius": "8 km",
+                "orbitAltitude": "6000 m",
+                "reportTo": "blue_tanks_lead"
+              }
+            },
+            "lost_link": {
+              "parameters": {
+                "homeBase": {
+                  "lat": 39.45,
+                  "lon": 26.95
+                }
+              }
+            }
+          }
+        }
+      },
+      "blue_lift": {
+        "platform": "core.platform.rotary.generic_utility_helicopter",
+        "side": "blue",
+        "callsign": "DUSTOFF 1",
+        "initial": {
+          "route": "helo_ingress",
+          "altitude": "50 m",
+          "speed": "200 km/h"
+        },
+        "overrides": {
+          "systems": {
+            "cabin": {
+              "initialState": {
+                "occupants": 8
+              }
+            }
+          }
+        },
+        "plan": [
+          {
+            "action": "core.action.follow_route",
+            "params": {
+              "route": "helo_ingress"
+            }
+          }
+        ]
+      },
+      "blue_cp": {
+        "platform": "core.platform.structure.generic_command_post",
+        "side": "blue",
+        "callsign": "BLUE CP",
+        "initial": {
+          "position": {
+            "lat": 39.5,
+            "lon": 27.0
+          }
+        }
+      },
+      "red_lm": {
+        "platform": "core.platform.uav.generic_loitering_munition",
+        "side": "red",
+        "callsign": "RED-LM 1",
+        "initial": {
+          "position": {
+            "lat": 39.78,
+            "lon": 27.4
+          },
+          "altitude": "1500 m",
+          "speed": "110 km/h"
+        },
+        "overrides": {
+          "behaviors": {
+            "strike": {
+              "parameters": {
+                "searchArea": "ea_north"
+              }
+            }
+          }
+        }
+      },
+      "red_quad": {
+        "platform": "core.platform.uav.generic_quadcopter",
+        "side": "red",
+        "callsign": "RED-EYE",
+        "initial": {
+          "position": {
+            "lat": 39.69,
+            "lon": 27.34
+          },
+          "altitude": "120 m"
+        },
+        "overrides": {
+          "behaviors": {
+            "isr": {
+              "parameters": {
+                "orbitCenter": {
+                  "lat": 39.66,
+                  "lon": 27.3
+                }
+              }
+            }
+          }
+        }
+      },
+      "civ_car": {
+        "platform": "core.platform.land.generic_civil_car",
+        "side": "white",
+        "initial": {
+          "route": "road_east"
+        },
+        "plan": [
+          {
+            "action": "core.action.follow_route",
+            "params": {
+              "route": "road_east"
+            }
+          }
+        ]
+      },
+      "civ_ga": {
+        "platform": "core.platform.air.generic_light_aircraft",
+        "side": "white",
+        "callsign": "TC-ABC",
+        "initial": {
+          "route": "airway_civil",
+          "altitude": "2500 m",
+          "speed": "110 kts"
+        },
+        "overrides": {
+          "systems": {
+            "iff": {
+              "initialState": {
+                "mode3Code": "4610"
+              }
+            }
+          },
+          "behaviors": {
+            "civil": {
+              "parameters": {
+                "divertAirport": {
+                  "lat": 39.45,
+                  "lon": 26.95
+                }
+              }
+            }
+          }
+        },
+        "plan": [
+          {
+            "action": "core.action.follow_route",
+            "params": {
+              "route": "airway_civil"
+            }
+          }
+        ]
+      },
+      "civ_drone": {
+        "platform": "core.platform.uav.generic_commercial_drone",
+        "side": "white",
+        "initial": {
+          "position": {
+            "lat": 39.705,
+            "lon": 27.36
+          },
+          "altitude": "80 m"
+        }
+      },
+      "town_hall": {
+        "platform": "core.platform.structure.generic_building",
+        "side": "white",
+        "initial": {
+          "position": {
+            "lat": 39.7012,
+            "lon": 27.3512
+          }
+        }
+      }
+    },
+    "groups": {
+      "blue_air": {
+        "label": "Blue aviation",
+        "members": [
+          "blue_attack_lead",
+          "blue_attack_wing",
+          "blue_lift",
+          "blue_uav"
+        ]
+      }
+    },
+    "behaviorOverrides": {
+      "core.behavior.lifeform.civilian": {
+        "parameters": {
+          "panicRadius": "500 m"
+        }
+      },
+      "core.behavior.lifeform.infantry_combat": {
+        "parameters": {
+          "coverRadius": "30 m"
+        }
+      }
+    },
+    "variables": {
+      "phase": {
+        "type": "integer",
+        "default": 1
+      }
+    },
+    "rules": {
+      "atc_divert_civil_traffic": {
+        "label": "ATC: sivil trafiği uzaklaştır",
+        "trigger": {
+          "at": "5 min"
+        },
+        "actions": [
+          {
+            "action": "core.action.send_message",
+            "on": "blue_cp",
+            "params": {
+              "system": "radio",
+              "to": "civ_ga",
+              "message": "divert",
+              "priority": "immediate"
+            }
+          }
+        ]
+      },
+      "red_shelling": {
+        "label": "Kırmızı topçu kasabayı dövüyor",
+        "trigger": {
+          "at": "10 min"
+        },
+        "actions": [
+          {
+            "action": "core.action.set_variable",
+            "params": {
+              "name": "phase",
+              "value": 2
+            }
+          },
+          {
+            "action": "core.action.log",
+            "params": {
+              "message": "Red artillery shelling the town",
+              "level": "alert"
+            }
+          },
+          {
+            "action": "core.action.set_master_arm",
+            "on": "red_artillery_gun_1",
+            "params": {
+              "launcher": "howitzer",
+              "armed": true
+            }
+          },
+          {
+            "action": "core.action.fire_at_position",
+            "on": "red_artillery_gun_1",
+            "params": {
+              "launcher": "howitzer",
+              "position": {
+                "lat": 39.703,
+                "lon": 27.356
+              },
+              "rounds": 2
+            }
+          }
+        ]
+      }
+    }
+  }
+}

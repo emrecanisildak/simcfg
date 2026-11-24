@@ -1,0 +1,74 @@
+{
+  "description": "Doküman türü (kind) -> şema eşlemesi. Yeni bir tür eklemek için şemasını buraya kaydedin; araç tarafında da opsiyonel bir semantik doğrulayıcı (KindHandler) yazılabilir.",
+  "apiVersion": "simcfg/v1",
+  "kinds": {
+    "Package": {
+      "schema": "package.schema.json",
+      "dir": ""
+    },
+    "UnitCatalog": {
+      "schema": "unit-catalog.schema.json",
+      "dir": "units"
+    },
+    "Enumeration": {
+      "schema": "enumeration.schema.json",
+      "dir": "enums"
+    },
+    "SystemType": {
+      "schema": "system-type.schema.json",
+      "dir": "system-types"
+    },
+    "SystemTemplate": {
+      "schema": "system-template.schema.json",
+      "dir": "systems"
+    },
+    "PlatformType": {
+      "schema": "platform-type.schema.json",
+      "dir": "platform-types"
+    },
+    "PlatformTemplate": {
+      "schema": "platform-template.schema.json",
+      "dir": "platforms"
+    },
+    "EventType": {
+      "schema": "event-type.schema.json",
+      "dir": "events"
+    },
+    "ConditionType": {
+      "schema": "condition-type.schema.json",
+      "dir": "conditions"
+    },
+    "ActionType": {
+      "schema": "action-type.schema.json",
+      "dir": "actions"
+    },
+    "Maneuver": {
+      "schema": "maneuver.schema.json",
+      "dir": "maneuvers"
+    },
+    "Behavior": {
+      "schema": "behavior.schema.json",
+      "dir": "behaviors"
+    },
+    "AreaType": {
+      "schema": "area-type.schema.json",
+      "dir": "area-types"
+    },
+    "Scenario": {
+      "schema": "scenario.schema.json",
+      "dir": "scenarios"
+    },
+    "MunitionType": {
+      "schema": "munition-type.schema.json",
+      "dir": "munition-types"
+    },
+    "Munition": {
+      "schema": "munition.schema.json",
+      "dir": "munitions"
+    },
+    "UnitTemplate": {
+      "schema": "unit-template.schema.json",
+      "dir": "unit-templates"
+    }
+  }
+}

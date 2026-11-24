@@ -1,0 +1,399 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_mbt",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic main battle tank"
+    },
+    "spec": {
+      "platformType": "core.platformtype.tracked_vehicle",
+      "parameters": {
+        "mass": "60 t",
+        "length": 9.8,
+        "maxSpeed": "70 km/h",
+        "offRoadSpeedFactor": 0.6,
+        "fuelCapacity": "1.2 t",
+        "fuelFlow": "0.05 kg/s",
+        "crew": 4,
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              90,
+              180
+            ]
+          ],
+          "values": [
+            10,
+            25,
+            12
+          ]
+        },
+        "irSignature": "5 kW/sr"
+      },
+      "systems": {
+        "armor": {
+          "template": "core.system.protection.armor_heavy"
+        },
+        "aps": {
+          "template": "core.system.protection.generic_aps"
+        },
+        "smoke": {
+          "template": "core.system.cm.generic_smoke_launcher"
+        },
+        "main_gun": {
+          "template": "core.system.weapon.tank_main_gun_120"
+        },
+        "coax": {
+          "template": "core.system.weapon.coax_mg_762"
+        },
+        "sight": {
+          "template": "core.system.eo.generic_tank_sight"
+        },
+        "periscope": {
+          "template": "core.system.visual.vehicle_periscope"
+        },
+        "lwr": {
+          "template": "core.system.ew.generic_lwr"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        },
+        "nav": {
+          "template": "core.system.nav.generic_gnss_ins"
+        }
+      },
+      "behaviors": {
+        "combat": {
+          "behavior": "core.behavior.ground.vehicle_combat",
+          "bindings": {
+            "main_weapon": "main_gun",
+            "secondary_weapon": "coax"
+          }
+        },
+        "protection": {
+          "behavior": "core.behavior.ground.vehicle_self_protection"
+        }
+      },
+      "appearance": {
+        "sidc": "SFGPEVAT--*****",
+        "model": "generic/mbt"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_ifv",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic infantry fighting vehicle"
+    },
+    "spec": {
+      "platformType": "core.platformtype.tracked_vehicle",
+      "parameters": {
+        "mass": "30 t",
+        "length": 7,
+        "maxSpeed": "65 km/h",
+        "fuelCapacity": "700 kg",
+        "fuelFlow": "0.03 kg/s",
+        "crew": 3,
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              90,
+              180
+            ]
+          ],
+          "values": [
+            8,
+            18,
+            9
+          ]
+        },
+        "irSignature": "3 kW/sr"
+      },
+      "systems": {
+        "armor": {
+          "template": "core.system.protection.armor_medium"
+        },
+        "smoke": {
+          "template": "core.system.cm.generic_smoke_launcher"
+        },
+        "cannon": {
+          "template": "core.system.weapon.ifv_autocannon_30"
+        },
+        "atgm": {
+          "template": "core.system.weapon.ifv_atgm_launcher"
+        },
+        "coax": {
+          "template": "core.system.weapon.coax_mg_762"
+        },
+        "sight": {
+          "template": "core.system.eo.generic_tank_sight"
+        },
+        "lwr": {
+          "template": "core.system.ew.generic_lwr"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        },
+        "nav": {
+          "template": "core.system.nav.generic_gnss_ins"
+        },
+        "troops": {
+          "template": "core.system.cargo.troop_compartment_8"
+        }
+      },
+      "behaviors": {
+        "combat": {
+          "behavior": "core.behavior.ground.vehicle_combat",
+          "bindings": {
+            "main_weapon": "cannon",
+            "secondary_weapon": "atgm"
+          }
+        },
+        "protection": {
+          "behavior": "core.behavior.ground.vehicle_self_protection"
+        },
+        "transport": {
+          "behavior": "core.behavior.transport.troop_transport",
+          "bindings": {
+            "cargo": "troops"
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SFGPEVAI--*****",
+        "model": "generic/ifv"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_apc",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic armored personnel carrier (wheeled)"
+    },
+    "spec": {
+      "platformType": "core.platformtype.wheeled_vehicle",
+      "parameters": {
+        "mass": "18 t",
+        "length": 7.5,
+        "maxSpeed": "100 km/h",
+        "fuelCapacity": "400 kg",
+        "crew": 2,
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              90,
+              180
+            ]
+          ],
+          "values": [
+            6,
+            15,
+            7
+          ]
+        },
+        "irSignature": "2 kW/sr"
+      },
+      "systems": {
+        "armor": {
+          "template": "core.system.protection.armor_light"
+        },
+        "smoke": {
+          "template": "core.system.cm.generic_smoke_launcher"
+        },
+        "rws": {
+          "template": "core.system.weapon.rws_mg_762"
+        },
+        "periscope": {
+          "template": "core.system.visual.vehicle_periscope"
+        },
+        "lwr": {
+          "template": "core.system.ew.generic_lwr"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        },
+        "troops": {
+          "template": "core.system.cargo.troop_compartment_10"
+        }
+      },
+      "behaviors": {
+        "combat": {
+          "behavior": "core.behavior.ground.vehicle_combat",
+          "bindings": {
+            "main_weapon": "rws"
+          }
+        },
+        "protection": {
+          "behavior": "core.behavior.ground.vehicle_self_protection"
+        },
+        "transport": {
+          "behavior": "core.behavior.transport.troop_transport",
+          "bindings": {
+            "cargo": "troops"
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SFGPEVAA--*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_logistics_truck",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic logistics truck"
+    },
+    "spec": {
+      "platformType": "core.platformtype.wheeled_vehicle",
+      "parameters": {
+        "mass": "12 t",
+        "length": 8,
+        "maxSpeed": "90 km/h",
+        "offRoadSpeedFactor": 0.5,
+        "fuelCapacity": "300 kg",
+        "crew": 2
+      },
+      "systems": {
+        "bed": {
+          "template": "core.system.cargo.truck_bed"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        },
+        "eyes": {
+          "template": "core.system.visual.vehicle_periscope"
+        }
+      },
+      "appearance": {
+        "sidc": "SFGPEVUL--*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_sp_howitzer",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic self-propelled howitzer"
+    },
+    "spec": {
+      "platformType": "core.platformtype.tracked_vehicle",
+      "parameters": {
+        "mass": "55 t",
+        "length": 11,
+        "maxSpeed": "60 km/h",
+        "fuelCapacity": "1 t",
+        "crew": 5
+      },
+      "systems": {
+        "armor": {
+          "template": "core.system.protection.armor_light"
+        },
+        "howitzer": {
+          "template": "core.system.weapon.howitzer_155"
+        },
+        "radio": {
+          "template": "core.system.comms.generic_vhf_radio"
+        },
+        "nav": {
+          "template": "core.system.nav.generic_gnss_ins"
+        }
+      },
+      "appearance": {
+        "sidc": "SFGPUCFHE-*****"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_civil_car",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic civilian car"
+    },
+    "spec": {
+      "platformType": "core.platformtype.wheeled_vehicle",
+      "parameters": {
+        "mass": "1.4 t",
+        "length": 4.5,
+        "maxSpeed": "180 km/h",
+        "offRoadSpeedFactor": 0.2,
+        "fuelCapacity": "40 kg",
+        "fuelFlow": "0.002 kg/s",
+        "crew": 1,
+        "rcs": {
+          "breakpoints": [
+            [
+              0,
+              180
+            ]
+          ],
+          "values": [
+            3,
+            3
+          ]
+        },
+        "irSignature": "1 kW/sr"
+      },
+      "systems": {
+        "eyes": {
+          "template": "core.system.visual.human_eyes"
+        }
+      },
+      "appearance": {
+        "sidc": "SNGPEVC---*****",
+        "model": "generic/car"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "PlatformTemplate",
+    "id": "core.platform.land.generic_civil_bus",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic civilian bus"
+    },
+    "spec": {
+      "platformType": "core.platformtype.wheeled_vehicle",
+      "parameters": {
+        "mass": "15 t",
+        "length": 12,
+        "maxSpeed": "100 km/h",
+        "offRoadSpeedFactor": 0.1,
+        "fuelCapacity": "250 kg",
+        "crew": 1
+      },
+      "systems": {
+        "eyes": {
+          "template": "core.system.visual.human_eyes"
+        },
+        "passengers": {
+          "template": "core.system.cargo.truck_bed",
+          "parameters": {
+            "seats": 50
+          }
+        }
+      },
+      "appearance": {
+        "sidc": "SNGPEVC---*****"
+      }
+    }
+  }
+]

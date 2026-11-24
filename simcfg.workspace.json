@@ -1,0 +1,5 @@
+{
+  "apiVersion": "simcfg/v1",
+  "schemas": "schemas/v1",
+  "packages": ["packages/core", "packages/demo"]
+}

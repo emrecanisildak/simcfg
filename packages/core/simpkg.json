@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schemas/v1/package.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "Package",
+  "id": "core",
+  "version": "1.0.0",
+  "meta": {
+    "name": "Core Library",
+    "description": { "tr": "Temel tipler: birimler, sistem/platform tipleri, olaylar, koşullar, aksiyonlar ve generic modeller.", "en": "Core types and generic models." }
+  },
+  "spec": {
+    "dependencies": {},
+    "include": ["**/*.json"],
+    "engine": { "plugins": ["engine.core"] }
+  }
+}

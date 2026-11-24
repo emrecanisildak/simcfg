@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../schemas/v1/system-type.schema.json",
+  "apiVersion": "simcfg/v1",
+  "kind": "SystemType",
+  "id": "core.systemtype.base",
+  "version": "1.0.0",
+  "abstract": true,
+  "meta": { "name": "Base system", "description": "Tüm sistem tiplerinin kökü: güç, arıza, kütle." },
+  "spec": {
+    "category": "generic",
+    "parameters": {
+      "mass":             { "type": "number", "unit": "kg", "default": 0, "min": 0, "ui": { "group": "Physical" } },
+      "powerConsumption": { "type": "number", "unit": "W",  "default": 0, "min": 0, "ui": { "group": "Physical" } },
+      "mtbf":             { "type": "number", "unit": "h",  "min": 0, "description": "Ortalama arızalar arası süre. Boş = arıza modellenmez.", "nullable": true, "default": null, "ui": { "group": "Reliability", "advanced": true } }
+    },
+    "state": {
+      "power":       { "type": "boolean", "default": true, "label": { "tr": "Enerji", "en": "Power" } },
+      "operational": { "type": "boolean", "default": true, "readonly": true, "description": "Arıza/hasar durumunda motor false yapar." }
+    },
+    "commands": {
+      "setPower": { "label": "Set power", "parameters": { "on": { "type": "boolean", "required": true } } }
+    },
+    "emits": ["core.event.system.failed"]
+  }
+}

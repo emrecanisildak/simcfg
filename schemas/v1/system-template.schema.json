@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simcfg.dev/schemas/v1/system-template.schema.json",
+  "title": "SystemTemplate - parametreleri doldurulmuş sistem modeli",
+  "allOf": [{ "$ref": "document.schema.json" }],
+  "properties": {
+    "kind": { "const": "SystemTemplate" },
+    "spec": {
+      "type": "object",
+      "required": ["systemType"],
+      "properties": {
+        "systemType": { "$ref": "common.schema.json#/$defs/id" },
+        "parameters": { "$ref": "common.schema.json#/$defs/valueMap" },
+        "initialState": { "$ref": "common.schema.json#/$defs/valueMap" }
+      },
+      "patternProperties": { "^x-": true },
+      "additionalProperties": false
+    }
+  }
+}

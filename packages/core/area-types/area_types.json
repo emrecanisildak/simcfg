@@ -1,0 +1,380 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Genel alan",
+        "en": "Generic area"
+      }
+    },
+    "spec": {
+      "properties": {},
+      "style": {
+        "stroke": "#607d8b",
+        "fill": "#607d8b",
+        "opacity": 0.15,
+        "lineStyle": "solid"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.no_fly",
+    "extends": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Uçuşa yasak bölge",
+        "en": "No-fly zone"
+      }
+    },
+    "spec": {
+      "properties": {
+        "enforced": {
+          "type": "boolean",
+          "default": true
+        },
+        "exemptSides": {
+          "type": "list",
+          "items": {
+            "type": "sideRef"
+          },
+          "default": []
+        }
+      },
+      "style": {
+        "stroke": "#d32f2f",
+        "fill": "#d32f2f",
+        "lineStyle": "dashed"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.threat_zone",
+    "extends": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Tehdit bölgesi (MEZ/WEZ)",
+        "en": "Threat zone"
+      }
+    },
+    "spec": {
+      "properties": {
+        "threatSystem": {
+          "type": "string"
+        },
+        "lethality": {
+          "type": "number",
+          "default": 0.5,
+          "min": 0,
+          "max": 1
+        }
+      },
+      "allowedShapes": [
+        "circle",
+        "sector",
+        "polygon",
+        "ellipse"
+      ],
+      "style": {
+        "stroke": "#ff6f00",
+        "fill": "#ff6f00",
+        "opacity": 0.2
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.cap_station",
+    "extends": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "CAP istasyonu",
+        "en": "CAP station"
+      }
+    },
+    "spec": {
+      "properties": {
+        "stationAltitude": {
+          "type": "number",
+          "unit": "m",
+          "default": 7000
+        },
+        "minAircraft": {
+          "type": "integer",
+          "default": 2,
+          "min": 1
+        }
+      },
+      "style": {
+        "stroke": "#1976d2",
+        "fill": "#1976d2"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.air_corridor",
+    "extends": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Hava koridoru",
+        "en": "Air corridor"
+      }
+    },
+    "spec": {
+      "properties": {
+        "civilian": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "allowedShapes": [
+        "corridor",
+        "polygon"
+      ],
+      "style": {
+        "stroke": "#7cb342",
+        "lineStyle": "dotted"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.landing_zone",
+    "extends": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "İniş bölgesi (LZ)",
+        "en": "Landing zone"
+      }
+    },
+    "spec": {
+      "properties": {
+        "capacity": {
+          "type": "integer",
+          "default": 2,
+          "min": 1
+        },
+        "surface": {
+          "type": "enum",
+          "values": [
+            "paved",
+            "grass",
+            "sand",
+            "rough"
+          ],
+          "default": "grass"
+        }
+      },
+      "style": {
+        "stroke": "#2e7d32",
+        "fill": "#2e7d32"
+      },
+      "allowedShapes": [
+        "circle",
+        "polygon"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.urban_area",
+    "extends": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Yerleşim alanı",
+        "en": "Urban area"
+      }
+    },
+    "spec": {
+      "properties": {
+        "populationDensity": {
+          "type": "number",
+          "unit": "1/km2",
+          "default": 2000,
+          "min": 0
+        },
+        "civilianPresence": {
+          "type": "boolean",
+          "default": true
+        },
+        "buildingHeight": {
+          "type": "number",
+          "unit": "m",
+          "default": 10,
+          "min": 0
+        }
+      },
+      "style": {
+        "stroke": "#8d6e63",
+        "fill": "#8d6e63"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.restricted_operating_zone",
+    "extends": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Kısıtlı uçuş bölgesi (ROZ)",
+        "en": "Restricted operating zone"
+      }
+    },
+    "spec": {
+      "properties": {
+        "purpose": {
+          "type": "enum",
+          "values": [
+            "uav",
+            "artillery",
+            "air_defense",
+            "other"
+          ],
+          "default": "uav"
+        }
+      },
+      "style": {
+        "stroke": "#6a1b9a",
+        "lineStyle": "dashed"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.engagement_area",
+    "extends": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Angajman bölgesi (EA)",
+        "en": "Engagement area"
+      }
+    },
+    "spec": {
+      "properties": {
+        "priorityTargets": {
+          "type": "list",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      },
+      "style": {
+        "stroke": "#c62828",
+        "fill": "#c62828",
+        "opacity": 0.1
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.phase_line",
+    "extends": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Safha hattı",
+        "en": "Phase line"
+      }
+    },
+    "spec": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "style": {
+        "stroke": "#000000",
+        "lineStyle": "solid"
+      },
+      "allowedShapes": [
+        "corridor"
+      ]
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.minefield",
+    "extends": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Mayın sahası",
+        "en": "Minefield"
+      }
+    },
+    "spec": {
+      "properties": {
+        "mineType": {
+          "type": "enum",
+          "values": [
+            "at",
+            "ap",
+            "mixed"
+          ],
+          "default": "mixed"
+        },
+        "density": {
+          "type": "number",
+          "unit": "1/km2",
+          "default": 500,
+          "min": 0
+        }
+      },
+      "style": {
+        "stroke": "#bf360c",
+        "fill": "#bf360c"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "AreaType",
+    "id": "core.areatype.safe_zone",
+    "extends": "core.areatype.generic",
+    "version": "1.0.0",
+    "meta": {
+      "name": {
+        "tr": "Güvenli bölge (sivil)",
+        "en": "Safe zone"
+      }
+    },
+    "spec": {
+      "properties": {
+        "capacity": {
+          "type": "integer",
+          "default": 1000,
+          "min": 0
+        }
+      },
+      "style": {
+        "stroke": "#0277bd",
+        "fill": "#0277bd"
+      }
+    }
+  }
+]

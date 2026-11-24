@@ -1,0 +1,28 @@
+[
+  {
+    "apiVersion": "simcfg/v1", "kind": "SystemTemplate", "id": "core.system.radar.generic_fcr", "version": "1.0.0",
+    "meta": { "name": "Generic airborne fire-control radar", "tags": ["generic"] },
+    "spec": {
+      "systemType": "core.systemtype.radar",
+      "parameters": {
+        "emitterId": "GEN-FCR", "band": "X", "frequency": "10 GHz", "peakPower": "5 kW", "antennaGain": 33,
+        "maxRange": "80 nmi", "azimuthLimit": 60, "updateRate": "2 s", "maxTracks": 20,
+        "supportedModes": ["off", "standby", "search", "tws", "stt"], "mass": "150 kg"
+      },
+      "initialState": { "mode": "standby" }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1", "kind": "SystemTemplate", "id": "core.system.radar.generic_search", "version": "1.0.0",
+    "meta": { "name": "Generic ground surveillance radar", "tags": ["generic"] },
+    "spec": {
+      "systemType": "core.systemtype.radar",
+      "parameters": {
+        "emitterId": "GEN-SRCH", "band": "S", "frequency": "3 GHz", "peakPower": "1 MW", "antennaGain": 38,
+        "maxRange": "250 km", "azimuthLimit": 180, "updateRate": "10 s", "maxTracks": 100,
+        "elevationLimits": { "min": -2, "max": 40 }
+      },
+      "initialState": { "mode": "standby" }
+    }
+  }
+]

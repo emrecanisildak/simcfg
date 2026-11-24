@@ -1,0 +1,351 @@
+[
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.eo.generic_targeting_pod",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic targeting pod"
+    },
+    "spec": {
+      "systemType": "core.systemtype.eo_ir",
+      "parameters": {
+        "maxRange": "40 km",
+        "bands": [
+          "visual",
+          "mwir"
+        ],
+        "fovNarrow": 1,
+        "laserRangefinder": true,
+        "mass": "200 kg"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.eo.generic_heli_turret",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic helicopter EO/IR turret"
+    },
+    "spec": {
+      "systemType": "core.systemtype.eo_ir",
+      "parameters": {
+        "maxRange": "15 km",
+        "bands": [
+          "visual",
+          "mwir"
+        ],
+        "azimuthLimit": 120,
+        "laserRangefinder": true
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.eo.generic_uav_ball",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic UAV EO/IR ball"
+    },
+    "spec": {
+      "systemType": "core.systemtype.eo_ir",
+      "parameters": {
+        "maxRange": "30 km",
+        "bands": [
+          "visual",
+          "swir",
+          "mwir"
+        ],
+        "fovNarrow": 0.5,
+        "laserRangefinder": true
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.eo.generic_small_drone_camera",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic small drone camera"
+    },
+    "spec": {
+      "systemType": "core.systemtype.eo_ir",
+      "parameters": {
+        "maxRange": "3 km",
+        "bands": [
+          "visual"
+        ],
+        "fovWide": 80,
+        "fovNarrow": 10
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.eo.generic_tank_sight",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic tank thermal sight"
+    },
+    "spec": {
+      "systemType": "core.systemtype.eo_ir",
+      "parameters": {
+        "maxRange": "5 km",
+        "bands": [
+          "visual",
+          "lwir"
+        ],
+        "recognitionRange": "3 km",
+        "laserRangefinder": true
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.eo.generic_shorad_eo",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic SHORAD EO tracker"
+    },
+    "spec": {
+      "systemType": "core.systemtype.eo_ir",
+      "parameters": {
+        "maxRange": "15 km",
+        "bands": [
+          "visual",
+          "mwir"
+        ],
+        "slewRate": 120
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.eo.generic_naval_eo",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic naval EO director"
+    },
+    "spec": {
+      "systemType": "core.systemtype.eo_ir",
+      "parameters": {
+        "maxRange": "20 km",
+        "bands": [
+          "visual",
+          "mwir"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.visual.human_eyes",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Human eyes"
+    },
+    "spec": {
+      "systemType": "core.systemtype.visual",
+      "parameters": {
+        "maxRange": "3 km",
+        "recognitionRange": "800 m",
+        "identificationRange": "300 m",
+        "updateRate": "0.5 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.visual.human_nvg",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Human eyes + NVG"
+    },
+    "spec": {
+      "systemType": "core.systemtype.visual",
+      "parameters": {
+        "maxRange": "3 km",
+        "nightVision": true,
+        "recognitionRange": "800 m",
+        "identificationRange": "300 m"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.visual.vehicle_periscope",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Vehicle periscopes"
+    },
+    "spec": {
+      "systemType": "core.systemtype.visual",
+      "parameters": {
+        "maxRange": "2 km",
+        "recognitionRange": "600 m"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.radar.generic_aew",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic AEW radar"
+    },
+    "spec": {
+      "systemType": "core.systemtype.radar",
+      "parameters": {
+        "emitterId": "GEN-AEW",
+        "band": "S",
+        "frequency": "3 GHz",
+        "peakPower": "1 MW",
+        "antennaGain": 36,
+        "maxRange": "400 km",
+        "maxTracks": 300,
+        "updateRate": "10 s"
+      },
+      "initialState": {
+        "mode": "search"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.radar.generic_lr_search",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic long-range surveillance radar"
+    },
+    "spec": {
+      "systemType": "core.systemtype.radar",
+      "parameters": {
+        "emitterId": "GEN-LRS",
+        "band": "L",
+        "frequency": "1.3 GHz",
+        "peakPower": "2 MW",
+        "antennaGain": 38,
+        "maxRange": "350 km",
+        "maxTracks": 200,
+        "updateRate": "10 s",
+        "elevationLimits": {
+          "min": -2,
+          "max": 30
+        }
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.radar.generic_fire_control_ground",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic ground fire-control radar"
+    },
+    "spec": {
+      "systemType": "core.systemtype.radar",
+      "parameters": {
+        "emitterId": "GEN-GFCR",
+        "band": "X",
+        "frequency": "9.5 GHz",
+        "peakPower": "100 kW",
+        "maxRange": "150 km",
+        "azimuthLimit": 60,
+        "maxTracks": 12,
+        "supportedModes": [
+          "off",
+          "standby",
+          "search",
+          "tws",
+          "stt"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.radar.generic_shorad",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic SHORAD radar"
+    },
+    "spec": {
+      "systemType": "core.systemtype.radar",
+      "parameters": {
+        "emitterId": "GEN-SHORAD",
+        "band": "Ku",
+        "frequency": "15 GHz",
+        "peakPower": "20 kW",
+        "maxRange": "30 km",
+        "maxTracks": 20,
+        "updateRate": "1 s"
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.radar.generic_aaa_fcr",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic AAA fire-control radar"
+    },
+    "spec": {
+      "systemType": "core.systemtype.radar",
+      "parameters": {
+        "emitterId": "GEN-AAA",
+        "band": "Ku",
+        "frequency": "16 GHz",
+        "peakPower": "5 kW",
+        "maxRange": "15 km",
+        "maxTracks": 4,
+        "supportedModes": [
+          "off",
+          "standby",
+          "search",
+          "stt"
+        ]
+      }
+    }
+  },
+  {
+    "apiVersion": "simcfg/v1",
+    "kind": "SystemTemplate",
+    "id": "core.system.radar.generic_surface_search",
+    "version": "1.0.0",
+    "meta": {
+      "name": "Generic surface-search radar"
+    },
+    "spec": {
+      "systemType": "core.systemtype.radar",
+      "parameters": {
+        "emitterId": "GEN-SSR",
+        "band": "X",
+        "frequency": "9.4 GHz",
+        "peakPower": "25 kW",
+        "maxRange": "60 km",
+        "elevationLimits": {
+          "min": -5,
+          "max": 15
+        }
+      },
+      "initialState": {
+        "mode": "search"
+      }
+    }
+  }
+]
